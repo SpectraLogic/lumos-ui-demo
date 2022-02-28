@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  app:
+    build: 
+      context: .
+    volumes: 
+      - .:/lumos-ui-demo
+    ports:
+      - 3000:3000
+    image: app:lumos-ui-demo
+    container_name: lumos-ui-demo-container
+    command: npm start
