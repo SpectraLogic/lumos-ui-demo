@@ -3,29 +3,18 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppBar, Container, Toolbar } from '@mui/material';
 import Login from './components/Login';
-import SpectraLogo from './assets/sllogo.gif';
 import styled from 'styled-components';
+import Nav from './components/Nav';
 
-const AppBarLogo = styled.img`
-  height: 60px;
-`
 
-const CustomAppBar = styled(AppBar)`
-  background-color: #fff;
-`
 
 
 function App() {
   return (
     <>
-      <Login />
-      {/* <CustomAppBar position='static'>
-        <Container>
-          <Toolbar disableGutters={ true }>
-            <AppBarLogo src={ SpectraLogo } />
-          </Toolbar>
-        </Container>
-      </CustomAppBar> */}
+    <Nav>
+      Content
+    </Nav>
     </>
     // <BrowserRouter>
     //   <Routes>
