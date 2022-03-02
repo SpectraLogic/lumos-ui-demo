@@ -2,6 +2,8 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Grid, Container, TextField, Button } from '@mui/material';
 import  SpectraLogo  from '../../assets/sllogo.gif'; 
+import { CheckCircle } from '@mui/icons-material';
+
 
 export interface ILoginFormProps {
 }
@@ -52,7 +54,11 @@ export function LoginForm (props: ILoginFormProps) {
           <br/>
           <br/>
           <br/>
-          <LoginButton variant='contained'> Login </LoginButton>
+          <LoginButton 
+          variant='contained' 
+          endIcon={ <CheckCircle /> }> 
+            Login 
+          </LoginButton>
         </Form>
     </LoginFormContainer>
   );
