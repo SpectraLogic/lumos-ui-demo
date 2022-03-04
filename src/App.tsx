@@ -12,9 +12,9 @@ import Nav from './components/Nav';
 function App() {
   return (
     <>
-    <Nav>
-      Content
-    </Nav>
+      <Nav>
+        Content
+      </Nav>
     </>
     // <BrowserRouter>
     //   <Routes>

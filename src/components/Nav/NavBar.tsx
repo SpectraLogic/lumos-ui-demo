@@ -7,20 +7,20 @@ interface INavBarProps {
 }
 
 const AppBarLogo = styled.img`
-  height: 60px;
+  height: 45px;
 `
 
 const CustomAppBar = styled(AppBar)`
   background-color: #fff;
+  padding-left: 17px;
+  height: 72px;
 `
 const NavBar: React.FunctionComponent<INavBarProps> = (props) => {
   return(
     <CustomAppBar position='static'>
-        <Container>
             <Toolbar disableGutters={ true }>
                 <AppBarLogo src={ SpectraLogo } />
             </Toolbar>
-        </Container>
     </CustomAppBar>
   );
 };
