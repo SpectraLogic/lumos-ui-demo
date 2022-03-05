@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, ButtonProps, selectClasses, SvgIconProps, Typography } from '@mui/material';
 import styled from 'styled-components';
 import { InnerSelection } from '../Navigator';
-import { PartitionIcon, LifecycleIcon, NetworkIcon } from '../../Icons';
+import { PartitionIcon, LifecycleIcon, NetworkIcon, UsersIcon, UpdateIcon, DesktopIcon, ArrowsVerticalIcon, ArrowsLateralIcon, ServerEncryptIcon } from '../../Icons';
 
 interface IListButtonProps extends ButtonProps {
     which: InnerSelection
@@ -30,17 +30,28 @@ const ButtonIcon: React.FunctionComponent<{ selected: boolean, which: InnerSelec
         case InnerSelection.Partitions: 
             return ( <PartitionIcon { ...iconProps } />  );
         case InnerSelection.MediaLifecycle:
-            return ( <LifecycleIcon { ...iconProps } />)
+            return ( <LifecycleIcon { ...iconProps } />);
+        case InnerSelection.NetworkSettings:
+            return ( <NetworkIcon  { ...iconProps } />)
+        case InnerSelection.UserAccounts:
+            return ( <UsersIcon { ...iconProps } />);
+        case InnerSelection.Updates:
+            return ( <UpdateIcon { ...iconProps } />);
+        case InnerSelection.ManageDrives:
+            return ( <DesktopIcon { ...iconProps } />);
+        case InnerSelection.ImportExport: 
+            return ( <ArrowsVerticalIcon { ...iconProps } /> );
+        case InnerSelection.MoveMedia: 
+            return ( <ArrowsLateralIcon { ...iconProps } /> );
+        case InnerSelection.MediaEncryption: 
+            return ( <ServerEncryptIcon { ...iconProps } />)
         default: 
             return ( <> </> )
     }
 }
     
-
-
 const ListButton: React.FunctionComponent<IListButtonProps> = (props) => {
     const selected = props.selection === props.which;
-    
   return (
     <StyledButton 
     { ...props }
@@ -51,6 +62,7 @@ const ListButton: React.FunctionComponent<IListButtonProps> = (props) => {
             { props.which }
         </Typography>
     </StyledButton>
+    
   ) ;
 };
 

@@ -47,20 +47,38 @@ const ButtonList = styled.div`
 //     }
 // `;
 
-const NavInner: React.FunctionComponent<INavInnerProps> = (props) => {
+const getOnClickHandler = ( which: InnerSelection,  onChangeFunction: (val: InnerSelection ) => void ) => {
+    return onChangeFunction.bind( undefined, which );
+}
+
+const NavInner: React.FunctionComponent<INavInnerProps> = ({ innerSelection, outerSelection, onInnerSelectionChange }) => {
 
   return (
       <Background>
           {
-              props.outerSelection === OuterSelection.Config ? (
+              outerSelection === OuterSelection.Config ? (
                 <ButtonList>
-                    <ListButton selection={ props.innerSelection } which={ InnerSelection.Partitions } onClick={ props.onInnerSelectionChange.bind( undefined, InnerSelection.Partitions )}/>
-                    <ListButton selection={ props.innerSelection } which={ InnerSelection.MediaLifecycle } onClick={ props.onInnerSelectionChange.bind( undefined, InnerSelection.MediaLifecycle )}/>
-
+                    { [InnerSelection.Partitions, InnerSelection.MediaLifecycle, InnerSelection.NetworkSettings, InnerSelection.UserAccounts, InnerSelection.MediaEncryption, InnerSelection.Updates].map( (val, indx) => (
+                            <ListButton 
+                            key={ indx }
+                            selection={ innerSelection } 
+                            which={ val }
+                            onClick={ getOnClickHandler( val, onInnerSelectionChange ) }/> ) 
+                        )
+                    }
 
                 </ButtonList>
-              ) : props.outerSelection === OuterSelection.Operations ? (
-                  "Operations"
+              ) : outerSelection === OuterSelection.Operations ? (
+            <ButtonList>
+                { [InnerSelection.MoveMedia, InnerSelection.ImportExport, InnerSelection.ManageDrives].map( (val, indx) => (
+                        <ListButton 
+                        key={ indx }
+                        selection={ innerSelection } 
+                        which={ val }
+                        onClick={ getOnClickHandler( val, onInnerSelectionChange ) }/> ) 
+                    )
+                }
+            </ButtonList>
               ) : (
                   "else"
               )
