@@ -2,13 +2,7 @@ import * as React from 'react';
 import { OuterSelection, InnerSelection } from '../Navigator';
 import ListButton  from './ListButton';
 import styled from 'styled-components';
-import { PartitionIcon , LifecycleIcon, NetworkIcon} from '../../Icons';
-import { Button, Typography } from '@mui/material';
 import * as _ from 'lodash';
-import {
-    Storage
-} from '@mui/icons-material';
-
 interface INavInnerProps {
     outerSelection: OuterSelection;
     innerSelection: InnerSelection;
@@ -46,7 +40,8 @@ const NavInner: React.FunctionComponent<INavInnerProps> = ({ innerSelection, out
               outerSelection === OuterSelection.Config ? (
                 <ButtonList>
                     { [InnerSelection.Partitions, InnerSelection.MediaLifecycle, InnerSelection.NetworkSettings, InnerSelection.UserAccounts, InnerSelection.MediaEncryption, InnerSelection.Updates].map( (val, indx) => (
-                            <ListButton 
+                            <ListButton
+                            to={ "/" + val }
                             key={ indx }
                             selection={ innerSelection } 
                             which={ val }
@@ -59,9 +54,10 @@ const NavInner: React.FunctionComponent<INavInnerProps> = ({ innerSelection, out
                 <ButtonList>
                     { [InnerSelection.MoveMedia, InnerSelection.ImportExport, InnerSelection.ManageDrives].map( (val, indx) => (
                             <ListButton 
+                            to={ "/" + val}
                             key={ indx }
-                            selection={ innerSelection } 
-                            which={ val }
+                            selection={ innerSelection }
+                            which={ val } 
                             onClick={ getOnClickHandler( val, onInnerSelectionChange ) }/> ) 
                         )
                     }

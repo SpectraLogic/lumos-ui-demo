@@ -3,10 +3,12 @@ import { Button, ButtonProps, selectClasses, SvgIconProps, Typography } from '@m
 import styled from 'styled-components';
 import { InnerSelection } from '../Navigator';
 import { PartitionIcon, LifecycleIcon, NetworkIcon, UsersIcon, UpdateIcon, DesktopIcon, ArrowsVerticalIcon, ArrowsLateralIcon, ServerEncryptIcon } from '../../Icons';
+import { Link, LinkProps, useMatch, useResolvedPath, To } from 'react-router-dom';
 
 interface IListButtonProps extends ButtonProps {
     which: InnerSelection
-    selection: InnerSelection
+    selection: InnerSelection,
+    to: To
 }
 
 const StyledButton = styled(Button)<{selected: boolean}>`
@@ -51,17 +53,20 @@ const ButtonIcon: React.FunctionComponent<{ selected: boolean, which: InnerSelec
 }
     
 const ListButton: React.FunctionComponent<IListButtonProps> = (props) => {
-    const selected = props.selection === props.which;
+    let resolved = useResolvedPath(props.to);
+    let match = useMatch({ path: resolved.pathname, end: true });
   return (
-    <StyledButton 
+    <Link to={ props.to }>
+    <StyledButton
     { ...props }
-    selected={ selected }
-    startIcon={ <ButtonIcon which={ props.which } selected={ selected } /> }
+    selected={ match ? true : false }
+    startIcon={ <ButtonIcon which={ props.which } selected={ match ? true : false } /> }
     variant='contained'> 
         <Typography variant='body1'>
             { props.which }
         </Typography>
     </StyledButton>
+    </Link>
     
   ) ;
 };

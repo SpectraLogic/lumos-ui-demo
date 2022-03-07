@@ -12,27 +12,18 @@ import Nav from './components/Nav';
 function App() {
   return (
     <>
+    
       <Nav>
         Content
       </Nav>
+      <Routes>
+        <Route path="/" element={<Nav />}>
+          <Route index element={<p> Go Somewhere </p>} />
+          <Route path="partitions" element={<p> hello, partiotns</p> } />
+          <Route path="medialifecycle" element={ <p> media lifecycle </p> } />
+        </Route>
+      </Routes>
     </>
-    // <BrowserRouter>
-    //   <Routes>
-    //   <Route path="/" element={<Layout />}>
-    //       <Route index element={<Home />} />
-    //       <Route path="blogs" element={<Blogs />} />
-    //       <Route path="contact" element={<Contact />} />
-    //       <Route path="*" element={<NoPage />} />
-    //     </Route>
-    //   </Routes>
-    // </BrowserRouter>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <p>
-    //       Lumos UI
-    //     </p>
-    //   </header>
-    // </div>
   );
 }
 

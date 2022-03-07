@@ -42,7 +42,7 @@ const Navigator: React.FunctionComponent<INavigatorProps> = (props) => {
 
   return(
     <Wrapper>
-      <NavOuter selection={ outerSelectionState } onSelectionChange={ setOuterSelectionState }  />
+
       <NavInner
         outerSelection={ outerSelectionState }
         innerSelection={ innerSelectionState }
