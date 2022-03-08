@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, ButtonProps, selectClasses, SvgIconProps, Typography } from '@mui/material';
 import styled from 'styled-components';
-import { InnerSelection } from '../Navigator';
+import { InnerSelection } from '../Nav';
 import { PartitionIcon, LifecycleIcon, NetworkIcon, UsersIcon, UpdateIcon, DesktopIcon, ArrowsVerticalIcon, ArrowsLateralIcon, ServerEncryptIcon } from '../../Icons';
 import { Link, LinkProps, useMatch, useResolvedPath, To } from 'react-router-dom';
 
@@ -63,7 +63,7 @@ const ListButton: React.FunctionComponent<IListButtonProps> = (props) => {
     startIcon={ <ButtonIcon which={ props.which } selected={ match ? true : false } /> }
     variant='contained'> 
         <Typography variant='body1'>
-            { props.which }
+            { props.which.replace('-', ' ') }
         </Typography>
     </StyledButton>
     </Link>

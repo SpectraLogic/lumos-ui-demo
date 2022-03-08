@@ -28,17 +28,17 @@ export enum OuterSelection {
 
 export enum InnerSelection {
   /* Operations */
-  MoveMedia = "Move Media",
-  ImportExport = "Import/Export",
-  ManageDrives = "Manage Drives",
-  RunTests = "Run Tests",
-  GatherLogs = "Gather Logs",
+  MoveMedia = "Move-Media",
+  ImportExport = "Import-Export",
+  ManageDrives = "Manage-Drives",
+  RunTests = "Run-Tests",
+  GatherLogs = "Gather-Logs",
   /* Configuration */
   Partitions = "Partitions",
-  MediaLifecycle = "Media Lifecycle",
-  NetworkSettings = "Network Settings",
-  UserAccounts = "User Accounts",
-  MediaEncryption = "Media Encryption",
+  MediaLifecycle = "Media-Lifecycle",
+  NetworkSettings = "Network-Settings",
+  UserAccounts = "User-Accounts",
+  MediaEncryption = "Media-Encryption",
   Updates = "Updates"
 
 }

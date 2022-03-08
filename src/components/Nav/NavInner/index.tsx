@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { OuterSelection, InnerSelection } from '../Navigator';
+import { OuterSelection, InnerSelection } from '../Nav';
 import ListButton  from './ListButton';
 import styled from 'styled-components';
 import * as _ from 'lodash';

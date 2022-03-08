@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { BuildOutlined, InfoOutlined, SettingsApplicationsOutlined } from '@mui/icons-material';
 import { Typography } from '@mui/material';
-import { OuterSelection } from './Navigator';
+import { OuterSelection } from './Nav';
 
 interface INavOuterProps {
     selection: OuterSelection
