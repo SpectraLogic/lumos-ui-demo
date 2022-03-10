@@ -5,13 +5,14 @@ import { InnerSelection } from '../Nav';
 import { PartitionIcon, LifecycleIcon, NetworkIcon, UsersIcon, UpdateIcon, DesktopIcon, ArrowsVerticalIcon, ArrowsLateralIcon, ServerEncryptIcon } from '../../Icons';
 import { Link, LinkProps, useMatch, useResolvedPath, To } from 'react-router-dom';
 
-interface IListButtonProps extends ButtonProps {
-    which: InnerSelection
-    selection: InnerSelection,
-    to: To
-}
+// interface IListButtonProps extends ButtonProps {
+//     which: InnerSelection
+//     selection: InnerSelection,
+//     to: To
+// }
 
-const StyledButton = styled(Button)<{selected: boolean}>`
+// const StyledButton = styled(Button)<{selected: boolean}>`
+const StyledButton = styled(Button)`
     height: 40px;
     width: 100%;
     justify-content: left; 
@@ -26,8 +27,11 @@ const StyledButton = styled(Button)<{selected: boolean}>`
     }
 `;
 
-const ButtonIcon: React.FunctionComponent<{ selected: boolean, which: InnerSelection}> = (props) =>{
-    const iconProps: SvgIconProps =  { htmlColor: props.selected ? '#fff' : '#000' } ;
+// const ButtonIcon: React.FunctionComponent<{ selected: boolean, which: InnerSelection}> = (props) =>{
+const ButtonIcon = (props) =>{
+    const iconProps =  { htmlColor: props.selected ? '#fff' : '#000' } ;
+
+    // const iconProps: SvgIconProps =  { htmlColor: props.selected ? '#fff' : '#000' } ;
     switch( props.which ){
         case InnerSelection.Partitions: 
             return ( <PartitionIcon { ...iconProps } />  );
@@ -51,22 +55,31 @@ const ButtonIcon: React.FunctionComponent<{ selected: boolean, which: InnerSelec
             return ( <> </> )
     }
 }
+
+// function CustomButton<C extends React.ElementType>(
+//     props: ButtonProps<C, { component?: C }>
+// ) {
+//     return (
+//         <Button 
+//     )
+// }
     
-const ListButton: React.FunctionComponent<IListButtonProps> = (props) => {
+// const ListButton: React.FunctionComponent<IListButtonProps> = (props) => {
+const ListButton = (props) => {
     let resolved = useResolvedPath(props.to);
     let match = useMatch({ path: resolved.pathname, end: true });
   return (
-    <Link to={ props.to }>
-    <StyledButton
-    { ...props }
-    selected={ match ? true : false }
-    startIcon={ <ButtonIcon which={ props.which } selected={ match ? true : false } /> }
-    variant='contained'> 
-        <Typography variant='body1'>
-            { props.which.replace('-', ' ') }
-        </Typography>
-    </StyledButton>
-    </Link>
+        <StyledButton
+        to={ props.to }
+        component={ Link }
+        { ...props }
+        selected={ match ? true : false }
+        startIcon={ <ButtonIcon which={ props.which } selected={ match ? true : false } /> }
+        variant='contained'> 
+            <Typography variant='body1'>
+                { props.which.replace('-', ' ') }
+            </Typography>
+        </StyledButton>
     
   ) ;
 };
