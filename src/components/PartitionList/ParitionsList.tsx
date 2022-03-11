@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import IPartition from '../../interfaces/IPartition';
 import { Link } from 'react-router-dom';
 import PartitionListItem from './PartitionListItem';
+import ActionBar from './ActionBar';
 
 export interface IPartitionsListProps {
     partitions: IPartition[]
@@ -19,6 +20,7 @@ const Root = styled.div`
 `;
 
 const ListPanel = styled( motion(List) )<{ filterPanelVisibility: boolean}>`
+    position: relative;
     height: 100%;
     width: 100%;
     border-top-left-radius: 8px;
@@ -45,6 +47,10 @@ const listPanelAnimVariants = {
 const StyledLink = styled( Link )`
     text-decoration: none;
 `
+const StyledActionBar = styled( ActionBar )`
+    position: absolute;
+    bottom: 0px;
+`
 
 const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) => {
     const [filterPanelVisiblity, setFilterPanelVisibility] = React.useState( false );
@@ -65,6 +71,7 @@ const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) =>
                 ) )
             }
         </ListPanel>
+        <StyledActionBar />
     </Root>
   );
 };

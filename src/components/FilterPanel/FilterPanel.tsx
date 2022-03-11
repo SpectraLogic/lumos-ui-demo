@@ -24,7 +24,6 @@ const PanelHeader = styled.div`
     cursor: pointer;
 `;
 
-
 const FilterPanel: React.FunctionComponent<IFilterPanelProps> = (props) => {
   return(
     <Root 

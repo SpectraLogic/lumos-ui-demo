@@ -1,4 +1,5 @@
 import { SvgIcon, SvgIconProps } from "@mui/material";
+import { Ref } from "react";
 import styled from 'styled-components';
 
 const StyledSvgIcon = styled(SvgIcon)`
@@ -71,3 +72,11 @@ export function ArrowsVerticalIcon( props: SvgIconProps ){
         <path d="M11 14.01V7H9V14.01H6L10 18L14 14.01H11ZM4 0L0 3.99H3V11H5V3.99H8L4 0Z"/>
     </SvgIcon>
 )}
+
+export function PartitionAddIcon( props: SvgIconProps ){
+    return(
+        <SvgIcon { ...props }>
+            <path d="M17 11C12.58 11 9 12.79 9 15C9 17.21 12.58 19 17 19C21.42 19 25 17.21 25 15C25 12.79 21.42 11 17 11ZM9 17V20C9 22.21 12.58 24 17 24C21.42 24 25 22.21 25 20V17C25 19.21 21.42 21 17 21C12.58 21 9 19.21 9 17ZM9 22V25C9 27.21 12.58 29 17 29C18.41 29 19.79 28.81 21 28.46V25.46C19.79 25.81 18.41 26 17 26C12.58 26 9 24.21 9 22ZM26 22V25H23V27H26V30H28V27H31V25H28V22"/>
+        </SvgIcon>
+    )
+}
