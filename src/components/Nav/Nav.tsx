@@ -58,18 +58,7 @@ export enum InnerSelection {
 const Nav: React.FunctionComponent<INavProps> = (props) => {
   const [outerSelectionState, setOuterSelectionState] = React.useState( OuterSelection.Config );
   const [innerSelectionState, setInnerSelectionstate] = React.useState( InnerSelection.Partitions );
-  const [partitionList, setPartitionList] = React.useState<IPartition[]>( [
-    { 
-      id: "1",
-      name: "Partition 1",
-      mediaType: MediaType.LTO
-    },
-    { 
-      id: "2",
-      name: "Partition 2",
-      mediaType: MediaType.LTOClean
-    }
-  ] );
+
 
   return(
       <Wrapper>
@@ -84,7 +73,7 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
           />
           <Outlet />
           <Routes>
-            <Route path={`/${InnerSelection.Partitions}/*`} element={ <Partitions partitions={ partitionList } onChange={ setPartitionList } /> } />
+            <Route path={`/${InnerSelection.Partitions}/*`} element={ <Partitions /> } />
             <Route path={`/${InnerSelection.MediaLifecycle}`} element={<p> Display Component </p> } />
             <Route path={`/${InnerSelection.ImportExport}`} element={<p> Display Component </p> } />
             <Route path={`/${InnerSelection.ManageDrives}`} element={<p> Display Component </p> } />

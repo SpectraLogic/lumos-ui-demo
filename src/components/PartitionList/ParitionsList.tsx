@@ -7,10 +7,12 @@ import IPartition from '../../interfaces/IPartition';
 import { Link } from 'react-router-dom';
 import PartitionListItem from './PartitionListItem';
 import ActionBar from './ActionBar';
+import { useResolvedPath, useMatch, To } from 'react-router-dom';
 
 export interface IPartitionsListProps {
     partitions: IPartition[]
     onChange: ( partitions: IPartition[] ) => void 
+    createPartitionLink: To
 }
 
 const Root = styled.div`
@@ -71,7 +73,7 @@ const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) =>
                 ) )
             }
         </ListPanel>
-        <StyledActionBar />
+        <StyledActionBar createPartitionLink={ props.createPartitionLink } />
     </Root>
   );
 };

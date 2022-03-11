@@ -1,11 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Fab } from '@mui/material'
+import { Fab, Zoom  } from '@mui/material'
 import { PartitionAddIcon } from '../Icons'
 import { motion } from 'framer-motion';
+import { To, useResolvedPath, useMatch, Link } from 'react-router-dom';
+import  CreatePartitionFab  from './CreatePartitionFab';
  
 
 interface IActionBarProps {
+    createPartitionLink: To
 }
 
 const Root = styled.div`
@@ -31,7 +34,7 @@ const BackgroundLeft = styled( AppBarBackgroundItem )`
     border-bottom-left-radius: 16px;
     border-top-right-radius: 3px;
     flex-grow: 1;
-`;
+`
 
 const BackgroundMiddle = styled.div`
     position: relative;
@@ -55,35 +58,20 @@ const BackgroundRight = styled ( AppBarBackgroundItem)`
     border-bottom-right-radius: 16px;
 `;
 
-const StyledFab = styled( Fab )`
-    position: absolute; 
-    right: 22px;
-    bottom: 36px;
-    background: #A68AF9;
-    &:hover{
-        background: #916DFB;
-    }
-`;
 
-const StyledPartitionAddIcon = styled( PartitionAddIcon )`
-    color: #fff;
-    transform: scale( 1.5 );
-`;
+
 
 const ActionBar: React.FunctionComponent<IActionBarProps> = (props) => {
+    let resolved = useResolvedPath(props.createPartitionLink);
+    let createPartitionMatch = useMatch({ path: resolved.pathname, end: false });
   return(
-      
     <Root { ...props }>
         <Background>
             <BackgroundLeft />
             <BackgroundMiddle />
             <BackgroundRight />
         </Background>
-        <StyledFab>
-            <StyledPartitionAddIcon 
-                viewBox='0 0 40 40' 
-                height={ 40 } width={ 40 } />
-        </StyledFab>
+        <CreatePartitionFab createPartitionLink={ props.createPartitionLink } />
     </Root>
   );
 };
