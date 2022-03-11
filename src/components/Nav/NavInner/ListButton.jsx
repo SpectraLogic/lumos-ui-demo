@@ -67,7 +67,7 @@ const ButtonIcon = (props) =>{
 // const ListButton: React.FunctionComponent<IListButtonProps> = (props) => {
 const ListButton = (props) => {
     let resolved = useResolvedPath(props.to);
-    let match = useMatch({ path: resolved.pathname, end: true });
+    let match = useMatch({ path: resolved.pathname, end: false });
   return (
         <StyledButton
         to={ props.to }

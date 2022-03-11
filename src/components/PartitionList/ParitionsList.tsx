@@ -1,11 +1,15 @@
 import * as React from 'react';
 import FilterPanel from '../FilterPanel/FilterPanel';
 import styled from 'styled-components';
-import { List } from '@mui/material';
+import { List, ListItem, ListItemText } from '@mui/material';
 import { motion } from "framer-motion";
+import IPartition from '../../interfaces/IPartition';
+import { Link } from 'react-router-dom';
+import PartitionListItem from './PartitionListItem';
 
-
-interface IPartitionsListProps {
+export interface IPartitionsListProps {
+    partitions: IPartition[]
+    onChange: ( partitions: IPartition[] ) => void 
 }
 
 const Root = styled.div`
@@ -15,13 +19,8 @@ const Root = styled.div`
 `;
 
 const ListPanel = styled( motion(List) )<{ filterPanelVisibility: boolean}>`
-    // position: absolute;
-    // top: ${ ({ filterPanelVisibility }) => filterPanelVisibility ? '190px' : '40px' };
-    // top: 40px;
-    // height: calc( 100% - 60px )
     height: 100%;
     width: 100%;
-    // height: calc( 100% - ${ ({ filterPanelVisibility }) => filterPanelVisibility ? '210px' : '60px' } );
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     border-bottom-left-radius: 16px;
@@ -30,14 +29,26 @@ const ListPanel = styled( motion(List) )<{ filterPanelVisibility: boolean}>`
     box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.25);
 `;
 
+const SortControls = styled.div`
+    height: 23px;
+    width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+`;
+
 const listPanelAnimVariants = {
     open: { y: -10, height: 'calc( 100% - 200px )' },
     closed: { y: -150, height: 'calc( 100% - 60px )' }
 }
 
-const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) => {
+const StyledLink = styled( Link )`
+    text-decoration: none;
+`
 
+const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) => {
     const [filterPanelVisiblity, setFilterPanelVisibility] = React.useState( false );
+
   return(
     <Root>
       <FilterPanel onClick={ () => {  setFilterPanelVisibility( !filterPanelVisiblity ) } } />
@@ -46,8 +57,14 @@ const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) =>
         variants={ listPanelAnimVariants }
         animate={ filterPanelVisiblity ? 'open' : 'closed' }
         transition={{ type: "tween" }}
-        initial={ false }
-        />
+        initial={ false }>
+            <SortControls />
+            {
+                props.partitions.map( (partition) => (
+                    <PartitionListItem to={ `./${partition.id}` } partition={ partition } />
+                ) )
+            }
+        </ListPanel>
     </Root>
   );
 };
