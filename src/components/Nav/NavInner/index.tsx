@@ -10,6 +10,7 @@ interface INavInnerProps {
 }
 
 const Background = styled.div`
+    min-width: 205px;
     width: 205px;
     height: 100%;
     background-color: #fff;

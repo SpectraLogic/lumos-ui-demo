@@ -1,20 +1,26 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Grid } from '@mui/material';
+import PartitionsList from '../PartitionList/ParitionsList';
 
 interface IPartitionsProps {
 }
 
 const Background = styled(Grid)`
   width: 100%;
-  background-color: #000;
+  background-color: #f0f0f0;
   position: relative;
+  padding: 10px;
 `;
+
+
 
 const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
   return(
-      <Background>
-          <p style={{ position: 'absolute', bottom: '1px', color: '#fff'}}>Partitions!</p>
+      <Background container spacing={1}>
+        <Grid item xs={ 3 }>
+          <PartitionsList />
+        </Grid>
       </Background>
   );
 };
