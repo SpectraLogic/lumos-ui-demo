@@ -15,7 +15,7 @@ const Background = styled(Grid)`
   padding: 10px;
 `;
 
-const createPartitionLink: string = "Partitions/new"
+const createPartitionLink: string = "/Partitions/create"
 
 const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
   const [partitionList, setPartitionList] = React.useState<IPartition[]>( [

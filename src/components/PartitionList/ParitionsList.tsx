@@ -1,7 +1,7 @@
 import * as React from 'react';
 import FilterPanel from '../FilterPanel/FilterPanel';
 import styled from 'styled-components';
-import { List, ListItem, ListItemText } from '@mui/material';
+import { Divider, List, ListItem, ListItemText, Zoom } from '@mui/material';
 import { motion } from "framer-motion";
 import IPartition from '../../interfaces/IPartition';
 import { Link } from 'react-router-dom';
@@ -54,9 +54,35 @@ const StyledActionBar = styled( ActionBar )`
     bottom: 0px;
 `
 
+const NewPartitionItemBackground = styled( motion.div )`
+    position: absolute;
+    height: 72px;
+    color: #fff;
+    background-color: #A68AF9;
+    width: 100%;
+`
+
+const newPartitionItemBgVariants = {
+    open: (height = 72) => ({
+      clipPath: `circle(${height * 2 + 200}px at 50% 50%)`,
+      transition: {
+        type: "tween",
+        duration: 0.33
+      }
+    }),
+    closed: {
+      clipPath: "circle(0px at 50% 50%)",
+      transition: {
+        type: "tween",
+        duration: 0.15
+      }
+    }
+  };
+
 const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) => {
     const [filterPanelVisiblity, setFilterPanelVisibility] = React.useState( false );
-
+    let resolved = useResolvedPath(props.createPartitionLink);
+    let createPartitionMatch = useMatch({ path: resolved.pathname, end: false });
   return(
     <Root>
       <FilterPanel onClick={ () => {  setFilterPanelVisibility( !filterPanelVisiblity ) } } />
@@ -67,9 +93,22 @@ const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) =>
         transition={{ type: "tween" }}
         initial={ false }>
             <SortControls />
+            <NewPartitionItemBackground 
+                variants={ newPartitionItemBgVariants }
+                animate={ createPartitionMatch ? 'open' : 'closed' }/>
+            <Zoom in={ createPartitionMatch ? true : false } >
+                <ListItem>
+                    <ListItemText
+                        primary="New Partition"
+                        secondary="LTO" 
+                        primaryTypographyProps={{ sx: { color: '#fff' } }}
+                        secondaryTypographyProps={{ sx: { color: 'rgb(255 255 255 / 75%)' } }}
+                        />
+                </ListItem>
+            </Zoom>
             {
                 props.partitions.map( (partition) => (
-                    <PartitionListItem to={ `./${partition.id}` } partition={ partition } />
+                    <PartitionListItem disabled={ createPartitionMatch } to={ `./${partition.id}` } partition={ partition } />
                 ) )
             }
         </ListPanel>
