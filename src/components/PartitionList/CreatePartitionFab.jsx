@@ -40,8 +40,7 @@ export default function CreatePartitionFab ( props ) {
     return (
         <>
             <Zoom
-                in={ !createPartitionMatch }
-                unmountOnExit >
+                in={ !createPartitionMatch } unmountOnExit>
                 <CreateFab
                     to={ props.createPartitionLink }
                     component={ Link }>

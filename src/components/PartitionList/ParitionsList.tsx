@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import PartitionListItem from './PartitionListItem';
 import ActionBar from './ActionBar';
 import { useResolvedPath, useMatch, To } from 'react-router-dom';
+import SortControls from './SortControls';
 
 export interface IPartitionsListProps {
     partitions: IPartition[]
@@ -33,9 +34,7 @@ const ListPanel = styled( motion(List) )<{ filterPanelVisibility: boolean}>`
     box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.25);
 `;
 
-const SortControls = styled.div`
-    height: 23px;
-    width: 100%;
+const StyledSortControls = styled( SortControls )`
     position: -webkit-sticky;
     position: sticky;
     top: 0;
@@ -81,6 +80,7 @@ const newPartitionItemBgVariants = {
 
 const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) => {
     const [filterPanelVisiblity, setFilterPanelVisibility] = React.useState( false );
+    const [sortFunction, setSortFunction] = React.useState<(( a: IPartition, b: IPartition ) => number)>();
     let resolved = useResolvedPath(props.createPartitionLink);
     let createPartitionMatch = useMatch({ path: resolved.pathname, end: false });
   return(
@@ -92,10 +92,12 @@ const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) =>
         animate={ filterPanelVisiblity ? 'open' : 'closed' }
         transition={{ type: "tween" }}
         initial={ false }>
-            <SortControls />
+            <StyledSortControls sortPredicate={ undefined } onSortPredicateChange={ ( func ) => setSortFunction( () => func ) } />
+            <Divider />
             <NewPartitionItemBackground 
                 variants={ newPartitionItemBgVariants }
-                animate={ createPartitionMatch ? 'open' : 'closed' }/>
+                animate={ createPartitionMatch ? 'open' : 'closed' }
+                initial={ false } />
             <Zoom in={ createPartitionMatch ? true : false } >
                 <ListItem>
                     <ListItemText
@@ -107,9 +109,9 @@ const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) =>
                 </ListItem>
             </Zoom>
             {
-                props.partitions.map( (partition) => (
-                    <PartitionListItem disabled={ createPartitionMatch } to={ `./${partition.id}` } partition={ partition } />
-                ) )
+                props.partitions.sort(sortFunction).map( (partition) => {
+                   return <PartitionListItem disabled={ createPartitionMatch } to={ `./${partition.id}` } partition={ partition } />
+                 } )
             }
         </ListPanel>
         <StyledActionBar createPartitionLink={ props.createPartitionLink } />

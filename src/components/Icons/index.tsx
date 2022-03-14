@@ -80,3 +80,16 @@ export function PartitionAddIcon( props: SvgIconProps ){
         </SvgIcon>
     )
 }
+
+export const SortDescIcon = ( props: SvgIconProps ) => (
+    <SvgIcon { ...props }>
+        <path d="M18.5 21V19H26.5V21H18.5ZM18.5 27V25H22.5V27H18.5ZM18.5 15V13H30.5V15H18.5ZM14.5 25H17L13.5 28.5L10 25H12.5V12H14.5V25Z"/>
+    </SvgIcon>
+);
+
+export const SortAscIcon = ( props: SvgIconProps ) => (
+    <SvgIcon { ...props }>
+        <path d="M18.5 19.5V21.5H26.5V19.5H18.5ZM18.5 13.5V15.5H22.5V13.5H18.5ZM18.5 25.5V27.5H30.5V25.5H18.5ZM14.5 15.5H17L13.5 12L10 15.5H12.5V28.5H14.5V15.5Z"/>
+    </SvgIcon>
+);
+ 
