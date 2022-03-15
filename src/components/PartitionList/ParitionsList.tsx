@@ -81,11 +81,16 @@ const newPartitionItemBgVariants = {
 const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) => {
     const [filterPanelVisiblity, setFilterPanelVisibility] = React.useState( false );
     const [sortFunction, setSortFunction] = React.useState<(( a: IPartition, b: IPartition ) => number)>();
+    const [filterFunction, setFilterFunction] = React.useState<(( partition: IPartition ) => boolean)>( (p: IPartition) => (true) );
     let resolved = useResolvedPath(props.createPartitionLink);
     let createPartitionMatch = useMatch({ path: resolved.pathname, end: false });
   return(
     <Root>
-      <FilterPanel onClick={ () => {  setFilterPanelVisibility( !filterPanelVisiblity ) } } />
+      <FilterPanel 
+        panelIsOpen={ filterPanelVisiblity } 
+        onClick={ () => {  setFilterPanelVisibility( !filterPanelVisiblity ) } } 
+        onFilterChange={ ( func ) => { setFilterFunction( () => func ) } }
+        />
       <ListPanel 
         filterPanelVisibility={ filterPanelVisiblity }
         variants={ listPanelAnimVariants }
@@ -109,7 +114,7 @@ const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) =>
                 </ListItem>
             </Zoom>
             {
-                props.partitions.sort(sortFunction).map( (partition) => {
+                props.partitions.filter( filterFunction ).sort( sortFunction ).map( (partition) => {
                    return <PartitionListItem disabled={ createPartitionMatch } to={ `./${partition.id}` } partition={ partition } />
                  } )
             }
