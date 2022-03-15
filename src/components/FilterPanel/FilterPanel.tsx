@@ -1,32 +1,34 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { motion, Variant } from 'framer-motion'; 
-import { SxProps, Typography, OutlinedInput, InputBase, TextField } from '@mui/material';
-import { ExpandMore, ExpandLess, FilterAlt, Search } from '@mui/icons-material'
+import { SxProps, Typography, OutlinedInput, InputBase, TextField, Chip } from '@mui/material';
+import { ExpandMore, ExpandLess, FilterAlt, Search, Done } from '@mui/icons-material'
 import IPartition from '../../interfaces/IPartition';
 
 interface IFilterPanelProps {
     panelIsOpen: boolean
     onClick: () => void
     onFilterChange: ( func: ( partition: IPartition) => boolean ) => void
+    disabled?: boolean
 }
 
-const Root = styled( motion.div )`
+const Root = styled( motion.div )<{ disabled?: boolean }>`
     height: 190px;
     width: 100%;
-    background-color: #A68AF9;
+    background-color: ${ (props) => props.disabled ? '#c3aeff' : '#A68AF9' };
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
 `;
 
 const rootAnimVariants: { [key: string]: Variant } = {
-  hover: { backgroundColor: '#916DFB' }
+  hover: { backgroundColor: '#916DFB' },
+  disabled: { backgroundColor: '#c3aeff' }
 }
 
-const PanelHeader = styled.div`
+const PanelHeader = styled.div<{ disabled?: boolean }>`
     height: 40px;
     width: auto;
-    cursor: pointer;
+    cursor: ${ (props) => props.disabled ? 'default' : 'pointer' };
     display: flex; 
     flex-direction: row;
     padding-top: 13px;
@@ -41,12 +43,11 @@ const ElementsLeft = styled.div`
 
 const ElementsRight = styled.div`
   margin-left: auto;
-
 `;
 
-const PanelContent = styled.div`
-  padding-left: 19px;
-  padding-right: 19px;
+const PanelContent = styled(motion.div)`
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 
 const StyledTextField = styled(TextField)({
@@ -71,6 +72,38 @@ const StyledTextField = styled(TextField)({
   },
 });
 
+const ChipContainerRoot = styled.div`
+  margin-top: 8px;
+  display: flex; 
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+`;
+
+const ChipContainer = styled.div`
+  display: flex;
+  justify content: center;
+  gap 10px;
+`;
+
+const StyledChip = styled( Chip )`
+  background-color: #fff;
+  &:hover{
+    color: #fff;
+    border: 1px solid #fff;
+    & .MuiSvgIcon-root{
+      color: #fff;
+    }
+  };
+
+`;
+
+
+const panelContentVariants: {[key: string]: Variant} = {
+  hide: { visibility: 'hidden' },
+  show: { visibility:'visible' }
+}
+
 const iconStyle: SxProps = { color: '#fff' };
 
 const FilterPanel: React.FunctionComponent<IFilterPanelProps> = (props) => {
@@ -88,9 +121,10 @@ const FilterPanel: React.FunctionComponent<IFilterPanelProps> = (props) => {
 
   return(
     <Root 
-      whileHover='hover'
+      disabled={ props.disabled }
+      whileHover={ props.disabled ? 'disabled' : 'hover'}
       variants={ rootAnimVariants }>
-        <PanelHeader onClick={ props.onClick }>
+        <PanelHeader onClick={ props.onClick } disabled={ props.disabled }>
           <ElementsLeft>
             <Typography variant='body2' sx={{ color: '#fff' }}>
               Filters
@@ -106,7 +140,11 @@ const FilterPanel: React.FunctionComponent<IFilterPanelProps> = (props) => {
             { props.panelIsOpen ? <ExpandLess sx={ iconStyle } /> : <ExpandMore sx={ iconStyle }/> }
           </ElementsRight>
         </PanelHeader>  
-        <PanelContent>
+        <PanelContent 
+          initial={ false }
+          variants={ panelContentVariants }
+          animate={ props.panelIsOpen ? 'show' : 'hide' }
+          transition={{ type: "tween", delay: 0.11 }} >
           <StyledTextField 
             label='Search' 
             value={ searchText }
@@ -114,6 +152,16 @@ const FilterPanel: React.FunctionComponent<IFilterPanelProps> = (props) => {
             InputProps={{
               endAdornment: ( <Search sx={ iconStyle } /> )
           }} />
+          <ChipContainerRoot>
+            <ChipContainer>
+              <StyledChip clickable size='small' label="LTO" avatar={ <Done /> } /> 
+              <StyledChip clickable size='small' label="LTO Clean" avatar={ <Done />}/> 
+            </ChipContainer>
+            <ChipContainer>
+              <StyledChip clickable size='small' label="TS" avatar={ <Done /> } /> 
+              <StyledChip clickable size='small' label="TS Clean" avatar={ <Done />}/> 
+            </ChipContainer>
+          </ChipContainerRoot>
         </PanelContent>
     </Root>
   );

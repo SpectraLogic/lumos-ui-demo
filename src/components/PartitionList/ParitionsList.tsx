@@ -78,23 +78,25 @@ const newPartitionItemBgVariants = {
     }
   };
 
+
 const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) => {
     const [filterPanelVisiblity, setFilterPanelVisibility] = React.useState( false );
     const [sortFunction, setSortFunction] = React.useState<(( a: IPartition, b: IPartition ) => number)>();
-    const [filterFunction, setFilterFunction] = React.useState<(( partition: IPartition ) => boolean)>( (p: IPartition) => (true) );
+    const [filterFunction, setFilterFunction] = React.useState<(( partition: IPartition ) => boolean)>( () => (value: IPartition) => true );
     let resolved = useResolvedPath(props.createPartitionLink);
     let createPartitionMatch = useMatch({ path: resolved.pathname, end: false });
   return(
     <Root>
       <FilterPanel 
-        panelIsOpen={ filterPanelVisiblity } 
+        disabled={ createPartitionMatch ? true : false }
+        panelIsOpen={ createPartitionMatch ? false : filterPanelVisiblity } 
         onClick={ () => {  setFilterPanelVisibility( !filterPanelVisiblity ) } } 
         onFilterChange={ ( func ) => { setFilterFunction( () => func ) } }
         />
       <ListPanel 
         filterPanelVisibility={ filterPanelVisiblity }
         variants={ listPanelAnimVariants }
-        animate={ filterPanelVisiblity ? 'open' : 'closed' }
+        animate={ filterPanelVisiblity && !createPartitionMatch ? 'open' : 'closed' }
         transition={{ type: "tween" }}
         initial={ false }>
             <StyledSortControls sortPredicate={ undefined } onSortPredicateChange={ ( func ) => setSortFunction( () => func ) } />
