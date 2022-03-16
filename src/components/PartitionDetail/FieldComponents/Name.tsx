@@ -27,7 +27,7 @@ const Name: React.FunctionComponent<INameProps> = (props) => {
             </Zoom>
             <Zoom in={ !editState } appear={ false } exit={ false } >
                 <Root>
-                    <Typography variant='h5' >
+                    <Typography variant='h4' >
                         { props.value }
                     </Typography>
                     <EditModeButton onClick={ setEditState.bind( undefined, !editState ) } >

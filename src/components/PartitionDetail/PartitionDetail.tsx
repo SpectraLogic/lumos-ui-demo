@@ -3,8 +3,9 @@ import _ from 'lodash';
 import * as React from 'react';
 import styled from 'styled-components';
 import IPartition from '../../interfaces/IPartition';
-import MediaType from './MediaType';
-import Name from './Name';
+import MediaType from './FieldComponents/MediaType';
+import Name from './FieldComponents/Name';
+import SlotIQ from './FieldComponents/SlotIQ';
 import PartitionFields from './PartitionFields';
 
 interface IPartitionDetailProps {
@@ -20,14 +21,14 @@ const Root = styled.div`
 `;
 
 const Header = styled.div`
-    height: 35px; 
+    height: 50px; 
     width: auto;
     padding: 20px 13px 20px 13px;
     display: flex;
 `;
 
 const Body = styled.div`
-    height: calc(100% - 75px);
+    height: calc(100% - 90px);
     width: 100%;
     overflow-y: scroll;
 `;
@@ -48,7 +49,7 @@ const stagedEditsReducer = ( state: Partial<IPartition>, newState: Partial<IPart
 
 const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) => {
     const [stagedEditState, setStagedEditState] = React.useReducer( stagedEditsReducer as React.Reducer<Partial<IPartition>, Partial<IPartition>>, {} as Partial<IPartition> );
-    const { name, mediaType } = props.partition;
+    const { name, mediaType, SlotIQ: slotIq } = props.partition;
     return (
       <Root>
         <Header>
@@ -64,6 +65,9 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
             <MediaType 
                 value={ _.get( stagedEditState, ["mediaType"], mediaType ) } onValueChange={ value => setStagedEditState({ mediaType: value }) }
             />
+            <SlotIQ 
+                value={_.get( stagedEditState, [PartitionFields.SlotIQ], slotIq ) } onValueChange={ (value: boolean) => setStagedEditState({ SlotIQ: value }) } 
+            /> 
         </Body>   
       </Root>
   ) ;

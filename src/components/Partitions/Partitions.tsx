@@ -5,6 +5,7 @@ import PartitionsList, { IPartitionsListProps } from '../PartitionList/Paritions
 import { Routes, Route, Outlet } from 'react-router-dom'; 
 import IPartition, { MediaType } from '../../interfaces/IPartition';
 import PartitionDetail from '../PartitionDetail/PartitionDetail';
+import PartitionFields from '../PartitionDetail/PartitionFields';
 
 interface IPartitionsProps {
 }
@@ -23,12 +24,15 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
     { 
       id: "1",
       name: "Partition 1",
-      mediaType: MediaType.LTO
+      mediaType: MediaType.LTO,
+      [PartitionFields.SlotIQ]: false
+
     },
     { 
       id: "2",
       name: "Partition 2",
-      mediaType: MediaType.LTOClean
+      mediaType: MediaType.LTOClean,
+      [PartitionFields.SlotIQ]: true
     }
   ] );
   return(

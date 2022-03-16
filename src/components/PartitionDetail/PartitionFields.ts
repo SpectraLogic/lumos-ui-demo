@@ -1,6 +1,7 @@
 enum PartitionFields {
     Name = "Partition Name",
-    MediaType = "Media Type"
+    MediaType = "Media Type",
+    SlotIQ = "SlotIQ",
 }
 
 export default PartitionFields;

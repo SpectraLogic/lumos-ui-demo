@@ -2,9 +2,9 @@ import { ExpandMore } from '@mui/icons-material';
 import { Accordion, AccordionDetails, AccordionSummary, FormControl, InputLabel, MenuItem, Typography, Zoom, Select } from '@mui/material';
 import * as React from 'react';
 import styled from 'styled-components';
-import { MediaType as EMediaType } from '../../interfaces/IPartition';
-import PartitionFieldProps from './PartitionFieldProps';
-import PartitionFields from './PartitionFields';
+import { MediaType as EMediaType } from '../../../interfaces/IPartition';
+import PartitionFieldProps from '../PartitionFieldProps';
+import PartitionFields from '../PartitionFields';
 
 interface IMediaTypeProps extends PartitionFieldProps<EMediaType>{
 
@@ -28,7 +28,7 @@ const MediaType: React.FunctionComponent<IMediaTypeProps> = (props) => {
                 <Typography>
                     { PartitionFields.MediaType }
                 </Typography>
-                <Zoom in={ !expanded }>
+                <Zoom in={ !expanded } timeout={{ enter: 250, exit: 50 }} unmountOnExit>
                     <ValueTypography variant='caption' >
                         { props.value }
                     </ValueTypography>

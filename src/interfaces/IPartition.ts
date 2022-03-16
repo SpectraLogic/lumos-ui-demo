@@ -1,7 +1,10 @@
+import PartitionFields from "../components/PartitionDetail/PartitionFields"
+
 export default interface IPartition {
     id: string,
     name: string,
     mediaType: MediaType
+    [PartitionFields.SlotIQ]: boolean
     
 }
 
