@@ -4,6 +4,7 @@ import { Grid } from '@mui/material';
 import PartitionsList, { IPartitionsListProps } from '../PartitionList/ParitionsList';
 import { Routes, Route, Outlet } from 'react-router-dom'; 
 import IPartition, { MediaType } from '../../interfaces/IPartition';
+import PartitionDetail from '../PartitionDetail/PartitionDetail';
 
 interface IPartitionsProps {
 }
@@ -45,12 +46,13 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
             { partitionList.map( partition  => (
               <Route
                 path={ `/${partition.id.replace(' ', '-')}` }
-                element={ <span>{ partition.name }</span>}
+                element={ <PartitionDetail partition={ partition }/> }
                 />
             ) ) }
             <Route 
               path={ createPartitionLink }
-              element={ <span> new partition </span>} />
+              element={ <p> create partition </p>}
+              />
           </Routes>
         </Grid>
 
