@@ -7,6 +7,7 @@ import PartitionFields from './PartitionFields';
 
 interface IPartitionDetailProps {
     partition: IPartition
+    partitionId: string
 }
 
 const Root = styled.div`
@@ -37,7 +38,10 @@ const stagedEditsReducer = ( state: Partial<IPartition>, newState: Partial<IPart
 })
 
 const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) => {
-    const [stagedEditState, setStagedEditState] = React.useReducer( stagedEditsReducer as React.Reducer<Partial<IPartition>, Partial<IPartition>>, {} as Partial<IPartition> )
+    const [stagedEditState, setStagedEditState] = React.useReducer( stagedEditsReducer as React.Reducer<Partial<IPartition>, Partial<IPartition>>, {} as Partial<IPartition> );
+    // React.useEffect( () => {
+    //     setStagedEditState({});
+    // }, [ props.partitionId ])
     const { name } = props.partition;
     return (
       <Root>
