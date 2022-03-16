@@ -1,5 +1,5 @@
 import { ExpandMore } from '@mui/icons-material';
-import { Accordion, AccordionDetails, AccordionSummary, Typography, Zoom } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, FormControl, InputLabel, MenuItem, Typography, Zoom, Select } from '@mui/material';
 import * as React from 'react';
 import styled from 'styled-components';
 import { MediaType as EMediaType } from '../../interfaces/IPartition';
@@ -22,8 +22,8 @@ const ValueTypography = styled( Typography )`
 const MediaType: React.FunctionComponent<IMediaTypeProps> = (props) => {
     const [expanded, setExpanded] = React.useState( false );
   return(
-    <Accordion expanded={ expanded } onClick={ setExpanded.bind( undefined, !expanded ) }>
-        <AccordionSummary expandIcon={ <ExpandMore /> } >
+    <Accordion expanded={ expanded }>
+        <AccordionSummary onClick={ setExpanded.bind( undefined, !expanded ) } expandIcon={ <ExpandMore /> } >
             <AccordionSummaryContent>
                 <Typography>
                     { PartitionFields.MediaType }
@@ -36,7 +36,12 @@ const MediaType: React.FunctionComponent<IMediaTypeProps> = (props) => {
             </AccordionSummaryContent>
         </AccordionSummary>
         <AccordionDetails>
-            detail
+            <FormControl fullWidth>
+                <Select value={ props.value } onChange={ (e) => props.onValueChange( e.target.value as EMediaType ) } > 
+                    <MenuItem value={ EMediaType.LTO}>{ EMediaType.LTO }</MenuItem>
+                    <MenuItem value={ EMediaType.LTOClean }>{ EMediaType.LTOClean }</MenuItem>
+                </Select>    
+            </FormControl>
         </AccordionDetails>
     </Accordion>
   );
