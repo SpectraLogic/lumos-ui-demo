@@ -31,8 +31,8 @@ const FieldAccordion: React.FunctionComponent<IFieldAccordionProps> = (props) =>
                 <Typography>
                     { props.panelTitle }
                 </Typography>
-                <Zoom in={ !expanded } timeout={{ enter: 250,exit: 0 }} unmountOnExit>
-                    <Typography variant='caption'> 
+                <Zoom in={ !expanded } appear={ false } timeout={{ enter: 250,exit: 0 }} unmountOnExit>
+                    <Typography variant='body2'> 
                         { props.headerSubText }
                     </Typography>
                 </Zoom>

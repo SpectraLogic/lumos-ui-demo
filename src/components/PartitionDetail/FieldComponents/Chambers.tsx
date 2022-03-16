@@ -1,4 +1,4 @@
-import { Grid, Stack, TextField } from '@mui/material';
+import { Grid, Stack, TextField, Typography } from '@mui/material';
 import * as React from 'react';
 import styled from 'styled-components';
 import { IChambersConfig } from '../../../interfaces/IPartition';
@@ -9,7 +9,7 @@ import PartitionFields from '../PartitionFields';
 interface IChambersProps extends PartitionFieldProps<IChambersConfig> {
 }
 
-const TextContainer = styled.div`
+const TextContainer = styled( Typography )`
     position: absolute;
     display: flex;
     justify-content: center;
@@ -30,7 +30,7 @@ const Chambers: React.FunctionComponent<IChambersProps> = (props) => {
         detailsContent={ (
             <Grid container spacing={2}>
                 <Grid item xs={ 9 } sx={{ position: 'relative' }}>
-                    <TextContainer>
+                    <TextContainer variant='body2'>
                         Slots are allocated to partitions on a chamber basis. Partitions must allocate chambers for both storage and entry/exit. For the media type of this library there are 10 slots per chamber.
                         <br/> <br/>
                         A maximum of 294 chambers can be allocated to this partition. Note that the library will use available empty chambers to optimize robotic motion. If you allocate no more than 292 chambers to this partition, the speed at which tape movement operations can be executed may be increased.
