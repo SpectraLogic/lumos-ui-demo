@@ -1,7 +1,9 @@
+import { Divider } from '@mui/material';
 import _ from 'lodash';
 import * as React from 'react';
 import styled from 'styled-components';
 import IPartition from '../../interfaces/IPartition';
+import MediaType from './MediaType';
 import Name from './Name';
 import PartitionFields from './PartitionFields';
 
@@ -18,10 +20,16 @@ const Root = styled.div`
 `;
 
 const Header = styled.div`
-    height: 71px; 
+    height: 35px; 
     width: auto;
     padding: 20px 13px 20px 13px;
     display: flex;
+`;
+
+const Body = styled.div`
+    height: calc(100% - 75px);
+    width: 100%;
+    overflow-y: scroll;
 `;
 
 const HeaderLeft = styled.div`
@@ -37,9 +45,10 @@ const stagedEditsReducer = ( state: Partial<IPartition>, newState: Partial<IPart
     ...newState
 })
 
+
 const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) => {
     const [stagedEditState, setStagedEditState] = React.useReducer( stagedEditsReducer as React.Reducer<Partial<IPartition>, Partial<IPartition>>, {} as Partial<IPartition> );
-    const { name } = props.partition;
+    const { name, mediaType } = props.partition;
     return (
       <Root>
         <Header>
@@ -49,7 +58,13 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
             <HeaderRight>
                 right
             </HeaderRight>
-        </Header>              
+        </Header>
+        <Body>
+            <Divider /> 
+            <MediaType 
+                value={ _.get( stagedEditState, ["mediaType"], mediaType ) } onValueChange={ value => setStagedEditState({ mediaType: value }) }
+            />
+        </Body>   
       </Root>
   ) ;
 };

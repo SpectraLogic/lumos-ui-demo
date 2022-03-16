@@ -2,6 +2,7 @@ export default interface IPartition {
     id: string,
     name: string,
     mediaType: MediaType
+    
 }
 
 export enum MediaType {
