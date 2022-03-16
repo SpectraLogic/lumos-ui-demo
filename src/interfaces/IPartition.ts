@@ -6,14 +6,15 @@ export default interface IPartition {
     mediaType: MediaType
     [PartitionFields.SlotIQ]: boolean
     [PartitionFields.BarcodeOptions]: IBarcodeOptions,
-
-    
+    [PartitionFields.Chambers]: IChambersConfig
 }
 
 export enum MediaType {
     LTO = "LTO",
     LTOClean = "LTO Clean"
 }
+
+//Barcode Options 
 
 export interface IBarcodeOptions {
     checkSumBehavior: CheckSumBehavior,
@@ -27,9 +28,16 @@ export enum CheckSumBehavior {
     CHECK="Check-summed barcodes"
 
 } 
+
 export enum TruncationOptions {
     RIGHT = "Report right-hand characters",
     LEFT = "Report left-hand characters"
 }
 
+//Chambers 
+
+export interface IChambersConfig{
+    storage: number,
+    ee: number
+}
 

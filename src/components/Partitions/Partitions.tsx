@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Grid } from '@mui/material';
+import { Grid, Zoom } from '@mui/material';
 import PartitionsList, { IPartitionsListProps } from '../PartitionList/ParitionsList';
 import { Routes, Route, Outlet } from 'react-router-dom'; 
 import IPartition, { CheckSumBehavior, MediaType, TruncationOptions } from '../../interfaces/IPartition';
@@ -29,8 +29,12 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
       [PartitionFields.BarcodeOptions]: {
         checkSumBehavior: CheckSumBehavior.CHECK,
         truncationOption: TruncationOptions.LEFT,
-        numReportedChars: 16
-      }
+        numReportedChars: 16,
+      },
+      [PartitionFields.Chambers]: {
+          storage: 20,
+          ee: 0
+      },
     },
     { 
       id: "2",
@@ -41,7 +45,11 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
         checkSumBehavior: CheckSumBehavior.CHECK,
         truncationOption: TruncationOptions.LEFT,
         numReportedChars: 16
-      }
+      },
+      [PartitionFields.Chambers]: {
+        storage: 58,
+        ee: 11
+     },
 
     }
   ] );
@@ -60,8 +68,13 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
             { partitionList.map( partition  => (
               <Route
                 path={ `/${partition.id.replace(' ', '-')}` }
-                element={ <PartitionDetail key={ partition.id } partitionId={ partition.id } partition={ partition }/> }
-                />
+                element={ 
+                  <PartitionDetail 
+                    key={ partition.id } 
+                    partitionId={ partition.id } 
+                    partition={ partition }/> 
+                }
+              />
             ) ) }
             <Route 
               path={ createPartitionLink }
