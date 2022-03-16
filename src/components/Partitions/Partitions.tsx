@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Grid } from '@mui/material';
 import PartitionsList, { IPartitionsListProps } from '../PartitionList/ParitionsList';
 import { Routes, Route, Outlet } from 'react-router-dom'; 
-import IPartition, { MediaType } from '../../interfaces/IPartition';
+import IPartition, { CheckSumBehavior, MediaType, TruncationOptions } from '../../interfaces/IPartition';
 import PartitionDetail from '../PartitionDetail/PartitionDetail';
 import PartitionFields from '../PartitionDetail/PartitionFields';
 
@@ -25,14 +25,24 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
       id: "1",
       name: "Partition 1",
       mediaType: MediaType.LTO,
-      [PartitionFields.SlotIQ]: false
-
+      [PartitionFields.SlotIQ]: false,
+      [PartitionFields.BarcodeOptions]: {
+        checkSumBehavior: CheckSumBehavior.CHECK,
+        truncationOption: TruncationOptions.LEFT,
+        numReportedChars: 16
+      }
     },
     { 
       id: "2",
       name: "Partition 2",
       mediaType: MediaType.LTOClean,
-      [PartitionFields.SlotIQ]: true
+      [PartitionFields.SlotIQ]: true,
+      [PartitionFields.BarcodeOptions]: {
+        checkSumBehavior: CheckSumBehavior.CHECK,
+        truncationOption: TruncationOptions.LEFT,
+        numReportedChars: 16
+      }
+
     }
   ] );
   return(

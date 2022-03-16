@@ -2,7 +2,8 @@ import { Divider } from '@mui/material';
 import _ from 'lodash';
 import * as React from 'react';
 import styled from 'styled-components';
-import IPartition from '../../interfaces/IPartition';
+import IPartition, { IBarcodeOptions } from '../../interfaces/IPartition';
+import BarcodeOptions from './FieldComponents/BarcodeOptions';
 import MediaType from './FieldComponents/MediaType';
 import Name from './FieldComponents/Name';
 import SlotIQ from './FieldComponents/SlotIQ';
@@ -49,7 +50,7 @@ const stagedEditsReducer = ( state: Partial<IPartition>, newState: Partial<IPart
 
 const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) => {
     const [stagedEditState, setStagedEditState] = React.useReducer( stagedEditsReducer as React.Reducer<Partial<IPartition>, Partial<IPartition>>, {} as Partial<IPartition> );
-    const { name, mediaType, SlotIQ: slotIq } = props.partition;
+    const { name, mediaType, SlotIQ: slotIq, "Barcode Options": barcodeOptions } = props.partition;
     return (
       <Root>
         <Header>
@@ -68,6 +69,10 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
             <SlotIQ 
                 value={_.get( stagedEditState, [PartitionFields.SlotIQ], slotIq ) } onValueChange={ (value: boolean) => setStagedEditState({ SlotIQ: value }) } 
             /> 
+            <BarcodeOptions 
+                value={ _.get( stagedEditState, [PartitionFields.BarcodeOptions], barcodeOptions ) }
+                onValueChange={ (value: IBarcodeOptions) => setStagedEditState({ "Barcode Options": value }) } 
+            />
         </Body>   
       </Root>
   ) ;

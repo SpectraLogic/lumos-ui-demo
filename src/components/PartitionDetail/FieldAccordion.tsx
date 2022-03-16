@@ -17,6 +17,11 @@ const AccordionSummaryContent = styled.div`
 const DetailsDivider = styled( Divider )`
     margin-bottom: 10px;
 `;
+
+export const ValueText = styled.span`
+    color: #A68AF9;
+`;
+
 const FieldAccordion: React.FunctionComponent<IFieldAccordionProps> = (props) => {
     const [expanded, setExpanded] = React.useState( false );
   return(
