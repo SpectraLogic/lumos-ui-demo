@@ -39,15 +39,12 @@ const stagedEditsReducer = ( state: Partial<IPartition>, newState: Partial<IPart
 
 const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) => {
     const [stagedEditState, setStagedEditState] = React.useReducer( stagedEditsReducer as React.Reducer<Partial<IPartition>, Partial<IPartition>>, {} as Partial<IPartition> );
-    // React.useEffect( () => {
-    //     setStagedEditState({});
-    // }, [ props.partitionId ])
     const { name } = props.partition;
     return (
       <Root>
         <Header>
             <HeaderLeft>
-                <Name editState value={ _.get( stagedEditState, ["name"], name ) } onValueChange={ ( value ) => setStagedEditState({ name: value }) } />
+                <Name value={ _.get( stagedEditState, ["name"], name ) } onValueChange={ ( value ) => setStagedEditState({ name: value }) } />
             </HeaderLeft>
             <HeaderRight>
                 right
