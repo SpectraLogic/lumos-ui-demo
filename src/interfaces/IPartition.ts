@@ -7,7 +7,8 @@ export default interface IPartition {
     [PartitionFields.SlotIQ]: boolean
     [PartitionFields.BarcodeOptions]: IBarcodeOptions,
     [PartitionFields.Chambers]: IChambersConfig,
-    [PartitionFields.Drives]: Array<string> 
+    [PartitionFields.Drives]: Array<string>,
+    [PartitionFields.CleaningPartition]: string | false
 }
 
 export enum MediaType {

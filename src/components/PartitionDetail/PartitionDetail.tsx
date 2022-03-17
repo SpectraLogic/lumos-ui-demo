@@ -2,9 +2,10 @@ import { Divider } from '@mui/material';
 import _ from 'lodash';
 import * as React from 'react';
 import styled from 'styled-components';
-import IPartition, { IBarcodeOptions, IChambersConfig } from '../../interfaces/IPartition';
+import IPartition, { IBarcodeOptions, IChambersConfig, MediaType as MediaTypeEnum } from '../../interfaces/IPartition';
 import BarcodeOptions from './FieldComponents/BarcodeOptions';
 import Chambers from './FieldComponents/Chambers';
+import CleaningPartition from './FieldComponents/CleaningPartition';
 import Drives from './FieldComponents/Drives';
 import MediaType from './FieldComponents/MediaType';
 import Name from './FieldComponents/Name';
@@ -12,6 +13,7 @@ import SlotIQ from './FieldComponents/SlotIQ';
 import PartitionFields from './PartitionFields';
 
 interface IPartitionDetailProps {
+    availablePartitions: Array<IPartition>
     partition: IPartition
     partitionId: string
 }
@@ -59,6 +61,7 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
         "Barcode Options": barcodeOptions,
         "Chambers": chambers,
         "Drives": drives,
+        "Cleaning Partition": cleaningPartition
     } = props.partition;
     return (
       <Root>
@@ -89,7 +92,14 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
             <Drives 
                 value={ _.get( stagedEditState, [PartitionFields.Drives], drives ) }
                 onValueChange={ (value: Array<string>) => setStagedEditState({ Drives: value }) } 
-            /> 
+            />
+            { props.partition.mediaType !== MediaTypeEnum.LTOClean && (
+                <CleaningPartition 
+                    availablePartitions={ props.availablePartitions }
+                    value={ _.get( stagedEditState, [PartitionFields.CleaningPartition], cleaningPartition ) }
+                    onValueChange={ (value: string | false ) => setStagedEditState({  "Cleaning Partition": value }) } 
+                />
+            ) }
         </Body>   
       </Root>
   ) ;

@@ -4,7 +4,8 @@ enum PartitionFields {
     SlotIQ = "SlotIQ",
     BarcodeOptions = "Barcode Options",
     Chambers = "Chambers",
-    Drives = "Drives"
+    Drives = "Drives",
+    CleaningPartition = "Cleaning Partition"
 }
 
 export default PartitionFields;

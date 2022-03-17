@@ -23,7 +23,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
   const [partitionList, setPartitionList] = React.useState<IPartition[]>( [
     { 
       id: "1",
-      name: "Partition 1",
+      name: "Media 1",
       mediaType: MediaType.LTO,
       [PartitionFields.SlotIQ]: false,
       [PartitionFields.BarcodeOptions]: {
@@ -35,11 +35,12 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
           storage: 20,
           ee: 0
       },
-      [PartitionFields.Drives]: []
+      [PartitionFields.Drives]: [],
+      [PartitionFields.CleaningPartition]: "2"
     },
     { 
       id: "2",
-      name: "Partition 2",
+      name: "Media Clean",
       mediaType: MediaType.LTOClean,
       [PartitionFields.SlotIQ]: true,
       [PartitionFields.BarcodeOptions]: {
@@ -51,9 +52,28 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
         storage: 58,
         ee: 11
      },
-     [PartitionFields.Drives]: []
+     [PartitionFields.Drives]: [],
+     [PartitionFields.CleaningPartition]: false
+    },
+    { 
+      id: "3",
+      name: "Auxillary Clean",
+      mediaType: MediaType.LTOClean,
+      [PartitionFields.SlotIQ]: true,
+      [PartitionFields.BarcodeOptions]: {
+        checkSumBehavior: CheckSumBehavior.CHECK,
+        truncationOption: TruncationOptions.LEFT,
+        numReportedChars: 16
+      },
+      [PartitionFields.Chambers]: {
+        storage: 246,
+        ee: 17
+     },
+     [PartitionFields.Drives]: [],
+     [PartitionFields.CleaningPartition]: false
     }
   ] );
+
   return(
       <Background container spacing={1}>
         <Grid item xs={ 3 }>
@@ -72,6 +92,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
                 element={ 
                   <PartitionDetail 
                     key={ partition.id } 
+                    availablePartitions={ partitionList }
                     partitionId={ partition.id } 
                     partition={ partition }/> 
                 }
