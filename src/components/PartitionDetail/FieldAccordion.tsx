@@ -33,7 +33,7 @@ export const CenteredText = styled( Typography )`
 const FieldAccordion: React.FunctionComponent<IFieldAccordionProps> = (props) => {
     const [expanded, setExpanded] = React.useState( false );
   return(
-    <Accordion expanded={ expanded }>
+    <Accordion expanded={ expanded } TransitionProps={{ unmountOnExit: true }}>
         <AccordionSummary onClick={ setExpanded.bind( undefined, !expanded ) } expandIcon={ <ExpandMore /> }>
             <AccordionSummaryContent>
                 <Typography>
