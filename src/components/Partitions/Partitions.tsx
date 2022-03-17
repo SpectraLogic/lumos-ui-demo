@@ -36,7 +36,11 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
           ee: 0
       },
       [PartitionFields.Drives]: [],
-      [PartitionFields.CleaningPartition]: "2"
+      [PartitionFields.CleaningPartition]: "2",
+      [PartitionFields.MLMVerification]: {
+        quickScan: true,
+        preScan: true
+      }
     },
     { 
       id: "2",
@@ -52,7 +56,11 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
         clean: 5
      },
      [PartitionFields.Drives]: [],
-     [PartitionFields.CleaningPartition]: false
+     [PartitionFields.CleaningPartition]: false,
+     [PartitionFields.MLMVerification]: {
+        quickScan: true,
+        preScan: true
+    }
     },
     { 
       id: "3",
@@ -68,7 +76,11 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
         clean: 8
      },
      [PartitionFields.Drives]: [],
-     [PartitionFields.CleaningPartition]: false
+     [PartitionFields.CleaningPartition]: false,
+     [PartitionFields.MLMVerification]: {
+        quickScan: true,
+        preScan: true
+      }
     }
   ] );
 

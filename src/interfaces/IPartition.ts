@@ -9,6 +9,7 @@ export default interface IPartition {
     [PartitionFields.Chambers]: IMediaChambers | ICleaningChambers,
     [PartitionFields.Drives]: Array<string>,
     [PartitionFields.CleaningPartition]: string | false
+    [PartitionFields.MLMVerification]: IMLMVerificationConfig
 }
 
 export enum MediaType {
@@ -45,5 +46,12 @@ export interface IMediaChambers{
 
 export interface ICleaningChambers{
     clean: number
+}
+
+//MLM Verification 
+
+export interface  IMLMVerificationConfig {
+    preScan: boolean
+    quickScan: boolean
 }
 

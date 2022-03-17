@@ -2,12 +2,13 @@ import { Divider } from '@mui/material';
 import _ from 'lodash';
 import * as React from 'react';
 import styled from 'styled-components';
-import IPartition, { IBarcodeOptions, ICleaningChambers, IMediaChambers, MediaType as MediaTypeEnum } from '../../interfaces/IPartition';
+import IPartition, { IBarcodeOptions, ICleaningChambers, IMediaChambers, IMLMVerificationConfig, MediaType as MediaTypeEnum } from '../../interfaces/IPartition';
 import BarcodeOptions from './FieldComponents/BarcodeOptions';
 import Chambers from './FieldComponents/Chambers';
 import CleaningPartition from './FieldComponents/CleaningPartition';
 import Drives from './FieldComponents/Drives';
 import MediaType from './FieldComponents/MediaType';
+import MLMVerification from './FieldComponents/MLMVerification';
 import Name from './FieldComponents/Name';
 import SlotIQ from './FieldComponents/SlotIQ';
 import PartitionFields from './PartitionFields';
@@ -60,7 +61,8 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
         "Barcode Options": barcodeOptions,
         "Chambers": chambers,
         "Drives": drives,
-        "Cleaning Partition": cleaningPartition
+        "Cleaning Partition": cleaningPartition,
+        [PartitionFields.MLMVerification]: mlmVerification
     } = props.partition;
     return (
       <Root>
@@ -100,6 +102,11 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
                     onValueChange={ (value: string | false ) => setStagedEditState({  "Cleaning Partition": value }) } 
                 />
             ) }
+            <MLMVerification 
+                value={ _.get( stagedEditState, [PartitionFields.MLMVerification], mlmVerification ) }
+                onValueChange={ (value: IMLMVerificationConfig ) => setStagedEditState({  [PartitionFields.MLMVerification]: value }) } 
+
+            />
         </Body>   
       </Root>
   ) ;

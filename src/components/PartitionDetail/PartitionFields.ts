@@ -5,7 +5,8 @@ enum PartitionFields {
     BarcodeOptions = "Barcode Options",
     Chambers = "Chambers",
     Drives = "Drives",
-    CleaningPartition = "Cleaning Partition"
+    CleaningPartition = "Cleaning Partition",
+    MLMVerification = "MLM Media Verification",
 }
 
 export default PartitionFields;
