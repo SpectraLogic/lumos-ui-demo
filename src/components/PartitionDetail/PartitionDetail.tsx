@@ -107,6 +107,7 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
                 onValueChange={ (value: IMLMVerificationConfig ) => setStagedEditState({  [PartitionFields.MLMVerification]: value }) } 
 
             />
+            
         </Body>   
       </Root>
   ) ;

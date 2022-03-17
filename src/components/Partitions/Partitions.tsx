@@ -86,14 +86,14 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
 
   return(
       <Background container spacing={1}>
-        <Grid item xs={ 3 }>
+        <Grid item xs={ 3 } sx={{ maxHeight: '100%' }} >
           <PartitionsList
             partitions={ partitionList }
             onChange={ setPartitionList }
             createPartitionLink={ createPartitionLink }
           />
         </Grid>
-        <Grid item xs={ 9 }>
+        <Grid item xs={ 9 } sx={{ maxHeight: '100%' }}>
           <Outlet /> 
           <Routes>
             { partitionList.map( partition  => (
