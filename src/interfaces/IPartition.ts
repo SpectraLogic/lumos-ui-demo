@@ -6,7 +6,7 @@ export default interface IPartition {
     mediaType: MediaType
     [PartitionFields.SlotIQ]: boolean
     [PartitionFields.BarcodeOptions]: IBarcodeOptions,
-    [PartitionFields.Chambers]: IChambersConfig,
+    [PartitionFields.Chambers]: IMediaChambers | ICleaningChambers,
     [PartitionFields.Drives]: Array<string>,
     [PartitionFields.CleaningPartition]: string | false
 }
@@ -38,8 +38,12 @@ export enum TruncationOptions {
 
 //Chambers 
 
-export interface IChambersConfig{
+export interface IMediaChambers{
     storage: number,
     ee: number
+}
+
+export interface ICleaningChambers{
+    clean: number
 }
 

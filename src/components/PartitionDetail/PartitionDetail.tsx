@@ -2,7 +2,7 @@ import { Divider } from '@mui/material';
 import _ from 'lodash';
 import * as React from 'react';
 import styled from 'styled-components';
-import IPartition, { IBarcodeOptions, IChambersConfig, MediaType as MediaTypeEnum } from '../../interfaces/IPartition';
+import IPartition, { IBarcodeOptions, ICleaningChambers, IMediaChambers, MediaType as MediaTypeEnum } from '../../interfaces/IPartition';
 import BarcodeOptions from './FieldComponents/BarcodeOptions';
 import Chambers from './FieldComponents/Chambers';
 import CleaningPartition from './FieldComponents/CleaningPartition';
@@ -56,8 +56,7 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
     const [stagedEditState, setStagedEditState] = React.useReducer( stagedEditsReducer as React.Reducer<Partial<IPartition>, Partial<IPartition>>, {} as Partial<IPartition> );
     const { 
         name, mediaType, 
-        SlotIQ: 
-        slotIq, 
+        SlotIQ: slotIq, 
         "Barcode Options": barcodeOptions,
         "Chambers": chambers,
         "Drives": drives,
@@ -86,8 +85,9 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
                 onValueChange={ (value: IBarcodeOptions) => setStagedEditState({ "Barcode Options": value }) } 
             />
             <Chambers
+                mediaType={ mediaType }
                 value={ _.get( stagedEditState, [PartitionFields.Chambers], chambers ) }
-                onValueChange={ (value: IChambersConfig) => setStagedEditState({ Chambers: value }) } 
+                onValueChange={ (value: IMediaChambers | ICleaningChambers ) => setStagedEditState({ Chambers: value }) } 
             />
             <Drives 
                 value={ _.get( stagedEditState, [PartitionFields.Drives], drives ) }

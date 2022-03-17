@@ -49,8 +49,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
         numReportedChars: 16
       },
       [PartitionFields.Chambers]: {
-        storage: 58,
-        ee: 11
+        clean: 5
      },
      [PartitionFields.Drives]: [],
      [PartitionFields.CleaningPartition]: false
@@ -66,8 +65,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
         numReportedChars: 16
       },
       [PartitionFields.Chambers]: {
-        storage: 246,
-        ee: 17
+        clean: 8
      },
      [PartitionFields.Drives]: [],
      [PartitionFields.CleaningPartition]: false
