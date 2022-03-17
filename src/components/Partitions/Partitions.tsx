@@ -35,6 +35,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
           storage: 20,
           ee: 0
       },
+      [PartitionFields.Drives]: []
     },
     { 
       id: "2",
@@ -50,7 +51,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
         storage: 58,
         ee: 11
      },
-
+     [PartitionFields.Drives]: []
     }
   ] );
   return(
@@ -82,7 +83,6 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
               />
           </Routes>
         </Grid>
-
       </Background>
   );
 };

@@ -3,7 +3,8 @@ enum PartitionFields {
     MediaType = "Media Type",
     SlotIQ = "SlotIQ",
     BarcodeOptions = "Barcode Options",
-    Chambers = "Chambers"
+    Chambers = "Chambers",
+    Drives = "Drives"
 }
 
 export default PartitionFields;

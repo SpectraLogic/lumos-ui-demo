@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import IPartition, { IBarcodeOptions, IChambersConfig } from '../../interfaces/IPartition';
 import BarcodeOptions from './FieldComponents/BarcodeOptions';
 import Chambers from './FieldComponents/Chambers';
+import Drives from './FieldComponents/Drives';
 import MediaType from './FieldComponents/MediaType';
 import Name from './FieldComponents/Name';
 import SlotIQ from './FieldComponents/SlotIQ';
@@ -56,7 +57,8 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
         SlotIQ: 
         slotIq, 
         "Barcode Options": barcodeOptions,
-        "Chambers": chambers
+        "Chambers": chambers,
+        "Drives": drives,
     } = props.partition;
     return (
       <Root>
@@ -84,6 +86,10 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
                 value={ _.get( stagedEditState, [PartitionFields.Chambers], chambers ) }
                 onValueChange={ (value: IChambersConfig) => setStagedEditState({ Chambers: value }) } 
             />
+            <Drives 
+                value={ _.get( stagedEditState, [PartitionFields.Drives], drives ) }
+                onValueChange={ (value: Array<string>) => setStagedEditState({ Drives: value }) } 
+            /> 
         </Body>   
       </Root>
   ) ;

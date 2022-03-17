@@ -22,6 +22,14 @@ export const ValueText = styled.span`
     color: #A68AF9;
 `;
 
+export const CenteredText = styled( Typography )`
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    top: 50%;
+    transform: translate( 0px, -50% );
+`;
+
 const FieldAccordion: React.FunctionComponent<IFieldAccordionProps> = (props) => {
     const [expanded, setExpanded] = React.useState( false );
   return(
