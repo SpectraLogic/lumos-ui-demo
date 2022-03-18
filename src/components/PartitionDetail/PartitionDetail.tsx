@@ -1,5 +1,5 @@
 import { CheckCircle, Clear } from '@mui/icons-material';
-import { Button, ButtonGroup, Divider, Typography } from '@mui/material';
+import { Button, ButtonGroup, Divider, Typography, Zoom } from '@mui/material';
 import _ from 'lodash';
 import * as React from 'react';
 import styled from 'styled-components';
@@ -18,7 +18,7 @@ interface IPartitionDetailProps {
     availablePartitions: Array<IPartition>
     partition: IPartition
     partitionId: string
-    onChange?: ( partition: IPartition ) => void
+    onChange: ( partition: IPartition ) => void
 }
 
 const Root = styled.div`
@@ -133,10 +133,10 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
             />
             { !_.isEmpty( stagedEditState ) && ( <ForceExtraScroll /> ) } 
         </Body>
-        { !_.isEmpty( stagedEditState ) && (
-            <ButtonGroup fullWidth sx={{ transform: "translate(0, -56px)" }}>
+        <Zoom in={ !_.isEmpty( stagedEditState ) }>
+            <ButtonGroup fullWidth>
                 <Button 
-                sx={{ height: "56px", borderRadius: "0 0 0 16px" }} 
+                sx={{ height: "56px", borderRadius: "0 0 0 16px", transform: "translateY(-56px)" }} 
                 onClick={ () => setStagedEditState( { type: StagedEditsActions.CLEAR, payload: {} } ) }
                 color='error'
                 variant='contained'
@@ -146,7 +146,12 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
                     </Typography>
                 </Button>
                 <Button 
-                sx={{ height: "56px", borderRadius: "0 0 16px 0" }} 
+                sx={{ height: "56px", borderRadius: "0 0 16px 0", transform: "translateY(-56px)" }} 
+                onClick={ () => { 
+                        props.onChange( { ...props.partition, ...stagedEditState } );
+                        setStagedEditState( { type: StagedEditsActions.CLEAR, payload: {} } );
+                    }
+                }
                 color='success'
                 variant='contained'
                 endIcon={ <CheckCircle /> }>
@@ -155,7 +160,7 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
                     </Typography>
                 </Button>
             </ButtonGroup>   
-        ) }
+        </Zoom>
       </Root>
   ) ;
 };

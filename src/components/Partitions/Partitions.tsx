@@ -102,6 +102,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
                 element={ 
                   <PartitionDetail 
                     key={ partition.id } 
+                    onChange={ partition => setPartitionList( [ ...partitionList.filter( iter => iter.id !== partition.id ), partition ] ) }
                     availablePartitions={ partitionList }
                     partitionId={ partition.id } 
                     partition={ partition }/> 
