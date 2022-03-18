@@ -19,7 +19,7 @@ const Background = styled(Grid)`
 `;
 
 const createPartitionLink: string = "/Partitions/create"
-
+const mediaCleanId = uniqid();
 const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
   const [partitionList, setPartitionList] = React.useState<IPartition[]>( [
     { 
@@ -37,14 +37,14 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
           ee: 0
       },
       [PartitionFields.Drives]: [],
-      [PartitionFields.CleaningPartition]: "2",
+      [PartitionFields.CleaningPartition]: mediaCleanId,
       [PartitionFields.MLMVerification]: {
         quickScan: true,
         preScan: true
       }
     },
     { 
-      id: uniqid(),
+      id: mediaCleanId,
       name: "Media Clean",
       mediaType: MediaType.LTOClean,
       [PartitionFields.SlotIQ]: true,

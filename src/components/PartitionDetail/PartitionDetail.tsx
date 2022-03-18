@@ -83,8 +83,6 @@ const stagedEditsReducer = ( state: Partial<IPartition>, action: { type: StagedE
     }
 }
     
-
-
 const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) => {
     const [stagedEditState, setStagedEditState] = React.useReducer( stagedEditsReducer as React.Reducer<Partial<IPartition>, { type: StagedEditsActions, payload: Partial<IPartition> }>, {} as Partial<IPartition> );
     const [showAdvancedSettings, setShowAdvancedSettings] = React.useState( true );
