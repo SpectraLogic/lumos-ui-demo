@@ -6,6 +6,7 @@ import { Routes, Route, Outlet } from 'react-router-dom';
 import IPartition, { CheckSumBehavior, MediaType, TruncationOptions } from '../../interfaces/IPartition';
 import PartitionDetail from '../PartitionDetail/PartitionDetail';
 import PartitionFields from '../PartitionDetail/PartitionFields';
+import uniqid from 'uniqid';
 
 interface IPartitionsProps {
 }
@@ -22,7 +23,7 @@ const createPartitionLink: string = "/Partitions/create"
 const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
   const [partitionList, setPartitionList] = React.useState<IPartition[]>( [
     { 
-      id: "1",
+      id: uniqid(),
       name: "Media 1",
       mediaType: MediaType.LTO,
       [PartitionFields.SlotIQ]: false,
@@ -43,7 +44,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
       }
     },
     { 
-      id: "2",
+      id: uniqid(),
       name: "Media Clean",
       mediaType: MediaType.LTOClean,
       [PartitionFields.SlotIQ]: true,
@@ -63,7 +64,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
     }
     },
     { 
-      id: "3",
+      id: uniqid(),
       name: "Auxillary Clean",
       mediaType: MediaType.LTOClean,
       [PartitionFields.SlotIQ]: true,
@@ -83,6 +84,29 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
       }
     }
   ] );
+
+  const DEFAULT_PARTITION: IPartition = {
+    id: "DEFAULT",
+    name: "New Partition",
+    mediaType: MediaType.LTO,
+    [PartitionFields.SlotIQ]: false,
+    [PartitionFields.BarcodeOptions]: {
+      checkSumBehavior: CheckSumBehavior.CHECK,
+      truncationOption: TruncationOptions.LEFT,
+      numReportedChars: 16
+    },
+    [PartitionFields.Chambers]: {
+      ee: 0,
+      storage: 0
+    },
+    [PartitionFields.Drives]: [],
+    [PartitionFields.CleaningPartition]: false,
+    [PartitionFields.MLMVerification]: {
+      quickScan: true,
+      preScan: true
+    }
+
+  } 
 
   return(
       <Background container spacing={1}>
@@ -110,9 +134,17 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
               />
             ) ) }
             <Route 
-              path={ createPartitionLink }
-              element={ <p> create partition </p>}
-              />
+              path={ `/create` }
+              element={ 
+                <PartitionDetail 
+                  key={ "CREATE_PARTITION_DETIAL" }
+                  onChange={ partition => setPartitionList( [ ...partitionList, partition ] ) }
+                  availablePartitions={ partitionList }
+                  partitionId={ DEFAULT_PARTITION.id }
+                  partition={ DEFAULT_PARTITION }
+                />
+              }
+            />
           </Routes>
         </Grid>
       </Background>

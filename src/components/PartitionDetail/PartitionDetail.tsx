@@ -13,6 +13,8 @@ import MLMVerification from './FieldComponents/MLMVerification';
 import Name from './FieldComponents/Name';
 import SlotIQ from './FieldComponents/SlotIQ';
 import PartitionFields from './PartitionFields';
+import uniqid from 'uniqid';
+import { useNavigate} from 'react-router-dom';
 
 interface IPartitionDetailProps {
     availablePartitions: Array<IPartition>
@@ -79,6 +81,9 @@ const stagedEditsReducer = ( state: Partial<IPartition>, action: { type: StagedE
 
 const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) => {
     const [stagedEditState, setStagedEditState] = React.useReducer( stagedEditsReducer as React.Reducer<Partial<IPartition>, { type: StagedEditsActions, payload: Partial<IPartition> }>, {} as Partial<IPartition> );
+    const isNewPartition = props.partitionId === "DEFAULT";
+    const newPartitionId: Partial<IPartition> | undefined  = isNewPartition ? { id: uniqid() } : undefined; 
+    const navigate = useNavigate();
     const { 
         name, mediaType, 
         SlotIQ: slotIq, 
@@ -92,7 +97,10 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
       <Root>
         <Header>
             <HeaderLeft>
-                <Name value={ _.get( stagedEditState, ["name"], name ) } onValueChange={ ( value ) => setStagedEditState({ type: StagedEditsActions.UPDATE, payload: { name: value } }) } />
+                <Name 
+                editState={ isNewPartition ? true : undefined } 
+                value={ _.get( stagedEditState, ["name"], name ) } 
+                onValueChange={ ( value ) => setStagedEditState({ type: StagedEditsActions.UPDATE, payload: { name: value } }) } />
             </HeaderLeft>
             <HeaderRight>
                 right
@@ -131,32 +139,35 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
                 onValueChange={ (value: IMLMVerificationConfig ) => setStagedEditState({  type: StagedEditsActions.UPDATE, payload: {[PartitionFields.MLMVerification]: value} }) } 
 
             />
-            { !_.isEmpty( stagedEditState ) && ( <ForceExtraScroll /> ) } 
+            { ( !_.isEmpty( stagedEditState ) || isNewPartition ) && ( <ForceExtraScroll /> ) } 
         </Body>
-        <Zoom in={ !_.isEmpty( stagedEditState ) }>
+        <Zoom in={ !_.isEmpty( stagedEditState ) || isNewPartition }>
             <ButtonGroup fullWidth>
+                { !isNewPartition && (
+                    <Button 
+                    sx={{ height: "56px", borderRadius: "0 0 0 16px", transform: "translateY(-56px)" }} 
+                    onClick={ () => setStagedEditState( { type: StagedEditsActions.CLEAR, payload: {} } ) }
+                    color='error'
+                    variant='contained'
+                    startIcon={ <Clear /> }>
+                        <Typography variant='body1'>
+                            Discard Changes
+                        </Typography>
+                    </Button>
+                ) }
                 <Button 
-                sx={{ height: "56px", borderRadius: "0 0 0 16px", transform: "translateY(-56px)" }} 
-                onClick={ () => setStagedEditState( { type: StagedEditsActions.CLEAR, payload: {} } ) }
-                color='error'
-                variant='contained'
-                startIcon={ <Clear /> }>
-                    <Typography variant='body1'>
-                        Discard Changes
-                    </Typography>
-                </Button>
-                <Button 
-                sx={{ height: "56px", borderRadius: "0 0 16px 0", transform: "translateY(-56px)" }} 
+                sx={{ height: "56px", borderRadius: "0 0 16px 16px", transform: "translateY(-56px)" }} 
                 onClick={ () => { 
-                        props.onChange( { ...props.partition, ...stagedEditState } );
+                        props.onChange( { ...props.partition, ...stagedEditState, ...newPartitionId  } );
                         setStagedEditState( { type: StagedEditsActions.CLEAR, payload: {} } );
+                        if( isNewPartition ){ navigate(`../${ newPartitionId?.id }`) };
                     }
                 }
                 color='success'
                 variant='contained'
                 endIcon={ <CheckCircle /> }>
                     <Typography variant='body1'>
-                        Save Changes
+                        { isNewPartition ? "Create Partition" : "Save Changes" }
                     </Typography>
                 </Button>
             </ButtonGroup>   
