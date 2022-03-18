@@ -1,5 +1,5 @@
 import { CheckCircle, Clear } from '@mui/icons-material';
-import { Button, ButtonGroup, Divider, Typography, Zoom } from '@mui/material';
+import { Button, ButtonGroup, Divider, FormControlLabel, FormGroup, Switch, Typography, Zoom } from '@mui/material';
 import _ from 'lodash';
 import * as React from 'react';
 import styled from 'styled-components';
@@ -21,6 +21,7 @@ import EmulationOptions from './FieldComponents/EmulationOptions';
 import SoftLoad from './FieldComponents/SoftLoad';
 import RoboticLoadBalancing from './FieldComponents/RoboticLoadBalancing';
 import MediaZoning from './FieldComponents/MediaZoning';
+import AdvancedSettingsWarning from './Dialogs/AdvancedSettingsWarning';
 
 interface IPartitionDetailProps {
     availablePartitions: Array<IPartition>
@@ -64,20 +65,25 @@ const HeaderRight = styled.div`
 
 enum StagedEditsActions {
     UPDATE,
-    CLEAR
+    CLEAR,
+    CONFIRM_ADVANCED_SETTINGS
 }
 
 const stagedEditsReducer = ( state: Partial<IPartition>, action: { type: StagedEditsActions, payload?: Partial<IPartition> } ) => {
     switch( action.type ){
         case StagedEditsActions.CLEAR:
             return {}; 
-            break;
         case StagedEditsActions.UPDATE:
             return {
                 ...state,
                 ...action.payload
             }
-            break;
+        case StagedEditsActions.CONFIRM_ADVANCED_SETTINGS:
+            return{
+                ...state,
+                showAdvancedSettings: true,
+                advancedSettingsConfrimed: true
+            }
         default:
             return state;
     }
@@ -85,7 +91,19 @@ const stagedEditsReducer = ( state: Partial<IPartition>, action: { type: StagedE
     
 const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) => {
     const [stagedEditState, setStagedEditState] = React.useReducer( stagedEditsReducer as React.Reducer<Partial<IPartition>, { type: StagedEditsActions, payload: Partial<IPartition> }>, {} as Partial<IPartition> );
-    const [showAdvancedSettings, setShowAdvancedSettings] = React.useState( true );
+    const [showAdvancedSettings, setShowAdvancedSettings] = React.useState( props.partition.showAdvancedSettings || false );
+    const [advSettingsWarningOpen, setAdvSettingsWarningOpen] = React.useState( false );
+    React.useEffect( () => {
+        if( showAdvancedSettings && !props.partition.advancedSettingsConfrimed ){ 
+            setAdvSettingsWarningOpen( true ); 
+        }else{
+            if( !isNewPartition ){
+                props.onChange({ ...props.partition, showAdvancedSettings: false, advancedSettingsConfrimed: false });
+            }else{
+                setStagedEditState({ type: StagedEditsActions.CONFIRM_ADVANCED_SETTINGS, payload: {} })
+            }
+        }
+    }, [showAdvancedSettings] )
     const isNewPartition = props.partitionId === "DEFAULT";
     const newPartitionId: Partial<IPartition> | undefined  = isNewPartition ? { id: uniqid() } : undefined; 
     const navigate = useNavigate();
@@ -108,7 +126,18 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
                 onValueChange={ ( value ) => setStagedEditState({ type: StagedEditsActions.UPDATE, payload: { name: value } }) } />
             </HeaderLeft>
             <HeaderRight>
-                right
+                <FormGroup> 
+                    <FormControlLabel 
+                        control={ 
+                            <Switch 
+                            checked={ showAdvancedSettings }
+                            onChange={ (e) => {
+                                setShowAdvancedSettings( !showAdvancedSettings );
+                            } }/> 
+                        }
+                        label="Show Advanced Settings"
+                    />
+                </FormGroup>
             </HeaderRight>
         </Header>
         <Body>
@@ -188,6 +217,19 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
                 </Button>
             </ButtonGroup>   
         </Zoom>
+        <AdvancedSettingsWarning 
+            open={ advSettingsWarningOpen }
+            onCancel={ () => {
+                setShowAdvancedSettings( false );
+                setAdvSettingsWarningOpen( false );
+            } }
+            onConfirm={ () => { 
+                setAdvSettingsWarningOpen( false )
+                if( !isNewPartition ){
+                    props.onChange({ ...props.partition, showAdvancedSettings: true, advancedSettingsConfrimed: true })
+                }
+            } }
+        />
       </Root>
   ) ;
 };

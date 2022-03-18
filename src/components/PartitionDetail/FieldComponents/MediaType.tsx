@@ -29,7 +29,7 @@ const MediaType: React.FunctionComponent<IMediaTypeProps> = (props) => {
                     { PartitionFields.MediaType }
                 </Typography>
                 <Zoom in={ !expanded } appear={ false } timeout={{ enter: 250, exit: 50 }} unmountOnExit>
-                    <ValueTypography variant='caption' >
+                    <ValueTypography variant='body2' >
                         { props.value }
                     </ValueTypography>
                 </Zoom>

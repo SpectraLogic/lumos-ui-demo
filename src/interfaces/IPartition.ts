@@ -10,6 +10,8 @@ export default interface IPartition {
     [PartitionFields.Drives]: Array<string>,
     [PartitionFields.CleaningPartition]: string | false
     [PartitionFields.MLMVerification]: IMLMVerificationConfig
+    showAdvancedSettings?: boolean
+    advancedSettingsConfrimed?: boolean
 }
 
 export enum MediaType {

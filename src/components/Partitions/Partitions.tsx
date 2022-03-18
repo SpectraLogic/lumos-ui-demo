@@ -2,11 +2,12 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Grid, Zoom } from '@mui/material';
 import PartitionsList, { IPartitionsListProps } from '../PartitionList/ParitionsList';
-import { Routes, Route, Outlet } from 'react-router-dom'; 
+import { Routes, Route, Outlet, useResolvedPath, useMatch } from 'react-router-dom'; 
 import IPartition, { CheckSumBehavior, MediaType, TruncationOptions } from '../../interfaces/IPartition';
 import PartitionDetail from '../PartitionDetail/PartitionDetail';
 import PartitionFields from '../PartitionDetail/PartitionFields';
 import uniqid from 'uniqid';
+import AdvancedSettingsWarning from '../PartitionDetail/Dialogs/AdvancedSettingsWarning';
 
 interface IPartitionsProps {
 }
@@ -107,7 +108,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
     }
 
   } 
-
+  
   return(
       <Background container spacing={1}>
         <Grid item xs={ 3 } sx={{ maxHeight: '100%' }} >
@@ -122,7 +123,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
           <Routes>
             { partitionList.map( partition  => (
               <Route
-                path={ `/${partition.id.replace(' ', '-')}` }
+                path={ `/${partition.id.replace(' ', '-')}/*` }
                 element={ 
                   <PartitionDetail 
                     key={ partition.id } 
@@ -145,6 +146,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
                 />
               }
             />
+
           </Routes>
         </Grid>
       </Background>
