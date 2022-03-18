@@ -15,6 +15,12 @@ import SlotIQ from './FieldComponents/SlotIQ';
 import PartitionFields from './PartitionFields';
 import uniqid from 'uniqid';
 import { useNavigate} from 'react-router-dom';
+import Emulation from './FieldComponents/Emulation';
+import Taos from './FieldComponents/Taos';
+import EmulationOptions from './FieldComponents/EmulationOptions';
+import SoftLoad from './FieldComponents/SoftLoad';
+import RoboticLoadBalancing from './FieldComponents/RoboticLoadBalancing';
+import MediaZoning from './FieldComponents/MediaZoning';
 
 interface IPartitionDetailProps {
     availablePartitions: Array<IPartition>
@@ -81,6 +87,7 @@ const stagedEditsReducer = ( state: Partial<IPartition>, action: { type: StagedE
 
 const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) => {
     const [stagedEditState, setStagedEditState] = React.useReducer( stagedEditsReducer as React.Reducer<Partial<IPartition>, { type: StagedEditsActions, payload: Partial<IPartition> }>, {} as Partial<IPartition> );
+    const [showAdvancedSettings, setShowAdvancedSettings] = React.useState( true );
     const isNewPartition = props.partitionId === "DEFAULT";
     const newPartitionId: Partial<IPartition> | undefined  = isNewPartition ? { id: uniqid() } : undefined; 
     const navigate = useNavigate();
@@ -139,6 +146,17 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
                 onValueChange={ (value: IMLMVerificationConfig ) => setStagedEditState({  type: StagedEditsActions.UPDATE, payload: {[PartitionFields.MLMVerification]: value} }) } 
 
             />
+            { showAdvancedSettings && (
+                <>
+                    <Emulation />
+                    <EmulationOptions />
+                    <Taos />
+                    <SoftLoad />
+                    <MediaZoning/>
+                    <Taos />
+                    <RoboticLoadBalancing />
+                </>
+            ) }
             { ( !_.isEmpty( stagedEditState ) || isNewPartition ) && ( <ForceExtraScroll /> ) } 
         </Body>
         <Zoom in={ !_.isEmpty( stagedEditState ) || isNewPartition }>

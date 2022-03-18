@@ -23,7 +23,7 @@ const MediaType: React.FunctionComponent<IMediaTypeProps> = (props) => {
     const [expanded, setExpanded] = React.useState( false );
   return(
     <Accordion expanded={ expanded }>
-        <AccordionSummary onClick={ setExpanded.bind( undefined, !expanded ) } expandIcon={ <ExpandMore /> } >
+        <AccordionSummary onClick={ setExpanded.bind( undefined, !expanded ) } expandIcon={ ( <ExpandMore /> ) } >
             <AccordionSummaryContent>
                 <Typography>
                     { PartitionFields.MediaType }

@@ -55,3 +55,18 @@ export interface  IMLMVerificationConfig {
     quickScan: boolean
 }
 
+//Advanced Settings 
+
+interface IAdvancedSetting {
+    isAdvanced: boolean
+}
+
+export interface IEmulationConfig extends IAdvancedSetting {
+    Preset: string
+}
+
+export interface EmulationOptions extends IAdvancedSetting {
+    inclTapeGen: boolean
+}
+
+
