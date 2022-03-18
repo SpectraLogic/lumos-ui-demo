@@ -51,7 +51,7 @@ const Body = styled.div`
 
 const ForceExtraScroll = styled.div`
     width: 100%;
-    height: 56px;
+    height: 60px;
 `;
 
 const HeaderLeft = styled.div`
