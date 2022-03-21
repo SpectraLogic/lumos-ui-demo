@@ -9,11 +9,13 @@ import PartitionListItem from './PartitionListItem';
 import ActionBar from './ActionBar';
 import { useResolvedPath, useMatch, To } from 'react-router-dom';
 import SortControls from './SortControls';
+import _ from 'lodash';
 
 export interface IPartitionsListProps {
     partitions: IPartition[]
-    onChange: ( partitions: IPartition[] ) => void 
-    createPartitionLink: To
+    enableManagement?: boolean
+    onChange?: ( partitions: IPartition[] ) => void 
+    createPartitionLink?: To
 }
 
 const Root = styled.div`
@@ -83,29 +85,33 @@ const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) =>
     const [filterPanelVisiblity, setFilterPanelVisibility] = React.useState( false );
     const [sortFunction, setSortFunction] = React.useState<(( a: IPartition, b: IPartition ) => number)>();
     const [filterFunction, setFilterFunction] = React.useState<(( partition: IPartition ) => boolean)>( () => (value: IPartition) => true );
-    let resolved = useResolvedPath(props.createPartitionLink);
+    if( props.enableManagement && ( _.isUndefined( props.onChange ) || _.isUndefined( props.createPartitionLink ) ) ){
+      throw "onChange() and createPartitionLink need to be provided when <PartitionList /> is set to management mode "
+    }
+    let resolved = useResolvedPath( props.createPartitionLink || "" );
     let createPartitionMatch = useMatch({ path: resolved.pathname, end: false });
+    const createMode = createPartitionMatch && props.enableManagement;
   return(
     <Root>
       <FilterPanel 
-        disabled={ createPartitionMatch ? true : false }
-        panelIsOpen={ createPartitionMatch ? false : filterPanelVisiblity } 
+        disabled={ createMode ? true : false }
+        panelIsOpen={ createMode ? false : filterPanelVisiblity } 
         onClick={ () => {  setFilterPanelVisibility( !filterPanelVisiblity ) } } 
         onFilterChange={ ( func ) => { setFilterFunction( () => func ) } }
         />
       <ListPanel 
         filterPanelVisibility={ filterPanelVisiblity }
         variants={ listPanelAnimVariants }
-        animate={ filterPanelVisiblity && !createPartitionMatch ? 'open' : 'closed' }
+        animate={ filterPanelVisiblity && !createMode ? 'open' : 'closed' }
         transition={{ type: "tween" }}
         initial={ false }>
             <StyledSortControls sortPredicate={ undefined } onSortPredicateChange={ ( func ) => setSortFunction( () => func ) } />
             <Divider />
             <NewPartitionItemBackground 
                 variants={ newPartitionItemBgVariants }
-                animate={ createPartitionMatch ? 'open' : 'closed' }
+                animate={ createMode ? 'open' : 'closed' }
                 initial={ false } />
-            <Zoom in={ createPartitionMatch ? true : false } >
+            <Zoom in={ createMode ? true : false } >
                 <ListItem>
                     <ListItemText
                         primary="New Partition"
@@ -117,11 +123,12 @@ const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) =>
             </Zoom>
             {
                 props.partitions.filter( filterFunction ).sort( sortFunction ).map( (partition) => {
-                   return <PartitionListItem disabled={ createPartitionMatch } to={ `./${partition.id}` } partition={ partition } />
+                   return <PartitionListItem disabled={ createMode } to={ `./${partition.id}` } partition={ partition } />
                  } )
             }
         </ListPanel>
-        <StyledActionBar createPartitionLink={ props.createPartitionLink } />
+        { props.enableManagement && ( <StyledActionBar createPartitionLink={ props.createPartitionLink! } /> ) }
+        
     </Root>
   );
 };

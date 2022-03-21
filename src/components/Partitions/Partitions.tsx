@@ -114,6 +114,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
         <Grid item xs={ 3 } sx={{ maxHeight: '100%' }} >
           <PartitionsList
             partitions={ partitionList }
+            enableManagement
             onChange={ setPartitionList }
             createPartitionLink={ createPartitionLink }
           />
