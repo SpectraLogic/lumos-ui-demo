@@ -24,7 +24,7 @@ const Root = styled.div`
     width: 100%;
 `;
 
-const ListPanel = styled( motion(List) )<{ filterPanelVisibility: boolean}>`
+const ListPanel = styled( motion(List) )`
     position: relative;
     height: 100%;
     width: 100%;
@@ -100,7 +100,6 @@ const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) =>
         onFilterChange={ ( func ) => { setFilterFunction( () => func ) } }
         />
       <ListPanel 
-        filterPanelVisibility={ filterPanelVisiblity }
         variants={ listPanelAnimVariants }
         animate={ filterPanelVisiblity && !createMode ? 'open' : 'closed' }
         transition={{ type: "tween" }}
@@ -123,7 +122,7 @@ const PartitionsList: React.FunctionComponent<IPartitionsListProps> = (props) =>
             </Zoom>
             {
                 props.partitions.filter( filterFunction ).sort( sortFunction ).map( (partition) => {
-                   return <PartitionListItem disabled={ createMode } to={ `./${partition.id}` } partition={ partition } />
+                   return <PartitionListItem key={ partition.id } disabled={ createMode } to={ `./${partition.id}` } partition={ partition } />
                  } )
             }
         </ListPanel>
