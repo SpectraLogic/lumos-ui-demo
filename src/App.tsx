@@ -17,7 +17,7 @@ function App() {
   return (
       <Nav 
         partitionsRoot={ <Partitions partitions={ partitions } onPartitionsChange={ setPartitions }/> }
-        movesRoot={ <MovesManagement /> }
+        movesRoot={ <MovesManagement partitions={ partitions } /> }
       />
   );
 }

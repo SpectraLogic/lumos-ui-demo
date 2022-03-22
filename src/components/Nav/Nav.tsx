@@ -83,7 +83,7 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
             <Route path={`/${InnerSelection.UserAccounts}`} element={<p> Display Component </p> } />
             <Route path={`/${InnerSelection.NetworkSettings}`} element={<p> Display Component </p> } />
             <Route path={`/${InnerSelection.Updates}`} element={<p> Display Component </p> } />
-            <Route path={`/${InnerSelection.MoveMedia}`} element={ props.movesRoot } />
+            <Route path={`/${InnerSelection.MoveMedia}/*`} element={ props.movesRoot } />
             <Route path={`/${InnerSelection.MediaEncryption}`} element={<p> Display Component </p> } />
           </Routes>
         </NavWrapper>
