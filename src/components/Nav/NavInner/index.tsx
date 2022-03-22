@@ -64,7 +64,7 @@ const NavInner: React.FunctionComponent<INavInnerProps> = ({ innerSelection, out
                     }
                 </ButtonList>
               ) : (
-                  "else"
+                  <ButtonList />
               )
           }
       </Background>
