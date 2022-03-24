@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import UnderSheet from './UnderSheet';
 import { motion } from 'framer-motion';
 
 interface IOverlapPanelProps {
@@ -27,6 +26,11 @@ const OverSheet = styled( motion.div )`
     border-bottom-right-radius: 16px;
     background-color: #fff;
     box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.25);
+`;
+
+const UnderSheet = styled.div<{ height: number }>`
+    height: ${ ({ height }) => `${height}px` };
+    width: 100%;
 `;
 
 const getOverSheetMotionVariants = ( peekHeight: number, totHeight: number ) => ({
