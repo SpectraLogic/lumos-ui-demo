@@ -6,6 +6,8 @@ import PartitionsList from '../../components/PartitionList/ParitionsList';
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 import { PartitionIcon as PartitionIconBase } from '../../components/Icons';
 import SlotSelection from './SlotSelection';
+import { slots } from '../../assets/mock-data';
+
 
 interface IMoveManagementProps {
     partitions: Array<IPartition>
@@ -84,11 +86,13 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                                     <Grid item xs={ 4 }>
                                         <SlotSelection 
                                             selectionType='source'
+                                            slots={ slots }
                                         />
                                     </Grid>
                                     <Grid item xs={ 4 }>
                                         <SlotSelection 
                                             selectionType='destination'
+                                            slots={ slots }
                                         />
                                     </Grid>
                                     <Grid item xs={ 4 }>
