@@ -23,7 +23,7 @@ const SlotSelection: React.FunctionComponent<ISlotSelectionProps> = (props) => {
         underSheetElement={ <SlotFilter isOpen={ filterIsOpen }onHeaderClicked={ setFilterOpenState.bind( undefined, !filterIsOpen ) }/> }
         overSheetElement={ 
           <SlotTable 
-            slots={ props.slots.filter( iter => !_.isUndefined(iter.barcode) ) } 
+            slots={ props.slots } 
             selectionType={ props.selectionType }
             onSlotSelect={ props.onSlotSelect } /> 
           }

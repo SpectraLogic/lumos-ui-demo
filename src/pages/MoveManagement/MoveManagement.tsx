@@ -9,6 +9,8 @@ import SlotSelection from './SlotSelection/SlotSelection';
 import { slots } from '../../assets/mock-data';
 import { ITapeSlot } from '../../interfaces/ITapeSlot';
 import MoveQueue from './MoveQueue/MoveQueue';
+import { Actions, IMoveMgmtState, reducer } from './redux';
+import * as _ from 'lodash'
 
 
 interface IMoveManagementProps {
@@ -56,8 +58,12 @@ const PartitionIcon = styled( PartitionIconBase )`
 
 const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partitions }) => {
     const navigate = useNavigate();
-    const [source, setSource] = React.useState<ITapeSlot | undefined>( undefined );
-    const [destination, setDestination] = React.useState<ITapeSlot | undefined>( undefined );
+    const [state, dispatch] = React.useReducer( reducer, {
+        sourceSlots: slots.filter( iter => !_.isUndefined( iter.barcode ) ),
+        destinationSlots: slots.filter( iter => _.isUndefined( iter.barcode ) ),
+        stagedMoves: []
+    } );
+
   return(
       <Root>
         <Routes>
@@ -91,19 +97,22 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                                     <Grid item xs={ 4 }>
                                         <SlotSelection 
                                             selectionType='source'
-                                            slots={ slots }
-                                            onSlotSelect={ setSource }
+                                            slots={ state.sourceSlots }
+                                            onSlotSelect={ ( slot ) => dispatch({ type: Actions.SET_SOURCE, payload: slot }) }
                                         />
                                     </Grid>
                                     <Grid item xs={ 4 }>
                                         <SlotSelection 
                                             selectionType='destination'
-                                            slots={ slots }
-                                            onSlotSelect={ setDestination }
+                                            slots={ state.destinationSlots }
+                                            onSlotSelect={ ( slot ) => dispatch({ type: Actions.SET_DESTINATION, payload: slot }) }
                                         />
                                     </Grid>
                                     <Grid item xs={ 4 }>
                                         <MoveQueue 
+                                            source={ state.source }
+                                            destination={ state.destination }
+                                            onConfirmToQueue={ dispatch.bind( undefined, { type: Actions.ADD_MOVE_TO_QUEUE } ) }
                                         />
                                     </Grid>
                                 </Background>

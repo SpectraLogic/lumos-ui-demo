@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import * as React from 'react';
 import styled from 'styled-components';
 import { ITapeSlot } from '../../../interfaces/ITapeSlot';
@@ -17,9 +18,15 @@ const Root = styled.div`
 `;
 
 
-const AddToQueuePanel: React.FunctionComponent<IAddToQueuePanelProps> = (props) => {
+const AddToQueuePanel: React.FunctionComponent<IAddToQueuePanelProps> = ({ source, destination, onConfirmAdd }) => {
   return(
-    <Root />
+    <Root>
+        { source?.barcode }
+        <br/>
+        { destination?.type } &nbsp; { destination?.number }
+        <br/>
+        <Button onClick={ onConfirmAdd }>Add to Queue</Button>
+    </Root>
   );
 };
 

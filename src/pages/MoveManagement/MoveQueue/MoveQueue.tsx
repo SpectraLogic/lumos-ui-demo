@@ -3,8 +3,12 @@ import { Tab, Tabs } from '@mui/material';
 import * as React from 'react';
 import OverlapPanel from '../../../components/OverlapPanel/OverlapPanel';
 import AddToQueuePanel from './AddToQueuePanel';
+import { ITapeSlot } from '../../../interfaces/ITapeSlot';
 
 interface IMoveQueueProps {
+    source?: ITapeSlot
+    destination?: ITapeSlot
+    onConfirmToQueue: () => void
 }
 
 const MoveQueue: React.FunctionComponent<IMoveQueueProps> = (props) => {
@@ -27,7 +31,9 @@ const MoveQueue: React.FunctionComponent<IMoveQueueProps> = (props) => {
         }
         underSheetElement={ 
             <AddToQueuePanel
-                onConfirmAdd={ () => {} }
+                source={ props.source }
+                destination={ props.destination }
+                onConfirmAdd={ props.onConfirmToQueue }
             />
         }
     />
