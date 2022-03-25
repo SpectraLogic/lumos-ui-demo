@@ -1,19 +1,24 @@
 
 import * as React from 'react';
 import { DataGrid as DataGridBase, GridColDef } from '@mui/x-data-grid';
-import { slots } from '../../assets/mock-data';
 import * as _ from 'lodash';
 import styled from 'styled-components';
-import { ITapeSlot } from '../../interfaces/ITapeSlot';
+import { ITapeSlot } from '../../../interfaces/ITapeSlot';
 
 interface ISlotTableProps {
     slots: Array<ITapeSlot>
     selectionType: "source" | "destination"
+    onSlotSelect: ( slot: ITapeSlot ) => void
 }
 
 const DataGrid = styled( DataGridBase )`
+    border-radius: 8px 8px 16px 16px;
     & .MuiDataGrid-footerContainer {
         display: none;
+    }
+
+    & ::-webkit-scrollbar {
+        border-radius: 0px 0px 16px 0px;
     }
 `;
 
@@ -34,7 +39,9 @@ const SlotTable: React.FunctionComponent<ISlotTableProps> = (props) => {
   return (
       <DataGrid
         columns={ props.selectionType === "source" ? sourceColumns : destinationColumns }
-        rows={ props.slots }/>
+        rows={ props.slots }
+        onRowClick={ ({ row }) => props.onSlotSelect( row as ITapeSlot ) }
+        />
   );
 };
 

@@ -5,8 +5,10 @@ import { Button, Grid, Stack, Typography } from '@mui/material';
 import PartitionsList from '../../components/PartitionList/ParitionsList';
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 import { PartitionIcon as PartitionIconBase } from '../../components/Icons';
-import SlotSelection from './SlotSelection';
+import SlotSelection from './SlotSelection/SlotSelection';
 import { slots } from '../../assets/mock-data';
+import { ITapeSlot } from '../../interfaces/ITapeSlot';
+import MoveQueue from './MoveQueue/MoveQueue';
 
 
 interface IMoveManagementProps {
@@ -54,6 +56,8 @@ const PartitionIcon = styled( PartitionIconBase )`
 
 const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partitions }) => {
     const navigate = useNavigate();
+    const [source, setSource] = React.useState<ITapeSlot | undefined>( undefined );
+    const [destination, setDestination] = React.useState<ITapeSlot | undefined>( undefined );
   return(
       <Root>
         <Routes>
@@ -79,6 +83,7 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
             {
                 partitions.map( partition => (
                     <Route
+                        key={ partition.id }
                         path={ `/${ partition.id }/*` }
                         element={
                             <>
@@ -87,20 +92,24 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                                         <SlotSelection 
                                             selectionType='source'
                                             slots={ slots }
+                                            onSlotSelect={ setSource }
                                         />
                                     </Grid>
                                     <Grid item xs={ 4 }>
                                         <SlotSelection 
                                             selectionType='destination'
                                             slots={ slots }
+                                            onSlotSelect={ setDestination }
                                         />
                                     </Grid>
                                     <Grid item xs={ 4 }>
-                                        moves
+                                        <MoveQueue 
+                                        />
                                     </Grid>
                                 </Background>
                                 <Button 
                                 fullWidth 
+                                color='info'
                                 onClick={ () => navigate( '../Move-Media' ) }
                                 variant='contained'> 
                                     Go Back
