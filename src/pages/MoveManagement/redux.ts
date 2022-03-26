@@ -2,19 +2,29 @@ import { ITapeSlot } from "../../interfaces/ITapeSlot"
 import * as _ from 'lodash';
 import { Reducer } from "react";
 
+export enum MoveStatus {
+    Pending = "Pending", 
+    InProgress = "In Progress",
+    Success = "Succeeded",
+    Fail = "Failed"
+}
 
 export interface IMoveMgmtState {
     sourceSlots: Array<ITapeSlot>
     destinationSlots: Array<ITapeSlot>
     source?: ITapeSlot
     destination?: ITapeSlot
-    stagedMoves: Array<Array<ITapeSlot>> 
+    stagedMoves: Array<Array<ITapeSlot>>
+    issuedMoves: Array<Array<ITapeSlot>>
+    moveStatus: { [barcode: string]: MoveStatus }
 }
 
 export enum Actions {
     SET_SOURCE,
     SET_DESTINATION,
-    ADD_MOVE_TO_QUEUE
+    ADD_MOVE_TO_QUEUE,
+    SUBMIT_QUEUE,
+    DISCARD_QUEUE
 }
 
 export const reducer: Reducer<IMoveMgmtState, { type: Actions, payload?: ITapeSlot }> = ( state: IMoveMgmtState, action: { type: Actions, payload?: ITapeSlot } ) => {
@@ -31,7 +41,26 @@ export const reducer: Reducer<IMoveMgmtState, { type: Actions, payload?: ITapeSl
                 //remove slots from respective lists now that they're in the queue
                 sourceSlots: state.sourceSlots.filter( iter => iter.id !== state.source?.id ), 
                 destinationSlots: state.destinationSlots.filter( iter => iter.id !== state.destination?.id ),
-                stagedMoves: [ ...state.stagedMoves, [ state.source as ITapeSlot, state.destination as ITapeSlot ] ],                
+                stagedMoves: [ ...state.stagedMoves, [ state.source as ITapeSlot, state.destination as ITapeSlot ] ],   
+                issuedMoves: state.issuedMoves,
+                moveStatus: state.moveStatus             
+            }
+        case Actions.SUBMIT_QUEUE:
+            return {
+                ...state,
+                stagedMoves: [],
+                issuedMoves: [...state.issuedMoves, ...state.stagedMoves],
+                moveStatus: state.stagedMoves.reduce( (prev, curr) => {
+                    return {
+                        ...prev,
+                        [curr[0].barcode!]: MoveStatus.Pending
+                    }
+                }, state.moveStatus as { [barcode: string]: MoveStatus } )
+            }
+        case Actions.DISCARD_QUEUE:
+            return{
+                ...state,
+                stagedMoves: []
             }
         default: 
             return state;

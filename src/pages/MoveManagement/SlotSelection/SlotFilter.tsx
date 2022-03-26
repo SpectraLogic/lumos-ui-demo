@@ -10,7 +10,7 @@ interface ISlotFilterProps {
 }
 
 const Root = styled.div`
-    height: 213px;
+    height: 234px;
     width: 100%;
     background-color: #A68AF9 ;
     border-top-left-radius: 16px;

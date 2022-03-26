@@ -1,14 +1,22 @@
 import { Queue, Send } from '@mui/icons-material';
-import { Tab, Tabs } from '@mui/material';
+import { Tab, Tabs, Zoom } from '@mui/material';
 import * as React from 'react';
 import OverlapPanel from '../../../components/OverlapPanel/OverlapPanel';
 import AddToQueuePanel from './AddToQueuePanel';
 import { ITapeSlot } from '../../../interfaces/ITapeSlot';
+import QueueTable from './QueueTable';
+import { MoveStatus } from '../redux';
+import  IssuedTable  from './IssuedTable';
 
 interface IMoveQueueProps {
     source?: ITapeSlot
     destination?: ITapeSlot
     onConfirmToQueue: () => void
+    onSubmitQueue: () => void
+    onDiscardQueue: () => void
+    stagedMoves: Array<Array<ITapeSlot>>
+    issuedMoves: Array<Array<ITapeSlot>>
+    moveStatus: { [barcode: string]: MoveStatus}
 }
 
 const MoveQueue: React.FunctionComponent<IMoveQueueProps> = (props) => {
@@ -16,8 +24,8 @@ const MoveQueue: React.FunctionComponent<IMoveQueueProps> = (props) => {
   return(
     <OverlapPanel
         isOpen
-        underSheetHeightPeek={ 143 }
-        underSheetHeightTotal={ 143 }
+        underSheetHeightPeek={ 163 }
+        underSheetHeightTotal={ 163 }
         overSheetElement={ 
             <>
                 <Tabs 
@@ -27,13 +35,28 @@ const MoveQueue: React.FunctionComponent<IMoveQueueProps> = (props) => {
                         <Tab label="Move Queue" icon={ <Queue /> } />
                         <Tab label="Issued Moves" icon={ <Send /> } />
                 </Tabs>
+                    { tabValue === 0 && ( 
+                        <QueueTable 
+                            moves={ props.stagedMoves } 
+                            onSubmit={ props.onSubmitQueue }
+                            onDiscard={ props.onDiscardQueue  }/> 
+                    ) }
+                    {
+                        tabValue === 1 && (
+                            <IssuedTable 
+                                moves={ props.issuedMoves }
+                                moveStatus={ props.moveStatus }/>
+                    ) }
             </>
         }
         underSheetElement={ 
             <AddToQueuePanel
                 source={ props.source }
                 destination={ props.destination }
-                onConfirmAdd={ props.onConfirmToQueue }
+                onConfirmAdd={ () => { 
+                    setTabValue( 0 );
+                    props.onConfirmToQueue(); 
+                } }
             />
         }
     />

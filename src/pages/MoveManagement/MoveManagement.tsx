@@ -11,6 +11,7 @@ import { ITapeSlot } from '../../interfaces/ITapeSlot';
 import MoveQueue from './MoveQueue/MoveQueue';
 import { Actions, IMoveMgmtState, reducer } from './redux';
 import * as _ from 'lodash'
+import { random } from 'lodash';
 
 
 interface IMoveManagementProps {
@@ -61,8 +62,16 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
     const [state, dispatch] = React.useReducer( reducer, {
         sourceSlots: slots.filter( iter => !_.isUndefined( iter.barcode ) ),
         destinationSlots: slots.filter( iter => _.isUndefined( iter.barcode ) ),
-        stagedMoves: []
+        stagedMoves: [],
+        issuedMoves: [],
+        moveStatus: {}
     } );
+
+    React.useEffect( () => {
+        const interval = setInterval( () => {
+            console.log("random interval!")
+        }, random( 3000, 10000 ) );
+    }, [] );
 
   return(
       <Root>
@@ -110,9 +119,14 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                                     </Grid>
                                     <Grid item xs={ 4 }>
                                         <MoveQueue 
+                                            stagedMoves={ state.stagedMoves }
+                                            issuedMoves={ state.issuedMoves }
+                                            moveStatus={ state.moveStatus }
                                             source={ state.source }
                                             destination={ state.destination }
                                             onConfirmToQueue={ dispatch.bind( undefined, { type: Actions.ADD_MOVE_TO_QUEUE } ) }
+                                            onSubmitQueue={ dispatch.bind( undefined, { type: Actions.SUBMIT_QUEUE } ) }
+                                            onDiscardQueue={ dispatch.bind( undefined, { type: Actions.DISCARD_QUEUE } ) }
                                         />
                                     </Grid>
                                 </Background>
