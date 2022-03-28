@@ -16,6 +16,7 @@ interface IMoveQueueProps {
     onDiscardQueue: () => void
     stagedMoves: Array<Array<ITapeSlot>>
     issuedMoves: Array<Array<ITapeSlot>>
+    concludedMoves: Array<Array<ITapeSlot>>
     moveStatus: { [barcode: string]: MoveStatus}
 }
 
@@ -38,13 +39,16 @@ const MoveQueue: React.FunctionComponent<IMoveQueueProps> = (props) => {
                     { tabValue === 0 && ( 
                         <QueueTable 
                             moves={ props.stagedMoves } 
-                            onSubmit={ props.onSubmitQueue }
+                            onSubmit={ () => {
+                                setTabValue( 1 );
+                                props.onSubmitQueue()
+                             } }
                             onDiscard={ props.onDiscardQueue  }/> 
                     ) }
                     {
                         tabValue === 1 && (
                             <IssuedTable 
-                                moves={ props.issuedMoves }
+                                moves={[ ...props.concludedMoves, ...props.issuedMoves ]}
                                 moveStatus={ props.moveStatus }/>
                     ) }
             </>

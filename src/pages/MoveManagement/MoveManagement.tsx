@@ -9,7 +9,7 @@ import SlotSelection from './SlotSelection/SlotSelection';
 import { slots } from '../../assets/mock-data';
 import { ITapeSlot } from '../../interfaces/ITapeSlot';
 import MoveQueue from './MoveQueue/MoveQueue';
-import { Actions, IMoveMgmtState, reducer } from './redux';
+import { Actions, IMoveMgmtState, MoveStatus, reducer } from './redux';
 import * as _ from 'lodash'
 import { random } from 'lodash';
 
@@ -24,7 +24,6 @@ const Root = styled.div`
     height: 100%;
     width: 100%;
     background-color: #f0f0f0;
-
 `;
 
 const Background = styled(Grid)`
@@ -40,7 +39,6 @@ const SelectPartition = styled( Stack )`
     width: 100%;
     top: 50%;
     transform: translateY( -50% );
-
 `;
 
 const SelectPartitionContainer = styled.div`
@@ -64,14 +62,16 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
         destinationSlots: slots.filter( iter => _.isUndefined( iter.barcode ) ),
         stagedMoves: [],
         issuedMoves: [],
+        concludedMoves: [],
         moveStatus: {}
     } );
 
     React.useEffect( () => {
-        const interval = setInterval( () => {
-            console.log("random interval!")
-        }, random( 3000, 10000 ) );
-    }, [] );
+        if( state.issuedMoves.length < 1 ) return ;
+        setTimeout( () => {
+            dispatch({ type: Actions.MOVE_COMPLETE, payload: { barcode: state.issuedMoves[0][0].barcode!, status: MoveStatus.Success  } })
+        }, Math.random() * (5000 - 1000) + 1000 );
+    }, [ state.issuedMoves ] )
 
   return(
       <Root>
@@ -122,10 +122,14 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                                             stagedMoves={ state.stagedMoves }
                                             issuedMoves={ state.issuedMoves }
                                             moveStatus={ state.moveStatus }
+                                            concludedMoves={ state.concludedMoves }
                                             source={ state.source }
                                             destination={ state.destination }
                                             onConfirmToQueue={ dispatch.bind( undefined, { type: Actions.ADD_MOVE_TO_QUEUE } ) }
-                                            onSubmitQueue={ dispatch.bind( undefined, { type: Actions.SUBMIT_QUEUE } ) }
+                                            onSubmitQueue={ () => {
+                                                // setTimeout( () => console.log( "complete" + state.issuedMoves[0]) )
+                                                dispatch({ type: Actions.SUBMIT_QUEUE } ) 
+                                            } }
                                             onDiscardQueue={ dispatch.bind( undefined, { type: Actions.DISCARD_QUEUE } ) }
                                         />
                                     </Grid>
