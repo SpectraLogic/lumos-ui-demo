@@ -72,17 +72,20 @@ export const reducer: Reducer<IMoveMgmtState, { type: Actions, payload?: ITapeSl
             }
         case Actions.MOVE_COMPLETE: 
             const { barcode: moveBarcode, status: moveStatus } = action.payload as { barcode: string, status: MoveStatus };
+            const move: Array<ITapeSlot> = state.issuedMoves.find( moveIter => moveBarcode === moveIter[0].barcode! )!;
             const filteredIssuedMoves = state.issuedMoves.filter( moveIter => moveBarcode !== moveIter[0].barcode! );
             const newInProgressMove =  filteredIssuedMoves.length < 1 ? {} : { [filteredIssuedMoves[0][0].barcode!]: MoveStatus.InProgress };
             return{
                 ...state,
                 issuedMoves: filteredIssuedMoves,
-                concludedMoves: [...state.concludedMoves, state.issuedMoves[0] ],
+                concludedMoves: [ ...state.concludedMoves, state.issuedMoves[0] ],
                 moveStatus: {
                     ...state.moveStatus,
                     ...newInProgressMove,
                     [moveBarcode]: moveStatus,
-                }
+                },
+                sourceSlots: moveStatus === MoveStatus.Success ? [ ...state.sourceSlots, { ...move[1], barcode: moveBarcode} ] :  [ ...state.sourceSlots, move[0] ],
+                destinationSlots: moveStatus === MoveStatus.Success ? [ ...state.destinationSlots, _.omit( move[0], ['barcode'] ) ] : [ ...state.destinationSlots, move[1] ]
             }
         default: 
             return state;
