@@ -7,8 +7,8 @@ import { MoveStatus } from '../redux';
 interface IIssuedTableProps {
     moves: Array<Array<ITapeSlot>>
     moveStatus: { [barcode: string]: MoveStatus }
-    // onSubmit: () => void
-    // onDiscard: () => void
+    completedMoves: Array<Array<ITapeSlot>>
+    onDiscard: () => void
 }
 
 const DataGrid = styled( DataGridBase )`
@@ -45,18 +45,16 @@ const generateTableData = ( moves: Array<Array<ITapeSlot>>, statuses: { [barcode
     } )
 }
 
-
 const IssuedTable: React.FunctionComponent<IIssuedTableProps> = (props) => {
     const tableData = React.useMemo( () => generateTableData( props.moves, props.moveStatus ), [ props.moves ] )
-    const [completeMoves, setCompleteMoves] = React.useState( [] as Array<Array<ITapeSlot>> );
   return(
     <>
         <DataGrid
             columns={ columns }
             rows={ tableData }
         />
-        <ButtonGroup fullWidth variant='contained' disabled={ completeMoves.length <= 0 }>
-            <Button color='info'>Dismiss Completed Moves</Button>
+        <ButtonGroup fullWidth variant='contained' disabled={ props.completedMoves.length < 1 }>
+            <Button onClick={ props.onDiscard } color='info'>Dismiss Completed Moves</Button>
         </ButtonGroup>
     </>
   );

@@ -26,7 +26,8 @@ export enum Actions {
     ADD_MOVE_TO_QUEUE,
     SUBMIT_QUEUE,
     DISCARD_QUEUE,
-    MOVE_COMPLETE
+    MOVE_COMPLETE,
+    DISCARD_COMPLETED 
 }
 
 // { type: Actions, payload?: ITapeSlot | { barcode: string, status: MoveStatus}
@@ -86,6 +87,11 @@ export const reducer: Reducer<IMoveMgmtState, { type: Actions, payload?: ITapeSl
                 },
                 sourceSlots: moveStatus === MoveStatus.Success ? [ ...state.sourceSlots, { ...move[1], barcode: moveBarcode} ] :  [ ...state.sourceSlots, move[0] ],
                 destinationSlots: moveStatus === MoveStatus.Success ? [ ...state.destinationSlots, _.omit( move[0], ['barcode'] ) ] : [ ...state.destinationSlots, move[1] ]
+            }
+        case Actions.DISCARD_COMPLETED:
+            return {
+                ...state,
+                concludedMoves: []
             }
         default: 
             return state;

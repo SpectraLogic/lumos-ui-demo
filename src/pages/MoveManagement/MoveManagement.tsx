@@ -127,10 +127,10 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                                             destination={ state.destination }
                                             onConfirmToQueue={ dispatch.bind( undefined, { type: Actions.ADD_MOVE_TO_QUEUE } ) }
                                             onSubmitQueue={ () => {
-                                                // setTimeout( () => console.log( "complete" + state.issuedMoves[0]) )
                                                 dispatch({ type: Actions.SUBMIT_QUEUE } ) 
                                             } }
                                             onDiscardQueue={ dispatch.bind( undefined, { type: Actions.DISCARD_QUEUE } ) }
+                                            onDiscardCompleted={ dispatch.bind( undefined, { type: Actions.DISCARD_COMPLETED } ) }
                                         />
                                     </Grid>
                                 </Background>
