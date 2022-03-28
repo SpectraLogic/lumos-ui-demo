@@ -7,11 +7,20 @@ import styled from 'styled-components';
 import Nav from './components/Nav';
 import { InnerSelection } from './components/Nav/Nav';
 import Partitions from './components/Partitions/Partitions';
+import MovesManagement from './pages/MoveManagement/MoveManagement';
+import IPartition from './interfaces/IPartition';
+import { partitions as mockPartitions } from './assets/mock-data';
 
 function App() {
+  const [partitions, setPartitions] = React.useState<IPartition[]>( mockPartitions );
+
   return (
-      <Nav />
+      <Nav 
+        partitionsRoot={ <Partitions partitions={ partitions } onPartitionsChange={ setPartitions }/> }
+        movesRoot={ <MovesManagement partitions={ partitions } /> }
+      />
   );
 }
 
 export default App;
+

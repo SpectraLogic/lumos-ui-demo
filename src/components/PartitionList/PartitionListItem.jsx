@@ -27,7 +27,7 @@ export default function PartitionListItem( props ){
                 { ...props }>
                 <ListItemText primary={ name } secondary={ mediaType } />   
             </StyledListItem>
-            <MotionDivider component='li' animate={{ y: props.disabled ? 0 : -72 }} inital={ false } />
+            <MotionDivider component='li' animate={{ y: props.disabled ? 0 : -72 }} initial={ false } />
         </>
     )
 

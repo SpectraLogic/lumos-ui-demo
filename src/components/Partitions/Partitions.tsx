@@ -10,6 +10,8 @@ import uniqid from 'uniqid';
 import AdvancedSettingsWarning from '../PartitionDetail/Dialogs/AdvancedSettingsWarning';
 
 interface IPartitionsProps {
+  partitions: IPartition[]
+  onPartitionsChange: ( partitions: IPartition[] ) => void
 }
 
 const Background = styled(Grid)`
@@ -20,72 +22,8 @@ const Background = styled(Grid)`
 `;
 
 const createPartitionLink: string = "/Partitions/create"
-const mediaCleanId = uniqid();
-const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
-  const [partitionList, setPartitionList] = React.useState<IPartition[]>( [
-    { 
-      id: uniqid(),
-      name: "Media 1",
-      mediaType: MediaType.LTO,
-      [PartitionFields.SlotIQ]: false,
-      [PartitionFields.BarcodeOptions]: {
-        checkSumBehavior: CheckSumBehavior.CHECK,
-        truncationOption: TruncationOptions.LEFT,
-        numReportedChars: 16,
-      },
-      [PartitionFields.Chambers]: {
-          storage: 20,
-          ee: 0
-      },
-      [PartitionFields.Drives]: [],
-      [PartitionFields.CleaningPartition]: mediaCleanId,
-      [PartitionFields.MLMVerification]: {
-        quickScan: true,
-        preScan: true
-      }
-    },
-    { 
-      id: mediaCleanId,
-      name: "Media Clean",
-      mediaType: MediaType.LTOClean,
-      [PartitionFields.SlotIQ]: true,
-      [PartitionFields.BarcodeOptions]: {
-        checkSumBehavior: CheckSumBehavior.CHECK,
-        truncationOption: TruncationOptions.LEFT,
-        numReportedChars: 16
-      },
-      [PartitionFields.Chambers]: {
-        clean: 5
-     },
-     [PartitionFields.Drives]: [],
-     [PartitionFields.CleaningPartition]: false,
-     [PartitionFields.MLMVerification]: {
-        quickScan: true,
-        preScan: true
-    }
-    },
-    { 
-      id: uniqid(),
-      name: "Auxillary Clean",
-      mediaType: MediaType.LTOClean,
-      [PartitionFields.SlotIQ]: true,
-      [PartitionFields.BarcodeOptions]: {
-        checkSumBehavior: CheckSumBehavior.CHECK,
-        truncationOption: TruncationOptions.LEFT,
-        numReportedChars: 16
-      },
-      [PartitionFields.Chambers]: {
-        clean: 8
-     },
-     [PartitionFields.Drives]: [],
-     [PartitionFields.CleaningPartition]: false,
-     [PartitionFields.MLMVerification]: {
-        quickScan: true,
-        preScan: true
-      }
-    }
-  ] );
 
+const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
   const DEFAULT_PARTITION: IPartition = {
     id: "DEFAULT",
     name: "New Partition",
@@ -113,22 +51,23 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
       <Background container spacing={1}>
         <Grid item xs={ 3 } sx={{ maxHeight: '100%' }} >
           <PartitionsList
-            partitions={ partitionList }
-            onChange={ setPartitionList }
+            partitions={ props.partitions }
+            enableManagement
+            onChange={ props.onPartitionsChange }
             createPartitionLink={ createPartitionLink }
           />
         </Grid>
         <Grid item xs={ 9 } sx={{ maxHeight: '100%' }}>
           <Outlet /> 
           <Routes>
-            { partitionList.map( partition  => (
+            { props.partitions.map( partition  => (
               <Route
                 path={ `/${partition.id.replace(' ', '-')}/*` }
                 element={ 
                   <PartitionDetail 
                     key={ partition.id } 
-                    onChange={ partition => setPartitionList( [ ...partitionList.filter( iter => iter.id !== partition.id ), partition ] ) }
-                    availablePartitions={ partitionList }
+                    onChange={ partition => props.onPartitionsChange( [ ...props.partitions.filter( iter => iter.id !== partition.id ), partition ] ) }
+                    availablePartitions={ props.partitions }
                     partitionId={ partition.id } 
                     partition={ partition }/> 
                 }
@@ -139,14 +78,13 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
               element={ 
                 <PartitionDetail 
                   key={ "CREATE_PARTITION_DETIAL" }
-                  onChange={ partition => setPartitionList( [ ...partitionList, partition ] ) }
-                  availablePartitions={ partitionList }
+                  onChange={ partition => props.onPartitionsChange( [ ...props.partitions, partition ] ) }
+                  availablePartitions={ props.partitions }
                   partitionId={ DEFAULT_PARTITION.id }
                   partition={ DEFAULT_PARTITION }
                 />
               }
             />
-
           </Routes>
         </Grid>
       </Background>

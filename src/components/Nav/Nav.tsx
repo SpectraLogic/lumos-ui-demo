@@ -6,8 +6,11 @@ import NavInner from './NavInner';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import Partitions  from '../Partitions/Partitions';
 import IPartition, { MediaType } from '../../interfaces/IPartition';
+import { MoveManagement } from '../../pages';
 
 interface INavProps {
+   partitionsRoot: React.ReactElement
+   movesRoot: React.ReactElement
 }
 
 const Wrapper = styled.div`
@@ -59,7 +62,6 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
   const [outerSelectionState, setOuterSelectionState] = React.useState( OuterSelection.Config );
   const [innerSelectionState, setInnerSelectionstate] = React.useState( InnerSelection.Partitions );
 
-
   return(
       <Wrapper>
         <StyledNavBar/>
@@ -73,7 +75,7 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
           />
           <Outlet />
           <Routes>
-            <Route path={`/${InnerSelection.Partitions}/*`} element={ <Partitions /> } />
+            <Route path={`/${InnerSelection.Partitions}/*`} element={ props.partitionsRoot } />
             <Route path={`/${InnerSelection.MediaLifecycle}`} element={<p> Display Component </p> } />
             <Route path={`/${InnerSelection.ImportExport}`} element={<p> Display Component </p> } />
             <Route path={`/${InnerSelection.ManageDrives}`} element={<p> Display Component </p> } />
@@ -81,7 +83,7 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
             <Route path={`/${InnerSelection.UserAccounts}`} element={<p> Display Component </p> } />
             <Route path={`/${InnerSelection.NetworkSettings}`} element={<p> Display Component </p> } />
             <Route path={`/${InnerSelection.Updates}`} element={<p> Display Component </p> } />
-            <Route path={`/${InnerSelection.MoveMedia}`} element={<p> Display Component </p> } />
+            <Route path={`/${InnerSelection.MoveMedia}/*`} element={ props.movesRoot } />
             <Route path={`/${InnerSelection.MediaEncryption}`} element={<p> Display Component </p> } />
           </Routes>
         </NavWrapper>
