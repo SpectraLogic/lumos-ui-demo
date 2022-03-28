@@ -129,6 +129,7 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                                             onSubmitQueue={ () => {
                                                 dispatch({ type: Actions.SUBMIT_QUEUE } ) 
                                             } }
+                                            onDiscardMove={ ( move: Array<ITapeSlot> ) => dispatch({ type: Actions.DISCARD_MOVE, payload: move }) }
                                             onDiscardQueue={ dispatch.bind( undefined, { type: Actions.DISCARD_QUEUE } ) }
                                             onDiscardCompleted={ dispatch.bind( undefined, { type: Actions.DISCARD_COMPLETED } ) }
                                         />

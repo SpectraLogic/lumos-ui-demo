@@ -27,11 +27,12 @@ export enum Actions {
     SUBMIT_QUEUE,
     DISCARD_QUEUE,
     MOVE_COMPLETE,
-    DISCARD_COMPLETED 
+    DISCARD_COMPLETED,
+    DISCARD_MOVE
 }
 
 // { type: Actions, payload?: ITapeSlot | { barcode: string, status: MoveStatus}
-export const reducer: Reducer<IMoveMgmtState, { type: Actions, payload?: ITapeSlot | { barcode: string, status: MoveStatus } }> = ( state: IMoveMgmtState, action ) => {
+export const reducer: Reducer<IMoveMgmtState, { type: Actions, payload?: ITapeSlot | { barcode: string, status: MoveStatus } | Array<ITapeSlot> }> = ( state: IMoveMgmtState, action ) => {
     switch( action.type ){
         case Actions.SET_SOURCE:
             if( _.isUndefined( action.payload ) ) throw `No source slot given for action type ${  action.type }`
@@ -92,6 +93,14 @@ export const reducer: Reducer<IMoveMgmtState, { type: Actions, payload?: ITapeSl
             return {
                 ...state,
                 concludedMoves: []
+            }
+        case Actions.DISCARD_MOVE:
+            const [source, destination] = (action.payload as Array<ITapeSlot>)
+            return {
+                ...state,
+                stagedMoves: state.stagedMoves.filter( moveIter => moveIter[0].barcode !==  source.barcode! ),
+                sourceSlots: [ ...state.sourceSlots, source],
+                destinationSlots: [ ...state.destinationSlots, destination ]
             }
         default: 
             return state;
