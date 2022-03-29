@@ -7,13 +7,15 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 import Partitions  from '../Partitions/Partitions';
 import IPartition, { MediaType } from '../../interfaces/IPartition';
 import { MoveManagement } from '../../pages';
+import Login from '../Login';
+import { motion } from 'framer-motion';
 
 interface INavProps {
    partitionsRoot: React.ReactElement
    movesRoot: React.ReactElement
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled( motion.div )`
   position: relative;
   overflow: hidden;
   height: 100%;
@@ -61,9 +63,13 @@ export enum InnerSelection {
 const Nav: React.FunctionComponent<INavProps> = (props) => {
   const [outerSelectionState, setOuterSelectionState] = React.useState( OuterSelection.Config );
   const [innerSelectionState, setInnerSelectionstate] = React.useState( InnerSelection.Partitions );
-
+  
   return(
-      <Wrapper>
+      <Wrapper
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ type: 'tween', duration: .75 }}
+      >
         <StyledNavBar/>
         
         <NavWrapper>

@@ -8,13 +8,14 @@ import PartitionDetail from '../PartitionDetail/PartitionDetail';
 import PartitionFields from '../PartitionDetail/PartitionFields';
 import uniqid from 'uniqid';
 import AdvancedSettingsWarning from '../PartitionDetail/Dialogs/AdvancedSettingsWarning';
+import { motion } from 'framer-motion';
 
 interface IPartitionsProps {
   partitions: IPartition[]
   onPartitionsChange: ( partitions: IPartition[] ) => void
 }
 
-const Background = styled(Grid)`
+const Background = styled( motion( Grid ) )`
   width: 100%;
   background-color: #f0f0f0;
   position: relative;
@@ -48,7 +49,10 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
   } 
   
   return(
-      <Background container spacing={1}>
+      <Background container spacing={1}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ type: 'tween', duration: 0.75 }}>
         <Grid item xs={ 3 } sx={{ maxHeight: '100%' }} >
           <PartitionsList
             partitions={ props.partitions }

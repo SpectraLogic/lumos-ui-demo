@@ -6,6 +6,7 @@ import { CheckCircle } from '@mui/icons-material';
 
 
 export interface ILoginFormProps {
+  onLogin: () => void
 }
 
 const LoginFormContainer = styled.div`
@@ -55,6 +56,7 @@ export function LoginForm (props: ILoginFormProps) {
           <br/>
           <br/>
           <LoginButton 
+          onClick={ props.onLogin }
           variant='contained' 
           endIcon={ <CheckCircle /> }> 
             Login 

@@ -12,13 +12,14 @@ import MoveQueue from './MoveQueue/MoveQueue';
 import { Actions, IMoveMgmtState, MoveStatus, reducer } from './redux';
 import * as _ from 'lodash'
 import { random } from 'lodash';
+import { motion } from 'framer-motion';
 
 
 interface IMoveManagementProps {
     partitions: Array<IPartition>
 }
 
-const Root = styled.div`
+const Root = styled( motion.div )`
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -26,7 +27,7 @@ const Root = styled.div`
     background-color: #f0f0f0;
 `;
 
-const Background = styled(Grid)`
+const Background = styled( motion(Grid) )`
   width: 100%;
   position: relative;
   padding: 10px;
@@ -74,7 +75,10 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
     }, [ state.issuedMoves ] )
 
   return(
-      <Root>
+      <Root
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ type: 'tween', duration: 0.75 }}>
         <Routes>
             <Route index element={
                 <Background container spacing={ 1 }>
@@ -102,7 +106,10 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                         path={ `/${ partition.id }/*` }
                         element={
                             <>
-                                <Background container spacing={ 1 }>     
+                                <Background container spacing={ 1 }
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ type: 'tween', duration: 0.75 }}>     
                                     <Grid item xs={ 4 }>
                                         <SlotSelection 
                                             selectionType='source'
