@@ -10,14 +10,19 @@ import Partitions from './components/Partitions/Partitions';
 import MovesManagement from './pages/MoveManagement/MoveManagement';
 import IPartition from './interfaces/IPartition';
 import { partitions as mockPartitions } from './assets/mock-data';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
   const [partitions, setPartitions] = React.useState<IPartition[]>( mockPartitions );
   const [loggedIn, setLoggedIn] = React.useState<boolean>( false ); 
+  const nav = useNavigate();
   return (
     <>
       {
-        !loggedIn && <Login onLogin={ setLoggedIn.bind( undefined, true ) } />
+        !loggedIn && <Login onLogin={ () => {
+          nav( './Partitions');
+          setLoggedIn( true );
+         } } />
       }
       {
         loggedIn && (
