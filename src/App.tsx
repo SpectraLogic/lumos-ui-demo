@@ -13,12 +13,24 @@ import { partitions as mockPartitions } from './assets/mock-data';
 
 function App() {
   const [partitions, setPartitions] = React.useState<IPartition[]>( mockPartitions );
-
+  const [loggedIn, setLoggedIn] = React.useState<boolean>( false ); 
   return (
-      <Nav 
-        partitionsRoot={ <Partitions partitions={ partitions } onPartitionsChange={ setPartitions }/> }
-        movesRoot={ <MovesManagement partitions={ partitions } /> }
-      />
+    <>
+      {
+        !loggedIn && <Login onLogin={ setLoggedIn.bind( undefined, true ) } />
+      }
+      {
+        loggedIn && (
+          <Nav 
+            partitionsRoot={ <Partitions partitions={ partitions } onPartitionsChange={ setPartitions }/> }
+            movesRoot={ <MovesManagement partitions={ partitions } /> }
+          />
+        )
+      }
+
+
+    </>
+
   );
 }
 
