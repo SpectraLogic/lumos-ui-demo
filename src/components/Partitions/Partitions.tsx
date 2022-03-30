@@ -66,6 +66,7 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
           <Routes>
             { props.partitions.map( partition  => (
               <Route
+                key={ partition.id }
                 path={ `/${partition.id.replace(' ', '-')}/*` }
                 element={ 
                   <PartitionDetail 

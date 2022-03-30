@@ -31,7 +31,7 @@ const BarcodeOptions: React.FunctionComponent<IBarcodeOptionsProps> = (props) =>
                             <InputLabel>Check sum behavior</InputLabel>
                             <Select value={ props.value.checkSumBehavior } onChange={ e => props.onValueChange({ ...props.value, checkSumBehavior: e.target.value as CheckSumBehavior })}>
                                 { [CheckSumBehavior.CHECK, CheckSumBehavior.IGNORE, CheckSumBehavior.NON].map( val => (
-                                    <MenuItem value={ val }> { val } </MenuItem>
+                                    <MenuItem key={ val } value={ val }> { val } </MenuItem>
                                 )) }
                             </Select>
                         </FormControl>
@@ -42,7 +42,7 @@ const BarcodeOptions: React.FunctionComponent<IBarcodeOptionsProps> = (props) =>
                             <Select 
                                 value={ props.value.truncationOption } onChange={ e => props.onValueChange({ ...props.value, truncationOption: e.target.value as TruncationOptions })} >
                                 { [TruncationOptions.LEFT, TruncationOptions.RIGHT].map( val => (
-                                    <MenuItem value={ val }> { val } </MenuItem>
+                                    <MenuItem key={ val } value={ val }> { val } </MenuItem>
                                 )) }
                             </Select>
                         </FormControl>
