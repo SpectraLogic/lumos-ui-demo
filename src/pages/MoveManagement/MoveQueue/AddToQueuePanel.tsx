@@ -12,11 +12,11 @@ interface IAddToQueuePanelProps {
 }
 
 const Root = styled( StackBase )`
-    height: 143px;
+    height: 153px;
     background-color: #A68AF9;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
-    padding: 18px 18px 18px 18px;
+    padding: 28px 18px 18px 18px;
 `;
 
 const Stack = styled( StackBase )`
@@ -64,7 +64,6 @@ const AddToQueuePanel: React.FunctionComponent<IAddToQueuePanelProps> = ({ sourc
   const selectionReady = !_.isUndefined( source ) && !_.isUndefined( destination );
 return(
     <Root spacing={ 2 }>
-        
         <Paper elevation={ selectionReady ? 3 : 0 }>
             {
                 selectionReady && (

@@ -27,8 +27,8 @@ const MoveQueue: React.FunctionComponent<IMoveQueueProps> = (props) => {
   return(
     <OverlapPanel
         isOpen
-        underSheetHeightPeek={ 163 }
-        underSheetHeightTotal={ 163 }
+        underSheetHeightPeek={ 183 }
+        underSheetHeightTotal={ 183 }
         overSheetElement={ 
             <>
                 <Tabs 

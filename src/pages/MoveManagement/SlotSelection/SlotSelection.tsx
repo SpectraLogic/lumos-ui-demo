@@ -18,7 +18,7 @@ const SlotSelection: React.FunctionComponent<ISlotSelectionProps> = (props) => {
 
   return (
       <OverlapPanel
-        underSheetHeightTotal={ 235 }
+        underSheetHeightTotal={ 255}
         underSheetHeightPeek={ 40 }
         underSheetElement={ <SlotFilter isOpen={ filterIsOpen }onHeaderClicked={ setFilterOpenState.bind( undefined, !filterIsOpen ) }/> }
         overSheetElement={ 
