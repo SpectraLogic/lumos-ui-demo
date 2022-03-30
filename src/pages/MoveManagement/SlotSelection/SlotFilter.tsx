@@ -1,5 +1,6 @@
 import { Input, Slider, Stack as BaseStack, SxProps, Typography } from '@mui/material';
 import * as React from 'react';
+import { Dispatch, SetStateAction } from 'react'
 import styled from 'styled-components';
 import { TextField as BaseTextField, Chip as BaseChip } from '@mui/material';
 import { ExpandMore, ExpandLess, FilterAlt, Search, Done, Check } from '@mui/icons-material'
@@ -12,6 +13,7 @@ interface ISlotFilterProps {
     isOpen: boolean
     onHeaderClicked: () => void
 		onChange: ( predicateFunc: ( slot: ITapeSlot ) => boolean ) => void
+		onResetChange: ( resetFunc: ( () => void ) | undefined  ) => void
 }
 
 const Root = styled.div`
@@ -116,6 +118,13 @@ const Stack = styled( BaseStack )`
 	padding: 0 10px, 0, 10px;
 `;
 
+const rangeDefault = [1, 500];
+const slotTypeFilterDefault = { 
+	[SlotType.DRIVE]: true,
+	[SlotType.EE]: true,
+	[SlotType.STORAGE]: true
+};
+
 const createFilterPredicate = ( searchText: string, range: [number, number], slotTypeFilter: { [type: string]: boolean } ) => {
 	return ( slot: ITapeSlot ) => {
 			const searchTextBool = _.values( slot ).map( value => value?.toString().toLowerCase().includes( searchText.toLowerCase() ) ).reduce( ( prev, curr ) => (prev || curr), false);
@@ -125,26 +134,32 @@ const createFilterPredicate = ( searchText: string, range: [number, number], slo
 	}
 }
 
-const testSlot: ITapeSlot = {
-	barcode: "abc123",
-	number: 69,
-	id: "poop",
-	type: SlotType.STORAGE,
-	location: "Frame 6"
-}
+const createResetFunc = ( 
+		searchText: string, 
+		range: [number, number],
+		slotTypeFilter: { [type: string]: boolean }, 
+		setSearchText: Dispatch<SetStateAction<string>>,
+		setRange: Dispatch<SetStateAction<[number, number]>>,
+		setSlotTypeFilter: Dispatch<SetStateAction<{ [type: string]: boolean }>> ) => {
+	if( searchText === "" && _.isEqual( range, rangeDefault ) && _.isEqual( slotTypeFilter, slotTypeFilterDefault ) )
+		return undefined
+	
+	return () => {
+		setSearchText("");
+		setRange( rangeDefault as [number, number] );
+		setSlotTypeFilter( slotTypeFilterDefault );
+	}
+} 
 
 const SlotFilter: React.FunctionComponent<ISlotFilterProps> = (props) => {
 	const [sliderCommits, setSliderCommits] = React.useState<number>(0);
 	const [searchText, setSearchText] = React.useState<string>("");
-	const [range, setRange] = React.useState<[number, number]>([1, 500]);
-	const [slotTypeFilter, setSlotTypeFilter] = React.useState<{ [type: string]: boolean }>({ 
-		[SlotType.DRIVE]: true,
-		[SlotType.EE]: true,
-		[SlotType.STORAGE]: true
-	});
+	const [range, setRange] = React.useState<[number, number]>( [rangeDefault[0], rangeDefault[1]] );
+	const [slotTypeFilter, setSlotTypeFilter] = React.useState<{ [type: string]: boolean }>( slotTypeFilterDefault );
 
 	React.useEffect( () => {
 		props.onChange( createFilterPredicate( searchText, range, slotTypeFilter ) );
+		props.onResetChange( createResetFunc( searchText, range, slotTypeFilter, setSearchText, setRange, setSlotTypeFilter ) );
 	}, [searchText, sliderCommits, slotTypeFilter]);
 
   return(
