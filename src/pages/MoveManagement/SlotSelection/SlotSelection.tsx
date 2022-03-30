@@ -14,16 +14,21 @@ interface ISlotSelectionProps {
 
 const SlotSelection: React.FunctionComponent<ISlotSelectionProps> = (props) => {
     const [filterIsOpen, setFilterOpenState] = React.useState( false );
-    //@todo handle filters
+    const [filterPredicate, setFilterPredicate] = React.useState( () => ( slot: ITapeSlot ) => true );
 
   return (
       <OverlapPanel
-        underSheetHeightTotal={ 255}
-        underSheetHeightPeek={ 40 }
-        underSheetElement={ <SlotFilter isOpen={ filterIsOpen }onHeaderClicked={ setFilterOpenState.bind( undefined, !filterIsOpen ) }/> }
+        underSheetHeightTotal={ 255 }
+        underSheetHeightPeek={ 35 }
+        underSheetElement={ 
+          <SlotFilter 
+            isOpen={ filterIsOpen }
+            onHeaderClicked={ setFilterOpenState.bind( undefined, !filterIsOpen ) }
+            onChange={ ( func ) => setFilterPredicate( () => func ) }
+            /> }
         overSheetElement={ 
           <SlotTable 
-            slots={ props.slots } 
+            slots={ props.slots.filter( filterPredicate ) } 
             selectionType={ props.selectionType }
             onSlotSelect={ props.onSlotSelect } /> 
           }
