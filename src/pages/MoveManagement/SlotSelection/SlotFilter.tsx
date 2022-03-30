@@ -138,19 +138,11 @@ const createResetFunc = (
 		searchText: string, 
 		range: [number, number],
 		slotTypeFilter: { [type: string]: boolean }, 
-		setSearchText: Dispatch<SetStateAction<string>>,
-		setRange: Dispatch<SetStateAction<[number, number]>>,
-		setSlotTypeFilter: Dispatch<SetStateAction<{ [type: string]: boolean }>>,
-		forceEffect: () => void ) => {
+		resetFunction: () => void ) => {
 	if( searchText === "" && _.isEqual( range, rangeDefault ) && _.isEqual( slotTypeFilter, slotTypeFilterDefault ) )
 		return undefined
 	
-	return () => {
-		setSearchText("");
-		setRange( rangeDefault as [number, number] );
-		setSlotTypeFilter( slotTypeFilterDefault );
-		forceEffect();
-	}
+	return resetFunction;
 } 
 
 const SlotFilter: React.FunctionComponent<ISlotFilterProps> = (props) => {
@@ -161,7 +153,12 @@ const SlotFilter: React.FunctionComponent<ISlotFilterProps> = (props) => {
 
 	React.useEffect( () => {
 		props.onChange( createFilterPredicate( searchText, range, slotTypeFilter ) );
-		props.onResetChange( createResetFunc( searchText, range, slotTypeFilter, setSearchText, setRange, setSlotTypeFilter, setSliderCommits.bind( undefined, sliderCommits+1 ) ) );
+		props.onResetChange( createResetFunc( searchText, range, slotTypeFilter, () => {
+			setSearchText("");
+			setRange( rangeDefault as [number, number] );
+			setSlotTypeFilter( slotTypeFilterDefault );
+			setSliderCommits( sliderCommits+1 );
+		} ) );
 	}, [searchText, sliderCommits, slotTypeFilter]);
 
   return(
