@@ -1,13 +1,19 @@
 import { Input, Slider, Stack as BaseStack, SxProps, Typography } from '@mui/material';
 import * as React from 'react';
+import { Dispatch, SetStateAction } from 'react'
 import styled from 'styled-components';
 import { TextField as BaseTextField, Chip as BaseChip } from '@mui/material';
-import { ExpandMore, ExpandLess, FilterAlt, Search, Done } from '@mui/icons-material'
+import { ExpandMore, ExpandLess, FilterAlt, Search, Done, Check } from '@mui/icons-material'
+import { ITapeSlot, SlotType } from '../../../interfaces/ITapeSlot';
+import * as _ from 'lodash';
+
 
 
 interface ISlotFilterProps {
     isOpen: boolean
     onHeaderClicked: () => void
+		onChange: ( predicateFunc: ( slot: ITapeSlot ) => boolean ) => void
+		onResetChange: ( resetFunc: ( () => void ) | undefined  ) => void
 }
 
 const Root = styled.div`
@@ -112,8 +118,52 @@ const Stack = styled( BaseStack )`
 	padding: 0 10px, 0, 10px;
 `;
 
+const rangeDefault = [1, 500];
+const slotTypeFilterDefault = { 
+	[SlotType.DRIVE]: true,
+	[SlotType.EE]: true,
+	[SlotType.STORAGE]: true
+};
+
+const createFilterPredicate = ( searchText: string, range: [number, number], slotTypeFilter: { [type: string]: boolean } ) => {
+	return ( slot: ITapeSlot ) => {
+			const searchTextBool = _.values( slot ).map( value => value?.toString().toLowerCase().includes( searchText.toLowerCase() ) ).reduce( ( prev, curr ) => (prev || curr), false);
+			const rangeBool = slot.number >= range[0] && slot.number <= range[1];
+			const typeBool = slotTypeFilter[slot.type];
+		return  searchTextBool! && rangeBool && typeBool;
+	}
+}
+
+const createResetFunc = ( 
+		searchText: string, 
+		range: [number, number],
+		slotTypeFilter: { [type: string]: boolean }, 
+		setSearchText: Dispatch<SetStateAction<string>>,
+		setRange: Dispatch<SetStateAction<[number, number]>>,
+		setSlotTypeFilter: Dispatch<SetStateAction<{ [type: string]: boolean }>>,
+		forceEffect: () => void ) => {
+	if( searchText === "" && _.isEqual( range, rangeDefault ) && _.isEqual( slotTypeFilter, slotTypeFilterDefault ) )
+		return undefined
+	
+	return () => {
+		setSearchText("");
+		setRange( rangeDefault as [number, number] );
+		setSlotTypeFilter( slotTypeFilterDefault );
+		forceEffect();
+	}
+} 
+
 const SlotFilter: React.FunctionComponent<ISlotFilterProps> = (props) => {
-	const [range, setRange] = React.useState<number []>([1, 500]);
+	const [sliderCommits, setSliderCommits] = React.useState<number>(0);
+	const [searchText, setSearchText] = React.useState<string>("");
+	const [range, setRange] = React.useState<[number, number]>( [rangeDefault[0], rangeDefault[1]] );
+	const [slotTypeFilter, setSlotTypeFilter] = React.useState<{ [type: string]: boolean }>( slotTypeFilterDefault );
+
+	React.useEffect( () => {
+		props.onChange( createFilterPredicate( searchText, range, slotTypeFilter ) );
+		props.onResetChange( createResetFunc( searchText, range, slotTypeFilter, setSearchText, setRange, setSlotTypeFilter, setSliderCommits.bind( undefined, sliderCommits+1 ) ) );
+	}, [searchText, sliderCommits, slotTypeFilter]);
+
   return(
       <Root>
         <Header onClick={ props.onHeaderClicked }>
@@ -135,20 +185,31 @@ const SlotFilter: React.FunctionComponent<ISlotFilterProps> = (props) => {
         <Content>
 					<TextField 
 						label="Search"
+						value={ searchText }
+						onChange={ e => setSearchText( e.target.value ) }
 						InputProps={{
 							endAdornment: <Search sx={{ color: '#fff' }}/>
 						}}
 					/>
 					<ChipContainerRoot>
 						<ChipContainer>
-							<Chip clickable label="Storage"/>	
-							<Chip clickable label="Drive"/>	
-							<Chip clickable label="Entry/Exit"/>	
+							{
+								[SlotType.STORAGE, SlotType.DRIVE, SlotType.EE].map( type => (
+									<Chip 
+										key={ type }
+										clickable	
+										label={ type }
+										icon={ slotTypeFilter[type] ? <Check/> : <></> } 
+										onClick={ setSlotTypeFilter.bind( undefined, { ...slotTypeFilter, [type]: !slotTypeFilter[type] }) }	
+									/>	
+								))
+							}
 						</ChipContainer>	
 					</ChipContainerRoot>
 					<Stack>
 						<Slider 
 							color='primary'
+							onChangeCommitted={ setSliderCommits.bind( undefined, sliderCommits+1 ) }
 							value={ [range[0]/5, range[1]/5] }
 							onChange={ (e, v) => {
 								const [a, b] = v as number[];
@@ -158,12 +219,26 @@ const SlotFilter: React.FunctionComponent<ISlotFilterProps> = (props) => {
 						<SliderDetail>
 							<SliderNumInput 
 								value={ range[0] }
+								inputProps={{ inputMode: 'numeric' }}
+								onChange={ e => {
+									if(_.isEmpty( e.target.value ) ) return;
+									const val = parseInt(e.target.value);
+									setRange([ val > range[1] ? range[1] : val, range[1] ]);
+									setSliderCommits( sliderCommits+1 );
+								} }
 							/>
 							<Typography variant='body2'>
 								Slot/Drive Range
 							</Typography>
 							<SliderNumInput 
 								value={ range[1] }
+								inputProps={{ inputMode: 'numeric' }}
+								onChange={ e => {
+									if(_.isEmpty( e.target.value ) ) return;
+									const val = parseInt(e.target.value);
+									setRange([ range[0], val < range[0] ? range[0] : val ]);
+									setSliderCommits( sliderCommits+1 );
+								} }
 							/>
 						</SliderDetail>
 					</Stack>

@@ -12,7 +12,7 @@ interface ISlotTableProps {
 }
 
 const DataGrid = styled( DataGridBase )`
-    border-radius: 8px 8px 16px 16px;
+    // border-radius: 8px 8px 16px 16px;
     & .MuiDataGrid-footerContainer {
         display: none;
     }
@@ -38,6 +38,7 @@ const destinationColumns: Array<GridColDef> = [
 const SlotTable: React.FunctionComponent<ISlotTableProps> = (props) => {
   return (
       <DataGrid
+        { ...props }
         columns={ props.selectionType === "source" ? sourceColumns : destinationColumns }
         rows={ props.slots }
         onRowClick={ ({ row }) => props.onSlotSelect( row as ITapeSlot ) }

@@ -12,7 +12,7 @@ interface IQueueTableProps {
 }
 
 const DataGrid = styled( DataGridBase )`
-    height: calc( 100% - 72px - 36.5px );
+    height: calc( 100% - 72px - 40.5px );
     & .MuiDataGrid-footerContainer{
         display: none;
     }
