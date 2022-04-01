@@ -1,8 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { BuildOutlined, InfoOutlined, SettingsApplicationsOutlined } from '@mui/icons-material';
+import { InfoOutlined, SettingsApplications } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { OuterSelection } from './Nav';
+import { ArrowsLateralIcon as ArrowsLateralIconBase } from '../Icons';
 
 interface INavOuterProps {
     selection: OuterSelection
@@ -35,6 +36,10 @@ const ItemIcon = styled.div`
     margin-bottom: 4px;
 `;
 
+const ArrowsLateralIcon = styled( ArrowsLateralIconBase )`
+    transform: translate( 5px, 7px );
+`;
+
 const NavOuter: React.FunctionComponent<INavOuterProps> = (props) => {
   return (
     <Background> 
@@ -57,7 +62,7 @@ const NavOuter: React.FunctionComponent<INavOuterProps> = (props) => {
             onClick={ props.onSelectionChange.bind( undefined, OuterSelection.Operations ) }
             >
             <ItemIcon>
-                <BuildOutlined />
+                <ArrowsLateralIcon />
             </ItemIcon>
             <Typography
                 align='center'
@@ -71,7 +76,7 @@ const NavOuter: React.FunctionComponent<INavOuterProps> = (props) => {
             onClick={ props.onSelectionChange.bind( undefined, OuterSelection.Config ) }
             >
             <ItemIcon>
-                <SettingsApplicationsOutlined />
+                <SettingsApplications />
             </ItemIcon>
             <Typography
                 align='center'
