@@ -70,7 +70,8 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
     React.useEffect( () => {
         if( state.issuedMoves.length < 1 ) return ;
         setTimeout( () => {
-            dispatch({ type: Actions.MOVE_COMPLETE, payload: { barcode: state.issuedMoves[0][0].barcode!, status: MoveStatus.Success  } })
+            const completionState = Math.random() > 0.20 ? MoveStatus.Success : MoveStatus.Fail;
+            dispatch({ type: Actions.MOVE_COMPLETE, payload: { barcode: state.issuedMoves[0][0].barcode!, status: completionState } })
         }, Math.random() * (12000 - 8000) + 8000 );
     }, [ state.issuedMoves ] )
 
