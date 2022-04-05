@@ -6,7 +6,7 @@ import { TextField as BaseTextField, Chip as BaseChip } from '@mui/material';
 import { ExpandMore, ExpandLess, FilterAlt, Search, Done, Check } from '@mui/icons-material'
 import { ITapeSlot, SlotType } from '../../../interfaces/ITapeSlot';
 import * as _ from 'lodash';
-
+import { motion, Variant } from 'framer-motion';
 
 
 interface ISlotFilterProps {
@@ -51,7 +51,7 @@ const Content = styled.div`
 	padding: 0 15px 0 15px;
 `;
 
-const TextField = styled(BaseTextField)({
+const TextField = styled( motion( BaseTextField ) )({
   width: '100%',
   '& label': {
     color: '#fff'
@@ -117,6 +117,11 @@ const Stack = styled( BaseStack )`
 	margin-top: 10px;
 	padding: 0 10px, 0, 10px;
 `;
+
+const searchBoxVariants: {[key: string]: Variant} = {
+	hide: { visibility: 'hidden' },
+	show: { visibility:'visible' }
+}
 
 const rangeDefault = [1, 500];
 const slotTypeFilterDefault = { 
@@ -184,6 +189,9 @@ const SlotFilter: React.FunctionComponent<ISlotFilterProps> = (props) => {
 						label="Search"
 						value={ searchText }
 						onChange={ e => setSearchText( e.target.value ) }
+						variants={ searchBoxVariants }
+						animate={ props.isOpen ? 'show' : 'hide' }
+						transition={{ type: "tween", delay: 0.11 }} 
 						InputProps={{
 							endAdornment: <Search sx={{ color: '#fff' }}/>
 						}}

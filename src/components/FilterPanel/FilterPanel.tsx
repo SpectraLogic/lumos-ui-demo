@@ -95,9 +95,7 @@ const StyledChip = styled( Chip )`
       color: #fff;
     }
   };
-
 `;
-
 
 const panelContentVariants: {[key: string]: Variant} = {
   hide: { visibility: 'hidden' },
