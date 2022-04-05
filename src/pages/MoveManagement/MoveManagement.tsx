@@ -112,6 +112,9 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                                 animate={{ opacity: 1 }}
                                 transition={{ type: 'tween', duration: 0.75 }}>     
                                     <Grid item xs={ 4 }>
+                                        <Typography variant='h4' sx={{ textAlign: 'center' }}>
+                                            Source
+                                        </Typography>
                                         <SlotSelection 
                                             selectionType='source'
                                             slots={ state.sourceSlots }
@@ -119,6 +122,9 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                                         />
                                     </Grid>
                                     <Grid item xs={ 4 }>
+                                        <Typography variant='h4' sx={{ textAlign: 'center' }}>
+                                            Destination
+                                        </Typography>
                                         <SlotSelection 
                                             selectionType='destination'
                                             slots={ state.destinationSlots }
@@ -126,6 +132,9 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                                         />
                                     </Grid>
                                     <Grid item xs={ 4 }>
+                                        <Typography variant='h4' sx={{ textAlign: 'center' }}>
+                                            Moves
+                                        </Typography>
                                         <MoveQueue 
                                             stagedMoves={ state.stagedMoves }
                                             issuedMoves={ state.issuedMoves }
