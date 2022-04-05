@@ -31,7 +31,7 @@ const Background = styled.div`
 `
 
 const BackgroundLeft = styled( AppBarBackgroundItem )`
-    border-bottom-left-radius: 16px;
+    border-bottom-left-radius: 8px;
     border-top-right-radius: 3px;
     flex-grow: 1;
 `
@@ -55,7 +55,7 @@ const BackgroundMiddle = styled.div`
 const BackgroundRight = styled ( AppBarBackgroundItem)`
     width: 14px;
     border-top-left-radius: 3px;
-    border-bottom-right-radius: 16px;
+    border-bottom-right-radius: 8px;
 `;
 
 

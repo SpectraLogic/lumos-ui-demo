@@ -30,8 +30,8 @@ const ListPanel = styled( motion(List) )`
     width: 100%;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
     background-color: #fff;
     box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.25);
 `;

@@ -12,13 +12,12 @@ interface ISlotTableProps {
 }
 
 const DataGrid = styled( DataGridBase )`
-    // border-radius: 8px 8px 16px 16px;
     & .MuiDataGrid-footerContainer {
         display: none;
     }
 
     & ::-webkit-scrollbar {
-        border-radius: 0px 0px 16px 0px;
+        border-radius: 0px 0px 8px 8px;
     }
 `;
 

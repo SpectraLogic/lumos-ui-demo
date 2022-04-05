@@ -20,8 +20,8 @@ const Root = styled.div`
     height: 265px;
     width: 100%;
     background-color: #A68AF9 ;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 `;
 
 const Header = styled.div<{ disabled?: boolean }>`
