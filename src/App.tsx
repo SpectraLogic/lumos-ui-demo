@@ -11,6 +11,7 @@ import MovesManagement from './pages/MoveManagement/MoveManagement';
 import IPartition from './interfaces/IPartition';
 import { partitions as mockPartitions } from './assets/mock-data';
 import { useNavigate } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 
 function App() {
   const [partitions, setPartitions] = React.useState<IPartition[]>( mockPartitions );
@@ -18,22 +19,22 @@ function App() {
   const nav = useNavigate();
   return (
     <>
-      {
-        !loggedIn && <Login onLogin={ () => {
-          nav( './Partitions');
-          setLoggedIn( true );
-         } } />
-      }
-      {
-        loggedIn && (
-          <Nav 
-            partitionsRoot={ <Partitions partitions={ partitions } onPartitionsChange={ setPartitions }/> }
-            movesRoot={ <MovesManagement partitions={ partitions } /> }
-          />
-        )
-      }
-
-
+      <AnimatePresence exitBeforeEnter>
+        {
+          !loggedIn && <Login onLogin={ () => {
+            nav( './Partitions/');
+            setLoggedIn( true );
+          } } />
+        }
+      </AnimatePresence>
+        {
+          loggedIn && (
+            <Nav 
+              partitionsRoot={ <Partitions partitions={ partitions } onPartitionsChange={ setPartitions }/> }
+              movesRoot={ <MovesManagement partitions={ partitions } /> }
+            />
+          )
+        }
     </>
 
   );

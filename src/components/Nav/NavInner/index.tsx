@@ -42,7 +42,7 @@ const NavInner: React.FunctionComponent<INavInnerProps> = ({ innerSelection, out
                 <ButtonList>
                     { [InnerSelection.Partitions, InnerSelection.MediaLifecycle, InnerSelection.NetworkSettings, InnerSelection.UserAccounts, InnerSelection.MediaEncryption, InnerSelection.Updates].map( (val, indx) => (
                             <ListButton
-                            to={ "./" + val }
+                            to={ "/" + val }
                             key={ indx }
                             selection={ innerSelection } 
                             which={ val }
