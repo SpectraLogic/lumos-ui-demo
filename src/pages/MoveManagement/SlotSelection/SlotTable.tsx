@@ -19,6 +19,14 @@ const DataGrid = styled( DataGridBase )`
     & ::-webkit-scrollbar {
         border-radius: 0px 0px 8px 8px;
     }
+
+    & .MuiDataGrid-cell:focus{
+        outline: none;
+    }
+
+    & .MuiDataGrid-row{
+        cursor: pointer; 
+    }
 `;
 
 const sourceColumns: Array<GridColDef> = [
