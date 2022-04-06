@@ -15,7 +15,7 @@ interface ISlotSelectionProps {
 
 const SlotTable = styled( SlotTableBase )<{ fitButton: boolean}>`
   border-radius: ${ ({ fitButton }) => fitButton ? 'none' : '8px 8px 8px 8px' };
-  height: ${ ({ fitButton }) => fitButton ? 'calc(100% - 40.5px)' : '100%' };
+  height: ${ ({ fitButton }) => fitButton ? 'calc(100% - 39px)' : '100%' };
 `
 
 const ResetFilterButton = styled( Button )`
