@@ -38,7 +38,7 @@ const columns: Array<GridColDef> = [
             case MoveStatus.Pending:
                 return <PendingActions />
             case MoveStatus.InProgress:
-                return <Cached  animate={{ rotate: 360 }} transition={{ repeat: Infinity, repeatDelay: 0, duration: 3 }}/>
+                return <Cached  animate={{ rotate: -360 }} transition={{ repeat: Infinity, repeatDelay: 0, duration: 3 }}/>
             case MoveStatus.Fail:
                 return <Report color='error' />
             case MoveStatus.Success: 
