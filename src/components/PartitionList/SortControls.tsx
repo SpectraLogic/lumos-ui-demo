@@ -43,11 +43,13 @@ const RightElements = styled.div`
 const StyledSortAscIcon = styled( SortAscIcon )`
     transform: scale( 0.75 );
     color: #979797;
+    overflow: visible;
 `;
 
 const StyledSortDescIcon = styled( SortDescIcon )`
     transform: scale( 0.75);
     color: #979797;
+    overflow: visible;
 `;
 
 const createPredicateFunction = ( direction: SortDirection, param: SortParam ) => {

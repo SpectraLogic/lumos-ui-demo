@@ -14,12 +14,12 @@ interface ISlotSelectionProps {
 }
 
 const SlotTable = styled( SlotTableBase )<{ fitButton: boolean}>`
-  border-radius: ${ ({ fitButton }) => fitButton ? 'none' : '8px 8px 16px 16px' };
-  height: ${ ({ fitButton }) => fitButton ? 'calc(100% - 40.5px)' : '100%' };
+  border-radius: ${ ({ fitButton }) => fitButton ? 'none' : '8px 8px 8px 8px' };
+  height: ${ ({ fitButton }) => fitButton ? 'calc(100% - 39px)' : '100%' };
 `
 
 const ResetFilterButton = styled( Button )`
-  border-radius: 0px 0px 16px 16px;
+  border-radius: 0px 0px 8px 8px;
 `; 
 
 const SlotSelection: React.FunctionComponent<ISlotSelectionProps> = (props) => {
@@ -29,6 +29,7 @@ const SlotSelection: React.FunctionComponent<ISlotSelectionProps> = (props) => {
 
   return (
       <OverlapPanel
+        { ...props }
         underSheetHeightTotal={ 255 }
         underSheetHeightPeek={ 35 }
         underSheetElement={ 

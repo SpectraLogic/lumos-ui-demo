@@ -6,7 +6,7 @@ import { TextField as BaseTextField, Chip as BaseChip } from '@mui/material';
 import { ExpandMore, ExpandLess, FilterAlt, Search, Done, Check } from '@mui/icons-material'
 import { ITapeSlot, SlotType } from '../../../interfaces/ITapeSlot';
 import * as _ from 'lodash';
-
+import { motion, Variant } from 'framer-motion';
 
 
 interface ISlotFilterProps {
@@ -20,8 +20,8 @@ const Root = styled.div`
     height: 265px;
     width: 100%;
     background-color: #A68AF9 ;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 `;
 
 const Header = styled.div<{ disabled?: boolean }>`
@@ -51,7 +51,7 @@ const Content = styled.div`
 	padding: 0 15px 0 15px;
 `;
 
-const TextField = styled(BaseTextField)({
+const TextField = styled( motion( BaseTextField ) )({
   width: '100%',
   '& label': {
     color: '#fff'
@@ -118,6 +118,11 @@ const Stack = styled( BaseStack )`
 	padding: 0 10px, 0, 10px;
 `;
 
+const searchBoxVariants: {[key: string]: Variant} = {
+	hide: { visibility: 'hidden' },
+	show: { visibility:'visible' }
+}
+
 const rangeDefault = [1, 500];
 const slotTypeFilterDefault = { 
 	[SlotType.DRIVE]: true,
@@ -138,19 +143,11 @@ const createResetFunc = (
 		searchText: string, 
 		range: [number, number],
 		slotTypeFilter: { [type: string]: boolean }, 
-		setSearchText: Dispatch<SetStateAction<string>>,
-		setRange: Dispatch<SetStateAction<[number, number]>>,
-		setSlotTypeFilter: Dispatch<SetStateAction<{ [type: string]: boolean }>>,
-		forceEffect: () => void ) => {
+		resetFunction: () => void ) => {
 	if( searchText === "" && _.isEqual( range, rangeDefault ) && _.isEqual( slotTypeFilter, slotTypeFilterDefault ) )
 		return undefined
 	
-	return () => {
-		setSearchText("");
-		setRange( rangeDefault as [number, number] );
-		setSlotTypeFilter( slotTypeFilterDefault );
-		forceEffect();
-	}
+	return resetFunction;
 } 
 
 const SlotFilter: React.FunctionComponent<ISlotFilterProps> = (props) => {
@@ -161,7 +158,12 @@ const SlotFilter: React.FunctionComponent<ISlotFilterProps> = (props) => {
 
 	React.useEffect( () => {
 		props.onChange( createFilterPredicate( searchText, range, slotTypeFilter ) );
-		props.onResetChange( createResetFunc( searchText, range, slotTypeFilter, setSearchText, setRange, setSlotTypeFilter, setSliderCommits.bind( undefined, sliderCommits+1 ) ) );
+		props.onResetChange( createResetFunc( searchText, range, slotTypeFilter, () => {
+			setSearchText("");
+			setRange( rangeDefault as [number, number] );
+			setSlotTypeFilter( slotTypeFilterDefault );
+			setSliderCommits( sliderCommits+1 );
+		} ) );
 	}, [searchText, sliderCommits, slotTypeFilter]);
 
   return(
@@ -187,6 +189,9 @@ const SlotFilter: React.FunctionComponent<ISlotFilterProps> = (props) => {
 						label="Search"
 						value={ searchText }
 						onChange={ e => setSearchText( e.target.value ) }
+						variants={ searchBoxVariants }
+						animate={ props.isOpen ? 'show' : 'hide' }
+						transition={{ type: "tween", delay: 0.11 }} 
 						InputProps={{
 							endAdornment: <Search sx={{ color: '#fff' }}/>
 						}}

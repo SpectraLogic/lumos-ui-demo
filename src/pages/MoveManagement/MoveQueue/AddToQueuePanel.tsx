@@ -14,8 +14,8 @@ interface IAddToQueuePanelProps {
 const Root = styled( StackBase )`
     height: 153px;
     background-color: #A68AF9;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     padding: 28px 18px 18px 18px;
 `;
 

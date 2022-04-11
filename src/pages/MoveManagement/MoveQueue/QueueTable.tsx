@@ -12,16 +12,16 @@ interface IQueueTableProps {
 }
 
 const DataGrid = styled( DataGridBase )`
-    height: calc( 100% - 72px - 40.5px );
+    height: calc( 100% - 72px - 39px );
     & .MuiDataGrid-footerContainer{
         display: none;
     }
 `;
 
 const ButtonGroup = styled( ButtonGroupBase )`
-    border-radius: 0 0 16px 16px;
+    border-radius: 0 0 8px 8px;
     & button {
-        border-radius: 0 0 16px 16px;
+        border-radius: 0 0 8px 8px;
     }
 `;
 

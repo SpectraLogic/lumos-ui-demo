@@ -22,6 +22,8 @@ import SoftLoad from './FieldComponents/SoftLoad';
 import RoboticLoadBalancing from './FieldComponents/RoboticLoadBalancing';
 import MediaZoning from './FieldComponents/MediaZoning';
 import AdvancedSettingsWarning from './Dialogs/AdvancedSettingsWarning';
+import { motion } from 'framer-motion';
+import { fadeInOutProps } from '../../assets/motion';
 
 interface IPartitionDetailProps {
     availablePartitions: Array<IPartition>
@@ -30,11 +32,11 @@ interface IPartitionDetailProps {
     onChange: ( partition: IPartition ) => void
 }
 
-const Root = styled.div`
+const Root = styled( motion.div )`
     width: 100%; 
     height: 100%;
     background-color: #fff;
-    border-radius: 16px;
+    border-radius: 8px;
 `;
 
 const Header = styled.div`
@@ -116,8 +118,9 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
         "Cleaning Partition": cleaningPartition,
         [PartitionFields.MLMVerification]: mlmVerification
     } = props.partition;
+    
     return (
-      <Root>
+      <Root { ...fadeInOutProps }  >
         <Header>
             <HeaderLeft>
                 <Name 

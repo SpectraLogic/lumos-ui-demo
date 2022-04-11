@@ -16,8 +16,8 @@ const Root = styled( motion.div )<{ disabled?: boolean }>`
     height: 190px;
     width: 100%;
     background-color: ${ (props) => props.disabled ? '#c3aeff' : '#A68AF9' };
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 `;
 
 const rootAnimVariants: { [key: string]: Variant } = {
@@ -95,9 +95,7 @@ const StyledChip = styled( Chip )`
       color: #fff;
     }
   };
-
 `;
-
 
 const panelContentVariants: {[key: string]: Variant} = {
   hide: { visibility: 'hidden' },
