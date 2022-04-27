@@ -7,6 +7,7 @@ import { ExpandMore, ExpandLess, FilterAlt, Search, Done, Check } from '@mui/ico
 import { ITapeSlot, SlotType } from '../../../interfaces/ITapeSlot';
 import * as _ from 'lodash';
 import { motion, Variant } from 'framer-motion';
+import { BaseTheme } from '../../../assets/theme';
 
 
 interface ISlotFilterProps {
@@ -16,10 +17,10 @@ interface ISlotFilterProps {
 		onResetChange: ( resetFunc: ( () => void ) | undefined  ) => void
 }
 
-const Root = styled.div`
+const Root = styled.div<{ theme: BaseTheme }>`
     height: 265px;
     width: 100%;
-    background-color: #A68AF9 ;
+    background-color: ${ ({theme}) => theme.colors.primaryMain };
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 `;
@@ -89,7 +90,8 @@ const ChipContainer = styled.div`
 
 const Chip = styled( BaseChip )`
   background-color: #fff;
-	transform: scale( 1.33 );
+  border-radius: 4px;
+	// transform: scale( 1.33 );
   &:hover{
     color: #fff;
     border: 1px solid #fff;
@@ -115,7 +117,7 @@ const SliderNumInput = styled( TextField )`
 
 const Stack = styled( BaseStack )`
 	margin-top: 10px;
-	padding: 0 10px, 0, 10px;
+	padding: 0 10px 0 10px;
 `;
 
 const searchBoxVariants: {[key: string]: Variant} = {
@@ -213,7 +215,7 @@ const SlotFilter: React.FunctionComponent<ISlotFilterProps> = (props) => {
 					</ChipContainerRoot>
 					<Stack>
 						<Slider 
-							color='primary'
+							color='secondary'
 							onChangeCommitted={ setSliderCommits.bind( undefined, sliderCommits+1 ) }
 							value={ [range[0]/5, range[1]/5] }
 							onChange={ (e, v) => {

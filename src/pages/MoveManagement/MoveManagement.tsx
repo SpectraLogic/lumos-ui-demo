@@ -11,7 +11,7 @@ import { ITapeSlot } from '../../interfaces/ITapeSlot';
 import MoveQueue from './MoveQueue/MoveQueue';
 import { Actions, IMoveMgmtState, MoveStatus, reducer } from './redux';
 import * as _ from 'lodash'
-import { random } from 'lodash';
+import { partition, random } from 'lodash';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 
 
@@ -189,7 +189,7 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                                     </Background>
                                     <Button 
                                     fullWidth 
-                                    color='info'
+                                    color='primary'
                                     onClick={ () => navigate( '../Move-Media' ) }
                                     variant='contained'
                                     initial={{ opacity: 0 }}

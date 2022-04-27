@@ -4,12 +4,10 @@ import  FieldAccordion  from '../FieldAccordion';
 import PartitionFields from '../PartitionFields';
 import styled from 'styled-components';
 import { Grid, Typography, Divider, Switch, FormGroup as BaseFormGroup, FormControlLabel } from '@mui/material';
+import { ValueText } from '../FieldAccordion';
 interface ISlotIQProps extends PartitionFieldProps<boolean> {
 }
 
-const ValueText = styled.span`
-    color: #A68AF9;
-`;
 
 const SwitchContainer = styled.div`
   display: flex;

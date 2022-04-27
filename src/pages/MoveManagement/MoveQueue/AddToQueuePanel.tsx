@@ -4,6 +4,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { ITapeSlot, SlotType } from '../../../interfaces/ITapeSlot';
 import * as _ from 'lodash';
+import { BaseTheme } from '../../../assets/theme';
 
 interface IAddToQueuePanelProps {
     source?: ITapeSlot,
@@ -11,9 +12,9 @@ interface IAddToQueuePanelProps {
     onConfirmAdd: () => void
 }
 
-const Root = styled( StackBase )`
+const Root = styled( StackBase )<{ theme: BaseTheme }>`
     height: 153px;
-    background-color: #A68AF9;
+    background-color: ${ ({theme}) => theme.colors.primaryMain };
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     padding: 28px 18px 18px 18px;

@@ -19,17 +19,17 @@ const StyledButton = styled(Button)`
     text-transform: none;
     font-weight: bold;
     box-shadow: none;
-    background-color: ${ ({selected}) => selected ? '#000' : '#fff' };
+    background-color: ${ ({selected}) => selected ? undefined : '#fff' };
     color: ${ ({selected}) => selected ? '#fff' : '#000' };
     &:hover{
         box-shadow: none;
-        background-color: ${ ({selected}) => selected ? '#000' : '#fff' };
+        background-color: ${ ({selected}) => selected ? undefined : '#fff' };
     }
 `;
 
 // const ButtonIcon: React.FunctionComponent<{ selected: boolean, which: InnerSelection}> = (props) =>{
 const ButtonIcon = (props) =>{
-    const iconProps =  { htmlColor: props.selected ? '#fff' : '#000' } ;
+    const iconProps =  { htmlColor: props.selected ? '#fff' : '#000' };
 
     // const iconProps: SvgIconProps =  { htmlColor: props.selected ? '#fff' : '#000' } ;
     switch( props.which ){
@@ -73,6 +73,7 @@ const ListButton = (props) => {
         to={ props.to }
         component={ Link }
         { ...props }
+        color={ match ? 'primary' : undefined }
         selected={ match ? true : false }
         startIcon={ <ButtonIcon which={ props.which } selected={ match ? true : false } /> }
         variant='contained'> 

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Typography, Zoom, } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import { motion, Variant } from 'framer-motion';
+import { BaseTheme } from '../../assets/theme';
 
 interface IFieldAccordionProps {
     panelTitle: PartitionFields;
@@ -37,8 +38,9 @@ const DetailsDivider = styled( Divider )`
     margin-bottom: 10px;
 `;
 
-export const ValueText = styled.span`
-    color: #A68AF9;
+export const ValueText = styled.span<{ theme: BaseTheme }>`
+    color: ${ ({ theme }) => theme.colors.primaryMain };
+    font-style: italic;
 `;
 
 export const CenteredText = styled( Typography )`

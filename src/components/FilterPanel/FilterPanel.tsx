@@ -1,9 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { motion, Variant } from 'framer-motion'; 
-import { SxProps, Typography, OutlinedInput, InputBase, TextField, Chip } from '@mui/material';
+import { SxProps, Typography, OutlinedInput, InputBase, TextField, Chip, Paper } from '@mui/material';
 import { ExpandMore, ExpandLess, FilterAlt, Search, Done } from '@mui/icons-material'
 import IPartition from '../../interfaces/IPartition';
+import { BaseTheme, baseTheme } from '../../assets/theme';
 
 interface IFilterPanelProps {
     panelIsOpen: boolean
@@ -12,17 +13,18 @@ interface IFilterPanelProps {
     disabled?: boolean
 }
 
-const Root = styled( motion.div )<{ disabled?: boolean }>`
+const Root = styled( motion( Paper ) )<{ theme: BaseTheme, disabled?: boolean }>`
     height: 190px;
     width: 100%;
-    background-color: ${ (props) => props.disabled ? '#c3aeff' : '#A68AF9' };
+    background-color: ${ ({ theme }) => theme.colors.primaryMain };
+    // background-color: ${ (props) => props.disabled ? '#c3aeff' : '#A68AF9' };
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 `;
 
 const rootAnimVariants: { [key: string]: Variant } = {
-  hover: { backgroundColor: '#916DFB' },
-  disabled: { backgroundColor: '#c3aeff' }
+  hover: { backgroundColor: baseTheme.colors.primaryDark },
+  disabled: { }
 }
 
 const PanelHeader = styled.div<{ disabled?: boolean }>`
@@ -88,6 +90,7 @@ const ChipContainer = styled.div`
 
 const StyledChip = styled( Chip )`
   background-color: #fff;
+  border-radius: 4px;
   &:hover{
     color: #fff;
     border: 1px solid #fff;
@@ -119,6 +122,7 @@ const FilterPanel: React.FunctionComponent<IFilterPanelProps> = (props) => {
 
   return(
     <Root 
+      color='primary'
       disabled={ props.disabled }
       whileHover={ props.disabled ? 'disabled' : 'hover'}
       variants={ rootAnimVariants }>

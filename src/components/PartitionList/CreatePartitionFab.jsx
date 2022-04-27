@@ -12,10 +12,10 @@ const BaseFab = styled( Fab )`
 `;
 
 const CreateFab = styled( BaseFab )`
-    background: #A68AF9;
-    &:hover{
-        background: #916DFB;
-    }
+    // background: #A68AF9;
+    // &:hover{
+    //     background: #916DFB;
+    // }
 `;
 
 const CancelFab = styled( BaseFab )`
@@ -42,6 +42,7 @@ export default function CreatePartitionFab ( props ) {
             <Zoom
                 in={ !createPartitionMatch } unmountOnExit>
                 <CreateFab
+                    color='success'
                     to={ props.createPartitionLink }
                     component={ Link }>
                     <StyledPartitionAddIcon 
@@ -54,7 +55,7 @@ export default function CreatePartitionFab ( props ) {
                     to='/Partitions'
                     component={ Link }>
                         <StyledCloseIcon color='#fff' />
-                    </CancelFab>
+                </CancelFab>
             </Zoom>
         </>
 

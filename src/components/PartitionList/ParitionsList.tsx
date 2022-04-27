@@ -10,6 +10,7 @@ import ActionBar from './ActionBar';
 import { useResolvedPath, useMatch, To } from 'react-router-dom';
 import SortControls from './SortControls';
 import _ from 'lodash';
+import { BaseTheme } from '../../assets/theme';
 
 export interface IPartitionsListProps {
     partitions: IPartition[]
@@ -55,11 +56,11 @@ const StyledActionBar = styled( ActionBar )`
     bottom: 0px;
 `
 
-const NewPartitionItemBackground = styled( motion.div )`
+const NewPartitionItemBackground = styled( motion.div )<{ theme: BaseTheme }>`
     position: absolute;
     height: 72px;
     color: #fff;
-    background-color: #A68AF9;
+    background-color: ${ ({ theme }) => theme.colors.primaryMain };
     width: 100%;
 `
 
