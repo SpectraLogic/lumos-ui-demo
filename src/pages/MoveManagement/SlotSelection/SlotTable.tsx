@@ -31,7 +31,7 @@ const DataGrid = styled( DataGridBase )`
 
 const sourceColumns: Array<GridColDef> = [
     { field: 'type', headerName: 'Type'},
-    { field: 'number', headerName: 'Number' },
+    { field: 'number', headerName: 'Number', flex: 1 },
     { field: 'barcode', headerName: 'Barcode', flex: 1 },
     { field: 'location', headerName: 'Location' }
 ];
