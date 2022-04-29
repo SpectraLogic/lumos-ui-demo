@@ -43,7 +43,7 @@ const ButtonContainer = styled.div`
     padding: 0 20px 0 20px;
 `;
 
-const SlotIcon: React.FunctionComponent<{ type: "Drive" | "Storage" | "Entry/Exit" }> = ( {type} ) => {
+const SlotIcon: React.FunctionComponent<{ type?: "Drive" | "Storage" | "Entry/Exit" }> = ( {type} ) => {
     const props = { sx: { alignSelf: "center", color: '#979797' } };
     switch( type ){
         case "Storage":
@@ -52,6 +52,8 @@ const SlotIcon: React.FunctionComponent<{ type: "Drive" | "Storage" | "Entry/Exi
             return <Input { ...props } />
         case "Drive":
             return <Computer { ...props } />
+        default: 
+            return <QuestionMark { ...props } /> 
     }
 }
 
@@ -66,31 +68,35 @@ const AddToQueuePanel: React.FunctionComponent<IAddToQueuePanelProps> = ({ sourc
 return(
     <Root spacing={ 2 }>
         <Paper elevation={ selectionReady ? 3 : 0 }>
-            {
-                selectionReady && (
                     <>
                         <Stack>
-                            <SlotIcon type={ source!.type } />
+                            <SlotIcon type={  source ? source!.type : undefined } />
                             <Typography { ...typographyProps }> 
-                                { source?.type }&nbsp;{ source?.number }
+                                { source ? `${source?.type}${ source?.number }` : 'Source' } 
                             </Typography>
                         </Stack>
                         <Stack>
-                            <Typography { ...typographyProps }> 
-                                { source.barcode }
-                            </Typography>
-                            <ArrowIcon sx={{ color: '#979797' }}/>
+                            {
+                                source && (
+                                <>
+                                    <Typography { ...typographyProps }> 
+                                        { source ? `${source.barcode}` : ` ` }
+                                    </Typography>
+                                    <ArrowIcon sx={{ color: '#979797' }}/>
+                                </>
+                                )
+                            }
+
                         </Stack>
                         <Stack>
-                            <SlotIcon type={ destination!.type } />
+                            <SlotIcon type={ destination ? destination!.type : undefined } />
                             <Typography { ...typographyProps }> 
-                                { destination.type }&nbsp;{ destination.number }
+                                { destination ? `${destination.type }  ${ destination.number }` : 'Destination' } 
                             </Typography>
                         </Stack> 
                     </>
-                 )
-            }
-            {
+
+            {/* {
                 !selectionReady && (
                     <>
                         <Stack>
@@ -117,8 +123,7 @@ return(
                         </Stack>
                     </>
                 )
-              
-            }
+            } */}
         </Paper>
         <ButtonContainer>
             <Button 

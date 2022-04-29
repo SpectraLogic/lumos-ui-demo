@@ -46,12 +46,12 @@ export function LoginForm (props: ILoginFormProps) {
           <LogoImg src={ SpectraLogo }/>
         </Container>
         <Form>
-          <LoginInput label='Username' variant='outlined' />
+          <LoginInput label='User' variant='outlined' />
           <br/>
           <br/>
           <br/>
           <br/>
-          <LoginInput label='Password' variant='outlined' />
+          <LoginInput label='Password' variant='outlined' type="password" />
           <br/>
           <br/>
           <br/>
