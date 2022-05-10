@@ -12,9 +12,9 @@ export interface BaseTheme {
 
 const baseTheme: BaseTheme = {
     colors: {
-        primaryLight: blueGrey[200],
-        primaryMain: blueGrey[600],
-        primaryDark: blueGrey[800],
+        primaryLight: '#4A4A4A',
+        primaryMain: '#242424',
+        primaryDark: '1A1A1A',
         contrastText: '#fff'
     }
 }

@@ -9,6 +9,8 @@ import IPartition, { MediaType } from '../../interfaces/IPartition';
 import { MoveManagement } from '../../pages';
 import Login from '../Login';
 import { motion, AnimatePresence } from 'framer-motion';
+import OverlapPanel from '../OverlapPanel/OverlapPanel';
+import NavSheet from './NavSheet/NavSheet';
 
 interface INavProps {
    partitionsRoot: React.ReactElement
@@ -56,13 +58,13 @@ export enum InnerSelection {
   UserAccounts = "User-Accounts",
   MediaEncryption = "Media-Encryption",
   Updates = "Updates"
-
 }
 
 
 const Nav: React.FunctionComponent<INavProps> = (props) => {
   const [outerSelectionState, setOuterSelectionState] = React.useState( OuterSelection.Config );
   const [innerSelectionState, setInnerSelectionstate] = React.useState( InnerSelection.Partitions );
+  const [navPanelIsOpen, setNavPanelIsOpen] = React.useState( false );
   const location = useLocation();
 
   return(
@@ -71,29 +73,46 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
         animate={{ display: '', opacity: 1, transition: { delay: 1.66 } }}
         transition={{ type: 'tween', duration: 1 }}
       >
-        <StyledNavBar/>
+        <OverlapPanel
+          squishOversheet={ false }
+          isOpen={ navPanelIsOpen }
+          underSheetHeightPeek={ 60 }
+          underSheetHeightTotal={ 465 }
+          underSheetElement={ 
+            <NavSheet 
+              isOpen={ navPanelIsOpen }
+              onOpenToggle={ () => setNavPanelIsOpen( !navPanelIsOpen ) }
+              location={ innerSelectionState } 
+            /> }
+          overSheetElement={ 
+            <>
+            <Outlet />
+              <Routes >
+                <Route path={`/${InnerSelection.Partitions}/*`} element={ props.partitionsRoot } />
+                <Route path={`/${InnerSelection.MediaLifecycle}`} element={<p> Display Component </p> } />
+                <Route path={`/${InnerSelection.ImportExport}`} element={<p> Display Component </p> } />
+                <Route path={`/${InnerSelection.ManageDrives}`} element={<p> Display Component </p> } />
+                <Route path={`/${InnerSelection.RunTests}`} element={<p> Display Component </p> } />
+                <Route path={`/${InnerSelection.UserAccounts}`} element={<p> Display Component </p> } />
+                <Route path={`/${InnerSelection.NetworkSettings}`} element={<p> Display Component </p> } />
+                <Route path={`/${InnerSelection.Updates}`} element={<p> Display Component </p> } />
+                <Route path={`/${InnerSelection.MoveMedia}/*`} element={ props.movesRoot } />
+                <Route path={`/${InnerSelection.MediaEncryption}`} element={<p> Display Component </p> } />
+              </Routes>
+            </>
+          }
+        /> 
+        {/* <StyledNavBar/> */}
         
-        <NavWrapper>
-          <NavOuter selection={ outerSelectionState } onSelectionChange={ setOuterSelectionState }  />
+        {/* <NavWrapper> */}
+          {/* <NavOuter selection={ outerSelectionState } onSelectionChange={ setOuterSelectionState }  />
           <NavInner
             outerSelection={ outerSelectionState }
             innerSelection={ innerSelectionState }
             onInnerSelectionChange={ setInnerSelectionstate }
-          />
-          <Outlet />
-            <Routes >
-              <Route path={`/${InnerSelection.Partitions}/*`} element={ props.partitionsRoot } />
-              <Route path={`/${InnerSelection.MediaLifecycle}`} element={<p> Display Component </p> } />
-              <Route path={`/${InnerSelection.ImportExport}`} element={<p> Display Component </p> } />
-              <Route path={`/${InnerSelection.ManageDrives}`} element={<p> Display Component </p> } />
-              <Route path={`/${InnerSelection.RunTests}`} element={<p> Display Component </p> } />
-              <Route path={`/${InnerSelection.UserAccounts}`} element={<p> Display Component </p> } />
-              <Route path={`/${InnerSelection.NetworkSettings}`} element={<p> Display Component </p> } />
-              <Route path={`/${InnerSelection.Updates}`} element={<p> Display Component </p> } />
-              <Route path={`/${InnerSelection.MoveMedia}/*`} element={ props.movesRoot } />
-              <Route path={`/${InnerSelection.MediaEncryption}`} element={<p> Display Component </p> } />
-            </Routes>
-        </NavWrapper>
+          /> */}
+
+        {/* </NavWrapper> */}
       </Wrapper>
   );
 };

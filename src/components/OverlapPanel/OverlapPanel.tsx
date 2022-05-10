@@ -8,6 +8,7 @@ interface IOverlapPanelProps {
     underSheetElement: React.ReactElement;
     overSheetElement: React.ReactElement;
     isOpen: boolean;
+    squishOversheet?: boolean
 }
 
 const Root = styled.div`
@@ -33,12 +34,13 @@ const UnderSheet = styled.div<{ height: number }>`
     width: 100%;
 `;
 
-const getOverSheetMotionVariants = ( peekHeight: number, totHeight: number ) => ({
-    open: { y: -10, height: `calc( 100% - ${ totHeight }px )` },
+const getOverSheetMotionVariants = ( peekHeight: number, totHeight: number, squish: boolean ) => ({
+    open: { y: -10 , height: squish ? `calc( 100% - ${ totHeight }px )` : undefined },
     closed: { y: -(totHeight - peekHeight - 10), height: `calc( 100% - ${ peekHeight + 20 }px )` }
 })
  
 const OverlapPanel: React.FunctionComponent<IOverlapPanelProps> = (props) => {
+    const squish = props.squishOversheet === undefined ? true : props.squishOversheet;
   return(
       <Root>
         <UnderSheet height={ props.underSheetHeightTotal }>
@@ -46,7 +48,7 @@ const OverlapPanel: React.FunctionComponent<IOverlapPanelProps> = (props) => {
         </UnderSheet>
         <OverSheet
             initial={ false }
-            variants={ getOverSheetMotionVariants( props.underSheetHeightPeek, props.underSheetHeightTotal ) }
+            variants={ getOverSheetMotionVariants( props.underSheetHeightPeek, props.underSheetHeightTotal, squish ) }
             animate={ props.isOpen ? 'open' : 'closed' }
             transition={{ type: 'tween' }}>
                 { props.overSheetElement }
