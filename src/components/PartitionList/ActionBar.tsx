@@ -5,6 +5,7 @@ import { PartitionAddIcon } from '../Icons'
 import { motion } from 'framer-motion';
 import { To, useResolvedPath, useMatch, Link } from 'react-router-dom';
 import  CreatePartitionFab  from './CreatePartitionFab';
+import { BaseTheme } from '../../assets/theme';
  
 
 interface IActionBarProps {
@@ -17,9 +18,9 @@ const Root = styled.div`
     width: 100%;
 `;
 
-const AppBarBackgroundItem = styled.div`
+const AppBarBackgroundItem = styled.div<{ theme: BaseTheme }>`
     height: 56px;
-    background: #263238;
+    background-color: ${ ({ theme }) => theme.colors.primaryMain };
 `;
 
 const Background = styled.div`
@@ -36,7 +37,7 @@ const BackgroundLeft = styled( AppBarBackgroundItem )`
     flex-grow: 1;
 `
 
-const BackgroundMiddle = styled.div`
+const BackgroundMiddle = styled.div<{ theme: BaseTheme }>`
     position: relative;
     overflow: hidden;
     width: 72px;
@@ -48,7 +49,7 @@ const BackgroundMiddle = styled.div`
         width: 100%;
         height:100%;
         border-radius:100%;
-        box-shadow: 0px 300px 0px 300px #263238;
+        box-shadow: 0px 300px 0px 300px ${ ({ theme }) => theme.colors.primaryMain };
     }
 `;
 

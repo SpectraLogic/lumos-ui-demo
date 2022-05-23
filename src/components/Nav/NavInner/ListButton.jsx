@@ -13,23 +13,23 @@ import { Link, LinkProps, useMatch, useResolvedPath, To } from 'react-router-dom
 
 // const StyledButton = styled(Button)<{selected: boolean}>`
 const StyledButton = styled(Button)`
-    height: 40px;
+    height: 60px;
     width: 100%;
     justify-content: left; 
     text-transform: none;
     font-weight: bold;
     box-shadow: none;
-    background-color: ${ ({selected}) => selected ? undefined : '#fff' };
-    color: ${ ({selected}) => selected ? '#fff' : '#000' };
+    // background-color: ${ ({selected}) => selected ? undefined : '#fff' };
+    color: ${ ({selected}) => selected ? '#89ED5B' : '#fff' };
     &:hover{
         box-shadow: none;
-        background-color: ${ ({selected}) => selected ? undefined : '#fff' };
+        background-color: ${ ({selected}) => selected ? undefined : undefined };
     }
 `;
 
 // const ButtonIcon: React.FunctionComponent<{ selected: boolean, which: InnerSelection}> = (props) =>{
 const ButtonIcon = (props) =>{
-    const iconProps =  { htmlColor: props.selected ? '#fff' : '#000' };
+    const iconProps =  { htmlColor: props.selected ? '#89ED5B' : '#fff' };
 
     // const iconProps: SvgIconProps =  { htmlColor: props.selected ? '#fff' : '#000' } ;
     switch( props.which ){
@@ -73,7 +73,8 @@ const ListButton = (props) => {
         to={ props.to }
         component={ Link }
         { ...props }
-        color={ match ? 'primary' : undefined }
+        // color={ match ? 'pri' : undefined }
+        color='primary'
         selected={ match ? true : false }
         startIcon={ <ButtonIcon which={ props.which } selected={ match ? true : false } /> }
         variant='contained'> 

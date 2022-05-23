@@ -1,12 +1,13 @@
 import { ThemeOptions } from "@mui/material";
-import { blueGrey, grey } from "@mui/material/colors";
+import { blueGrey, green } from "@mui/material/colors";
 
 export interface BaseTheme {
     colors: {
         primaryLight: string
         primaryMain: string,
         primaryDark: string,
-        contrastText: string
+        contrastText: string,
+        secondaryMain: string
     }
 }
 
@@ -15,7 +16,8 @@ const baseTheme: BaseTheme = {
         primaryLight: '#4A4A4A',
         primaryMain: '#242424',
         primaryDark: '1A1A1A',
-        contrastText: '#fff'
+        contrastText: '#fff',
+        secondaryMain: '#00e676'
     }
 }
 
@@ -27,7 +29,7 @@ const muiTheme: ThemeOptions = {
             dark: baseTheme.colors.primaryDark,
             contrastText: baseTheme.colors.contrastText
         },
-        secondary: grey
+        secondary: green
     }
 }
 

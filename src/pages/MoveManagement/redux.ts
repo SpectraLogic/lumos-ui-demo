@@ -28,7 +28,8 @@ export enum Actions {
     DISCARD_QUEUE,
     MOVE_COMPLETE,
     DISCARD_COMPLETED,
-    DISCARD_MOVE
+    DISCARD_MOVE,
+    DISCARD_SELECTION
 }
 
 // { type: Actions, payload?: ITapeSlot | { barcode: string, status: MoveStatus}
@@ -102,6 +103,8 @@ export const reducer: Reducer<IMoveMgmtState, { type: Actions, payload?: ITapeSl
                 sourceSlots: [ ...state.sourceSlots, source],
                 destinationSlots: [ ...state.destinationSlots, destination ]
             }
+        case Actions.DISCARD_SELECTION: 
+            return _.omit( state, "source", "destination" );
         default: 
             return state;
     }

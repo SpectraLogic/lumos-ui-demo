@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Grid, Zoom } from '@mui/material';
+import { Grid, Zoom, Stack, Typography } from '@mui/material';
+import { PartitionIcon as PartitionIconBase } from '../../components/Icons';
 import PartitionsList, { IPartitionsListProps } from '../PartitionList/ParitionsList';
 import { Routes, Route, Outlet, useResolvedPath, useMatch, useLocation } from 'react-router-dom'; 
 import IPartition, { CheckSumBehavior, MediaType, TruncationOptions } from '../../interfaces/IPartition';
@@ -18,6 +19,7 @@ const Root = styled.div`
   height: 100%;
   width: 100%;
   background-color: #f0f0f0;
+  border-radius: 10px 10px;
 `;
 
 const Background = styled( motion( Grid ) )`
@@ -26,6 +28,29 @@ const Background = styled( motion( Grid ) )`
   position: relative;
   padding: 10px;
 `;
+
+const SelectPartition = styled( Stack )`
+    position: absolute;
+    align-item: center;
+    width: 100%;
+    top: 50%;
+    transform: translateY( -50% );
+`;
+
+const SelectPartitionContainer = styled.div`
+    height: 100%;
+    position: relative;
+`;
+
+const PartitionIcon = styled( PartitionIconBase )`
+    height: 240px;
+    width: 240px;
+    transform: scale(1);
+    color: #979797;
+    align-self: center;
+    transform: translateX( 45px );
+`;
+
 
 const createPartitionLink: string = "/Partitions/create"
 
@@ -107,6 +132,19 @@ const Partitions: React.FunctionComponent<IPartitionsProps> = (props) => {
                         partitionId={ DEFAULT_PARTITION.id }
                         partition={ DEFAULT_PARTITION }
                       />
+                    }
+                  />
+                  <Route 
+                    index
+                    element={ 
+                    <SelectPartitionContainer>
+                        <SelectPartition spacing={ 2 } >
+                            <Typography sx={{ alignSelf: "center", color: "#979797" }} variant='h2'>
+                                Select Partition
+                            </Typography>
+                            <PartitionIcon />
+                        </SelectPartition> 
+                    </SelectPartitionContainer>
                     }
                   />
                 </Routes>

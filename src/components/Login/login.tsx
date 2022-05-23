@@ -33,7 +33,7 @@ const rootVariants: Variants = {
 }; 
 
 const loginFormVariants: Variants = {
-  hidden: { opacity: 0, y: '-50%', x: '50%' },
+  hidden: { opacity: 0, y: '-50%' },
   visible: { opacity: 1, y: '-50%', x: '0%', transition: { delay: 1, duration: 1 } },
   exit: { 
     x: '-100vw',

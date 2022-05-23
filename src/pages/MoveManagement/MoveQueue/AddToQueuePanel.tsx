@@ -1,15 +1,17 @@
-import { Button, Stack as StackBase, Paper as PaperBase, Typography as TypographyBase, TypographyProps, Zoom } from '@mui/material';
+import { Button, Stack as StackBase, Paper as PaperBase, Typography as TypographyBase, TypographyProps, Zoom, ButtonGroup } from '@mui/material';
 import { Storage, Computer, Input, ArrowRightAlt as ArrowIconBase, Add, QuestionMark, CheckCircle } from '@mui/icons-material'
 import * as React from 'react';
 import styled from 'styled-components';
 import { ITapeSlot, SlotType } from '../../../interfaces/ITapeSlot';
 import * as _ from 'lodash';
 import { BaseTheme } from '../../../assets/theme';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface IAddToQueuePanelProps {
     source?: ITapeSlot,
     destination?: ITapeSlot
     onConfirmAdd: () => void
+    onDiscardAdd: () => void
 }
 
 const Root = styled( StackBase )<{ theme: BaseTheme }>`
@@ -43,6 +45,12 @@ const ButtonContainer = styled.div`
     padding: 0 20px 0 20px;
 `;
 
+const AddToQueueButton = styled( Button )<{ disabled: boolean }>`
+    color: ${({ disabled }) => disabled ? '#fff !important' : '#000 !important' };
+    opacity : ${ ({ disabled }) => disabled ? 0.25 : undefined };
+    height: 40px;
+`;
+
 const SlotIcon: React.FunctionComponent<{ type?: "Drive" | "Storage" | "Entry/Exit" }> = ( {type} ) => {
     const props = { sx: { alignSelf: "center", color: '#979797' } };
     switch( type ){
@@ -63,7 +71,7 @@ const Typography = styled( TypographyBase )`
 
 const typographyProps: TypographyProps = { variant: 'caption' }
 
-const AddToQueuePanel: React.FunctionComponent<IAddToQueuePanelProps> = ({ source, destination, onConfirmAdd }) => {
+const AddToQueuePanel: React.FunctionComponent<IAddToQueuePanelProps> = ({ source, destination, onConfirmAdd, onDiscardAdd }) => {
   const selectionReady = !_.isUndefined( source ) && !_.isUndefined( destination );
 return(
     <Root spacing={ 2 }>
@@ -126,15 +134,25 @@ return(
             } */}
         </Paper>
         <ButtonContainer>
-            <Button 
-                fullWidth
-                color='success'
-                onClick={ onConfirmAdd }
-                disabled={ _.isUndefined( source )|| _.isUndefined( destination ) }
-                variant='contained'
-                endIcon={ <Add /> }> 
-                    Add to Move Queue 
-            </Button>
+            <ButtonGroup sx={{ width: '100%' }}>
+                <AddToQueueButton 
+                    fullWidth
+                    color='secondary'
+                    onClick={ onConfirmAdd }
+                    disabled={ _.isUndefined( source )|| _.isUndefined( destination ) }
+                    variant='contained'
+                    endIcon={ <Add /> }> 
+                        Add to Move Queue 
+                </AddToQueueButton>
+                <AddToQueueButton   
+                    onClick={ onDiscardAdd }
+                    variant='contained'
+                    size='small'
+                    color='error' 
+                    disabled={  _.isUndefined( source )|| _.isUndefined( destination )  }>
+                        <DeleteIcon />
+                </AddToQueueButton>
+            </ButtonGroup>
         </ButtonContainer>
     </Root>
   );

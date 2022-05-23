@@ -26,7 +26,7 @@ const OverSheet = styled( motion.div )`
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     background-color: #fff;
-    box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.25);
+    // box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.25);
 `;
 
 const UnderSheet = styled.div<{ height: number }>`
@@ -36,7 +36,7 @@ const UnderSheet = styled.div<{ height: number }>`
 
 const getOverSheetMotionVariants = ( peekHeight: number, totHeight: number, squish: boolean ) => ({
     open: { y: -10 , height: squish ? `calc( 100% - ${ totHeight }px )` : undefined },
-    closed: { y: -(totHeight - peekHeight - 10), height: `calc( 100% - ${ peekHeight + 20 }px )` }
+    closed: { y: -(totHeight - peekHeight - 10), height: `calc( 100% - ${ peekHeight }px )` }
 })
  
 const OverlapPanel: React.FunctionComponent<IOverlapPanelProps> = (props) => {

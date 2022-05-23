@@ -39,9 +39,10 @@ const StyledNavBar = styled(NavBar)`
 `;
 
 export enum OuterSelection {
-  LibraryStatus,
-  Operations,
-  Config
+  LibraryStatus = "Library Status",
+  Operations = "Operations",
+  Config = "Configuration",
+  Tools = "Tools"
 }
 
 export enum InnerSelection {
@@ -83,6 +84,9 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
               isOpen={ navPanelIsOpen }
               onOpenToggle={ () => setNavPanelIsOpen( !navPanelIsOpen ) }
               location={ innerSelectionState } 
+              outerSelection={ outerSelectionState }
+              onOuterSelectionChange={ (s) => setOuterSelectionState(s) }
+              onInnerSelectionChange={ (s) => setInnerSelectionstate(s) }
             /> }
           overSheetElement={ 
             <>

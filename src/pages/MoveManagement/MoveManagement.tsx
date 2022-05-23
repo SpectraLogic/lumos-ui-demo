@@ -183,21 +183,23 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                                                     onDiscardMove={ ( move: Array<ITapeSlot> ) => dispatch({ type: Actions.DISCARD_MOVE, payload: move }) }
                                                     onDiscardQueue={ dispatch.bind( undefined, { type: Actions.DISCARD_QUEUE } ) }
                                                     onDiscardCompleted={ dispatch.bind( undefined, { type: Actions.DISCARD_COMPLETED } ) }
+                                                    onClearSelection={ dispatch.bind( undefined, { type: Actions.DISCARD_SELECTION } ) }  
                                                 />
                                             </PanelContainer>
                                         </Grid>
+                                        {/* <Button 
+                                        fullWidth 
+                                        color='primary'
+                                        onClick={ () => navigate( '../Move-Media' ) }
+                                        variant='contained'
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ type: 'tween', duration: 0.33 }}> 
+                                            Go Back
+                                        </Button> */}
                                     </Background>
-                                    <Button 
-                                    fullWidth 
-                                    color='primary'
-                                    onClick={ () => navigate( '../Move-Media' ) }
-                                    variant='contained'
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{ type: 'tween', duration: 0.33 }}> 
-                                        Go Back
-                                    </Button>
+
                                 </>
                             }
                         />
