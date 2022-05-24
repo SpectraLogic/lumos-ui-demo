@@ -15,7 +15,7 @@ import { Link, LinkProps, useMatch, useResolvedPath, To } from 'react-router-dom
 const StyledButton = styled(Button)`
     height: 60px;
     width: 100%;
-    justify-content: left; 
+    justify-content: center; 
     text-transform: none;
     font-weight: bold;
     box-shadow: none;

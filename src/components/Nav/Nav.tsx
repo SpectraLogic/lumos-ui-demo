@@ -78,7 +78,7 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
           squishOversheet={ false }
           isOpen={ navPanelIsOpen }
           underSheetHeightPeek={ 60 }
-          underSheetHeightTotal={ 465 }
+          underSheetHeightTotal={ 275 }
           underSheetElement={ 
             <NavSheet 
               isOpen={ navPanelIsOpen }

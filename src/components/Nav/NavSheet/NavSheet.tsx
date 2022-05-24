@@ -80,7 +80,7 @@ const OuterNavItem = styled.div`
 const Triangle = styled.div`
     width: 15px;
     height: 15px;
-    margin-top: 1em;
+    margin-top: 0.25em;
     background: #fff;
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
     align-self: center;
@@ -162,7 +162,7 @@ const NavSheet: React.FunctionComponent<INavSheetProps> = (props) => {
                    return (
                         <OuterNavItem key={ item }>
                             <Typography 
-                                variant='h5'
+                                variant='h6'
                                 sx={ style } 
                                 onClick={ props.onOuterSelectionChange.bind( undefined, item ) }>
                                 { item }
@@ -179,7 +179,7 @@ const NavSheet: React.FunctionComponent<INavSheetProps> = (props) => {
                 props.outerSelection === OuterSelection.Config ? (
                     <InnerNavGrid container spacing={ 1 }>
                         { [InnerSelection.Partitions, InnerSelection.MediaLifecycle, InnerSelection.NetworkSettings, InnerSelection.UserAccounts, InnerSelection.MediaEncryption, InnerSelection.Updates].map( (val, indx) => (
-                                <Grid item m={ 6 } key={ indx }>
+                                <Grid item m={ 3 } key={ indx }>
                                     <ListButton
                                     to={ "/" + val }
                                     selection={ props.location } 
@@ -195,7 +195,7 @@ const NavSheet: React.FunctionComponent<INavSheetProps> = (props) => {
                 ) : props.outerSelection === OuterSelection.Operations ? (
                     <InnerNavGrid container rowSpacing={ 1 } >
                         { [InnerSelection.MoveMedia, InnerSelection.ImportExport, InnerSelection.ManageDrives].map( (val, indx) => (
-                                <Grid item m={ 6 } key={ indx }>
+                                <Grid item m={ 3 } key={ indx }>
                                     <ListButton 
                                     to={ "/" + val}
                                     selection={ props.location }
