@@ -1,7 +1,7 @@
 import * as React from 'react';
 import IPartition from '../../interfaces/IPartition';
 import styled from 'styled-components';
-import { Button as ButtonBase, Grid, Stack, Typography } from '@mui/material';
+import { Button as ButtonBase, Grid, Stack, Typography, Fab } from '@mui/material';
 import PartitionsList from '../../components/PartitionList/ParitionsList';
 import { Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { PartitionIcon as PartitionIconBase } from '../../components/Icons';
@@ -13,6 +13,7 @@ import { Actions, IMoveMgmtState, MoveStatus, reducer } from './redux';
 import * as _ from 'lodash'
 import { partition, random } from 'lodash';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
 interface IMoveManagementProps {
@@ -30,7 +31,7 @@ const Root = styled( motion.div )`
 const Background = styled( motion(Grid) )`
   width: 100%;
   position: relative;
-  padding: 10px;
+  padding: 10px 10px 10px 0px;
   flex-grow: 1;
 `;
 
@@ -106,7 +107,9 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
         <AnimatePresence exitBeforeEnter>
             <Routes location={ location } key={ location.pathname }>
                 <Route index element={
-                    <Background container spacing={ 1 }
+                    <Background 
+                    sx={{ marginLeft: '10px' }}
+                    container spacing={ 1 }
                     initial={ initial }
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -134,8 +137,22 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                             key={ partition.id }
                             path={ `/${ partition.id }/*` }
                             element={
-                                <>
+                                <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>  
+                                    <Button 
+                                        variant='contained' 
+                                        sx={{ width: '1em', height: '100%', borderRadius: 0 }} 
+                                        onClick={ () => navigate( '../Move-Media' ) }
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ type: 'tween', duration: 0.33 }}>
+                                            <ArrowBackIcon />
+                                    </Button>
+                                    {/* <Fab color='primary' sx={{ alignSelf: 'end', marginLeft: '0.75em' }}>
+                                        <ArrowBackIcon />
+                                    </Fab> */}
                                     <Background container spacing={ 1 }
+                                    style={{ marginLeft: '0', width: 'auto' }}
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
@@ -196,11 +213,11 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
                                         transition={{ type: 'tween', duration: 0.33 }}> 
-                                            Go Back
+                                                
                                         </Button> */}
                                     </Background>
 
-                                </>
+                                </div>
                             }
                         />
                     ) )
