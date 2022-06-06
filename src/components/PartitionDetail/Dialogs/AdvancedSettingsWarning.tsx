@@ -49,7 +49,7 @@ const AdvancedSettingsWarning: React.FunctionComponent<IAdvancedSettingsWarningP
                     Cancel
                 </Button>
                  &nbsp; &nbsp;
-                <Button variant='outlined' color='error' onClick={ props.onConfirm }>
+                <Button variant='contained' color='warning' onClick={ props.onConfirm }>
                     I Understand
                 </Button>
               </ButtonGroup>

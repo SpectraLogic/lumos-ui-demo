@@ -1,4 +1,4 @@
-import { FormControl, Grid, MenuItem, Select } from '@mui/material';
+import { FormControl, Grid, MenuItem, Select, Typography } from '@mui/material';
 import _, { partition } from 'lodash';
 import * as React from 'react';
 import IPartition, { MediaType } from '../../../interfaces/IPartition';
@@ -23,9 +23,11 @@ const CleaningPartition: React.FunctionComponent<ICleaningPartitionProps> = ({ a
             <Grid container spacing={ 2 }>
                 <Grid item xs={ 6 } sx={{ position: 'relative' }}>
                     {/* <CenteredText> */}
+                    <Typography>
                         Choose the cleaning partition that this partition will use for auto drive cleaning. 
                         <br/> <br/>
                         Choose None to disable auto drive cleaning for this partition.
+                    </Typography>
                     {/* </CenteredText> */}
                 </Grid>
                 <Grid item xs={ 6 }>

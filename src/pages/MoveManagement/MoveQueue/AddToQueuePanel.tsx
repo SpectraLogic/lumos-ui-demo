@@ -26,11 +26,11 @@ const Stack = styled( StackBase )`
     width: 33%;
 `;
 
-const Paper = styled( PaperBase )`
+const Paper = styled( PaperBase )<{ theme: BaseTheme }>`
     height: 60px;
     width: 100%;
     background: #F0F0F0;
-    border: 1px solid #2ECC71;
+    // border: 2px solid ${ ({ theme }) => theme.colors.secondaryMain };
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -46,7 +46,7 @@ const ButtonContainer = styled.div`
 `;
 
 const AddToQueueButton = styled( Button )<{ disabled: boolean }>`
-    color: ${({ disabled }) => disabled ? '#fff !important' : '#000 !important' };
+    color: ${({ disabled }) => disabled ? '#fff !important' : '#fff !important' };
     opacity : ${ ({ disabled }) => disabled ? 0.25 : undefined };
     height: 40px;
 `;
@@ -137,7 +137,7 @@ return(
             <ButtonGroup sx={{ width: '100%' }}>
                 <AddToQueueButton 
                     fullWidth
-                    color='secondary'
+                    color='success'
                     onClick={ onConfirmAdd }
                     disabled={ _.isUndefined( source )|| _.isUndefined( destination ) }
                     variant='contained'

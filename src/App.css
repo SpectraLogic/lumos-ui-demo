@@ -36,3 +36,26 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url("./assets/fonts/Helvetica_Neue.ttf");
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/fonts/Poppins-Regular.ttf")
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Poppins" !important;
+}
+
+p, span, .MuiDataGrid-cellContent {
+  font-family: "Helvetica Neue" !important;
+}
+
+
+.MuiTabs-indicator{
+  height: 5px !important;
+}

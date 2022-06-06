@@ -133,6 +133,7 @@ const PartitionDetail: React.FunctionComponent<IPartitionDetailProps> = (props) 
                     <FormControlLabel 
                         control={ 
                             <Switch 
+                            color='warning'
                             checked={ showAdvancedSettings }
                             onChange={ (e) => {
                                 setShowAdvancedSettings( !showAdvancedSettings );

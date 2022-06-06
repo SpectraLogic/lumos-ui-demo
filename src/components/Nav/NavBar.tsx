@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppBar, Container, Toolbar } from '@mui/material';
-import SpectraLogo from '../../assets/sllogo.gif';
+import SpectraLogo from '../../assets/sllogo_black.png';
 import styled from 'styled-components';
 
 interface INavBarProps {

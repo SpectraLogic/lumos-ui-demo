@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Grid, Container, TextField, Button } from '@mui/material';
-import  SpectraLogo  from '../../assets/sllogo.gif'; 
+import  SpectraLogo  from '../../assets/sllogo_black.png'; 
 import { CheckCircle } from '@mui/icons-material';
 
 

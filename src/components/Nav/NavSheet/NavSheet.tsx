@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { BaseTheme } from '../../../assets/theme';
-import SpectraLogo from '../../../assets/sllogo-dark.gif';
+import SpectraLogo from '../../../assets/sllogo_white.png';
 import { InnerSelection, OuterSelection } from '../Nav';
 import { SxProps, Typography, Stack, Grid } from '@mui/material';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
@@ -23,7 +23,7 @@ const Root = styled.div<{ theme: BaseTheme }>`
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: ${ ({ theme }) => theme.colors.primaryMain };
+    background-color: ${ ({ theme }) => theme.colors.backgroundDark };
 `;
 
 const AppBarLogo = styled.img`

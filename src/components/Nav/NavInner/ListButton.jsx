@@ -20,7 +20,8 @@ const StyledButton = styled(Button)`
     font-weight: bold;
     box-shadow: none;
     // background-color: ${ ({selected}) => selected ? undefined : '#fff' };
-    color: ${ ({selected}) => selected ? '#89ED5B' : '#fff' };
+    color: '#fff';
+    background-color: ${ ({selected, theme}) => selected ? theme.colors.secondaryMain : undefined };
     &:hover{
         box-shadow: none;
         background-color: ${ ({selected}) => selected ? undefined : undefined };
@@ -29,7 +30,11 @@ const StyledButton = styled(Button)`
 
 // const ButtonIcon: React.FunctionComponent<{ selected: boolean, which: InnerSelection}> = (props) =>{
 const ButtonIcon = (props) =>{
-    const iconProps =  { htmlColor: props.selected ? '#89ED5B' : '#fff' };
+    // const iconProps =  { htmlColor: props.selected ? '#89ED5B' : '#fff' };
+    const iconProps = { 
+        htmlColor: '#fff',
+        tranform: 'translateY(5px)'
+    };
 
     // const iconProps: SvgIconProps =  { htmlColor: props.selected ? '#fff' : '#000' } ;
     switch( props.which ){
@@ -73,7 +78,6 @@ const ListButton = (props) => {
         to={ props.to }
         component={ Link }
         { ...props }
-        // color={ match ? 'pri' : undefined }
         color='primary'
         selected={ match ? true : false }
         startIcon={ <ButtonIcon which={ props.which } selected={ match ? true : false } /> }

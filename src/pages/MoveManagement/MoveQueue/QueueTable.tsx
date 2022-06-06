@@ -68,7 +68,7 @@ const QueueTable: React.FunctionComponent<IQueueTableProps> = (props) => {
         />
         <ButtonGroup fullWidth variant='contained' disabled={ props.moves.length <= 0 }>
             <Button color='error' onClick={ props.onDiscard }>Discard Queue</Button>
-            <Button color='success' onClick={ props.onSubmit }>Submit Queue</Button>
+            <Button color='secondary' onClick={ props.onSubmit }>Submit Queue</Button>
         </ButtonGroup>
     </>
   );

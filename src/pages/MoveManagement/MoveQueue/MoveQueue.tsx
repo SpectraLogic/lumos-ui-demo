@@ -26,9 +26,13 @@ interface IMoveQueueProps {
 }
 
 const Tab = styled( TabBase )<{ theme: BaseTheme, selected: boolean }>`
-    background-color: ${ (props: { theme: BaseTheme }) => props.theme.colors.primaryMain };
-    color: ${ ({ theme, selected }) =>  selected ? `${ theme.colors.secondaryMain }` : '#fff'  } !important;
+    font-size: 1em;
+    font-weight: ${ ({ selected }) => selected ? 'bold' : undefined  };
+    background-color: ${ (props: { theme: BaseTheme }) => props.theme.colors.backgroundDark };
+    // background-color: ${ ({ theme, selected }) =>  selected ? `${ theme.colors.secondaryMain }` : theme.colors.backgroundDark  } !important;
+    color: white !important;
 `;
+
 
 const MoveQueue: React.FunctionComponent<IMoveQueueProps> = (props) => {
     const [tabValue, setTabValue] = React.useState( 0 );
@@ -39,7 +43,7 @@ const MoveQueue: React.FunctionComponent<IMoveQueueProps> = (props) => {
         underSheetHeightTotal={ 183 }
         overSheetElement={ 
             <>
-                <Tabs 
+                <Tabs
                     indicatorColor='secondary'
                     value={ tabValue } 
                     onChange={ (e, val) => setTabValue( val ) }

@@ -139,6 +139,7 @@ const MoveManagement: React.FunctionComponent<IMoveManagementProps> = ({ partiti
                             element={
                                 <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>  
                                     <Button 
+                                        color='primary'
                                         variant='contained' 
                                         sx={{ width: '1em', height: '100%', borderRadius: 0 }} 
                                         onClick={ () => navigate( '../Move-Media' ) }

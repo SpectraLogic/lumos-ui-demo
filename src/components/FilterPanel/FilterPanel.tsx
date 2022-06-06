@@ -1,10 +1,11 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { motion, Variant } from 'framer-motion'; 
-import { SxProps, Typography, OutlinedInput, InputBase, TextField, Chip, Paper } from '@mui/material';
+import { SxProps, Typography, OutlinedInput, InputBase, TextField, Chip, Paper, useTheme } from '@mui/material';
 import { ExpandMore, ExpandLess, FilterAlt, Search, Done } from '@mui/icons-material'
 import IPartition from '../../interfaces/IPartition';
-import { BaseTheme, baseTheme } from '../../assets/theme';
+import { BaseTheme } from '../../assets/theme';
+
 
 interface IFilterPanelProps {
     panelIsOpen: boolean
@@ -22,10 +23,6 @@ const Root = styled( motion( Paper ) )<{ theme: BaseTheme, disabled?: boolean }>
     border-top-right-radius: 8px;
 `;
 
-const rootAnimVariants: { [key: string]: Variant } = {
-  hover: { backgroundColor: baseTheme.colors.primaryDark },
-  disabled: { }
-}
 
 const PanelHeader = styled.div<{ disabled?: boolean }>`
     height: 40px;
@@ -108,6 +105,11 @@ const panelContentVariants: {[key: string]: Variant} = {
 const iconStyle: SxProps = { color: '#fff' };
 
 const FilterPanel: React.FunctionComponent<IFilterPanelProps> = (props) => {
+  const theme = useTheme(); 
+  const rootAnimVariants: { [key: string]: Variant } = {
+    hover: { backgroundColor: theme.palette.primary.dark },
+    disabled: { }
+  }
   const [ searchText, setSearchText ] = React.useState('');
   React.useEffect( () => {
     props.onFilterChange( createFilterFunction( searchText ) )
