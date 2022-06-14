@@ -11,6 +11,8 @@ import Login from '../Login';
 import { motion, AnimatePresence } from 'framer-motion';
 import OverlapPanel from '../OverlapPanel/OverlapPanel';
 import NavSheet from './NavSheet/NavSheet';
+import DashboardImg from '../../assets/dashboard.png';
+
 
 interface INavProps {
    partitionsRoot: React.ReactElement
@@ -38,6 +40,15 @@ const StyledNavBar = styled(NavBar)`
   top: 0;
 `;
 
+const Dashboard = styled.div`
+  height: 100%;
+  background: url(${DashboardImg});
+  background-size: cover;
+  position: relative;
+  border-radius: 5px 5px;
+
+`
+
 export enum OuterSelection {
   LibraryStatus = "Library Status",
   Operations = "Operations",
@@ -58,13 +69,18 @@ export enum InnerSelection {
   NetworkSettings = "Network-Settings",
   UserAccounts = "User-Accounts",
   MediaEncryption = "Media-Encryption",
-  Updates = "Updates"
+  Updates = "Updates",
+  /* Library Status */
+  Dashboard = "Dashboard",
+  SystemMessages = "System Messages",
+  RoboticsStatus = "Robotics Status"
+  
 }
 
 
 const Nav: React.FunctionComponent<INavProps> = (props) => {
-  const [outerSelectionState, setOuterSelectionState] = React.useState( OuterSelection.Config );
-  const [innerSelectionState, setInnerSelectionstate] = React.useState( InnerSelection.Partitions );
+  const [outerSelectionState, setOuterSelectionState] = React.useState( OuterSelection.LibraryStatus );
+  const [innerSelectionState, setInnerSelectionstate] = React.useState( InnerSelection.Dashboard );
   const [navPanelIsOpen, setNavPanelIsOpen] = React.useState( false );
   const location = useLocation();
 
@@ -78,7 +94,7 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
           squishOversheet={ false }
           isOpen={ navPanelIsOpen }
           underSheetHeightPeek={ 60 }
-          underSheetHeightTotal={ 275 }
+          underSheetHeightTotal={ 280 }
           underSheetElement={ 
             <NavSheet 
               isOpen={ navPanelIsOpen }
@@ -102,6 +118,7 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
                 <Route path={`/${InnerSelection.Updates}`} element={<p> Display Component </p> } />
                 <Route path={`/${InnerSelection.MoveMedia}/*`} element={ props.movesRoot } />
                 <Route path={`/${InnerSelection.MediaEncryption}`} element={<p> Display Component </p> } />
+                <Route path={`/${InnerSelection.Dashboard}`} element={ <Dashboard /> }/>
               </Routes>
             </>
           }

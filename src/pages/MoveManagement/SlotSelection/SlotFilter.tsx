@@ -75,7 +75,7 @@ const TextField = styled( motion( BaseTextField ) )({
 });
 
 const ChipContainerRoot = styled.div`
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex; 
   justify-content: center;
   gap: 10px;
@@ -116,7 +116,7 @@ const SliderNumInput = styled( TextField )`
 `;
 
 const Stack = styled( BaseStack )`
-	margin-top: 10px;
+	margin-top: 5px;
 	padding: 0 10px 0 10px;
 `;
 

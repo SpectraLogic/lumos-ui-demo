@@ -44,7 +44,7 @@ const StyledSortControls = styled( SortControls )`
 `;
 
 const listPanelAnimVariants = {
-    open: { y: -10, height: 'calc( 100% - 200px )' },
+    open: { y: -42, height: 'calc( 100% - 200px )' },
     closed: { y: -150, height: 'calc( 100% - 60px )' }
 }
 

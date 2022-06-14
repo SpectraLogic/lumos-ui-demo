@@ -37,9 +37,8 @@ const Toolbar = styled.div`
     flex-direction: row;
     // padding: 10px 10px 10px 10px;
     align-items: center;
-    :hover{
-        cursor: pointer;
-    }
+    cursor: pointer;
+
 `
 
 const LocationContainer = styled.div`
@@ -153,8 +152,8 @@ const NavSheet: React.FunctionComponent<INavSheetProps> = (props) => {
                     const style: SxProps = {
                         fontWeight: selected ? 'bold' : undefined,
                         color: '#fff',
+                        cursor: 'pointer',
                         ":hover": {
-                            cursor: 'pointer',
                             fontWeight: 'bold'
                         },
                         alignSelf: 'center'
@@ -177,8 +176,8 @@ const NavSheet: React.FunctionComponent<INavSheetProps> = (props) => {
             <InnerNavContainer>
                 {
                 props.outerSelection === OuterSelection.Config ? (
-                    <InnerNavGrid container spacing={ 1 }>
-                        { [InnerSelection.Partitions, InnerSelection.MediaLifecycle, InnerSelection.NetworkSettings, InnerSelection.UserAccounts, InnerSelection.MediaEncryption, InnerSelection.Updates].map( (val, indx) => (
+                    <InnerNavGrid container spacing={ 0 }>
+                        { [InnerSelection.Partitions, InnerSelection.MediaLifecycle, InnerSelection.NetworkSettings, InnerSelection.UserAccounts].map( (val, indx) => (
                                 <Grid item m={ 3 } key={ indx }>
                                     <ListButton
                                     to={ "/" + val }
@@ -195,6 +194,22 @@ const NavSheet: React.FunctionComponent<INavSheetProps> = (props) => {
                 ) : props.outerSelection === OuterSelection.Operations ? (
                     <InnerNavGrid container rowSpacing={ 1 } >
                         { [InnerSelection.MoveMedia, InnerSelection.ImportExport, InnerSelection.ManageDrives].map( (val, indx) => (
+                                <Grid item m={ 3 } key={ indx }>
+                                    <ListButton 
+                                    to={ "/" + val}
+                                    selection={ props.location }
+                                    which={ val } 
+                                    onClick={ () => { 
+                                        props.onOpenToggle();
+                                        props.onInnerSelectionChange( val )
+                                    } }/> 
+                                </Grid>) 
+                            )
+                        }
+                    </InnerNavGrid>
+                ) : props.outerSelection === OuterSelection.LibraryStatus ? ( 
+                    <InnerNavGrid container rowSpacing={ 1 } >
+                        { [InnerSelection.Dashboard, InnerSelection.SystemMessages, InnerSelection.RoboticsStatus].map( (val, indx) => (
                                 <Grid item m={ 3 } key={ indx }>
                                     <ListButton 
                                     to={ "/" + val}

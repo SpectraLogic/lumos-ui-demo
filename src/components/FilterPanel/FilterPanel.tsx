@@ -159,12 +159,12 @@ const FilterPanel: React.FunctionComponent<IFilterPanelProps> = (props) => {
           <ChipContainerRoot>
             <ChipContainer>
               <StyledChip clickable size='small' label="LTO" avatar={ <Done /> } /> 
-              <StyledChip clickable size='small' label="LTO Clean" avatar={ <Done />}/> 
+              <StyledChip clickable size='small' label="TS" avatar={ <Done />}/> 
             </ChipContainer>
-            <ChipContainer>
+            {/* <ChipContainer>
               <StyledChip clickable size='small' label="TS" avatar={ <Done /> } /> 
               <StyledChip clickable size='small' label="TS Clean" avatar={ <Done />}/> 
-            </ChipContainer>
+            </ChipContainer> */}
           </ChipContainerRoot>
         </PanelContent>
     </Root>

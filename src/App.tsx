@@ -33,7 +33,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState<boolean>( false ); 
   const nav = useNavigate();
 
-  const [themeIndex, setThemeIndex] = React.useState( 0 as number )
+  const [themeIndex, setThemeIndex] = React.useState( 1 as number )
 
   useHotkeys( 'ctrl+1', () => {
     setThemeIndex( () =>  0 );
@@ -59,7 +59,7 @@ function App() {
         <AnimatePresence exitBeforeEnter>
           {
             !loggedIn && <Login onLogin={ () => { 
-              nav( './Partitions/');
+              nav( './Dashboard/');
               setLoggedIn( true );
             } } />
           }

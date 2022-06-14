@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import { InnerSelection } from '../Nav';
 import { PartitionIcon, LifecycleIcon, NetworkIcon, UsersIcon, UpdateIcon, DesktopIcon, ArrowsVerticalIcon, ArrowsLateralIcon, ServerEncryptIcon } from '../../Icons';
 import { Link, LinkProps, useMatch, useResolvedPath, To } from 'react-router-dom';
-
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 // interface IListButtonProps extends ButtonProps {
 //     which: InnerSelection
 //     selection: InnerSelection,
@@ -55,7 +57,13 @@ const ButtonIcon = (props) =>{
         case InnerSelection.MoveMedia: 
             return ( <ArrowsLateralIcon { ...iconProps } /> );
         case InnerSelection.MediaEncryption: 
-            return ( <ServerEncryptIcon { ...iconProps } />)
+            return ( <ServerEncryptIcon { ...iconProps } />);
+        case InnerSelection.Dashboard:
+            return ( <DashboardIcon { ...iconProps } /> );
+        case InnerSelection.SystemMessages:
+            return ( <NotificationsNoneIcon { ...iconProps } /> );
+        case InnerSelection.RoboticsStatus:
+            return ( <PrecisionManufacturingIcon { ...iconProps } /> );
         default: 
             return ( <> </> )
     }
